@@ -72,7 +72,7 @@ fabricApi {
 tasks.matching { it.name == "runClientGameTest" }.configureEach {
 	// Read through providers so the configuration cache keys on them (a plain System.properties loop isn't tracked,
 	// and a cached run would silently ignore a new -Dopbosses.tests).
-	["opbosses.tests", "opbosses.only", "opbosses.siteDebug", "opbosses.siteRules"].each { k ->
+	["opbosses.tests", "opbosses.only", "opbosses.siteDebug", "opbosses.siteRules", "opbosses.structureGap"].each { k ->
 		def v = providers.systemProperty(k)
 		if (v.isPresent()) {
 			systemProperty k, v.get()
