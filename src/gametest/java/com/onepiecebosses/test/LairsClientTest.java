@@ -466,6 +466,27 @@ public class LairsClientTest implements FabricClientGameTest {
 		});
 	}
 
+	/** No structure of the main mod's (nor a village or outpost) overlaps the lair or comes within 16 blocks of it (LairNeighbours). */
+	private static void neighbours(ServerLevel level, String name, net.minecraft.world.level.levelgen.structure.BoundingBox bb) {
+		var near = bb.inflatedBy(16);
+		var registry = level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
+		Set<String> seen = new java.util.HashSet<>();
+		for (int cx = near.minX() >> 4; cx <= near.maxX() >> 4; cx++) {
+			for (int cz = near.minZ() >> 4; cz <= near.maxZ() >> 4; cz++) {
+				for (var start : level.structureManager().startsForStructure(cx, cz, st -> {
+					Identifier id = registry.getKey(st);
+					return id != null && (id.getNamespace().equals("onepiece") || id.getPath().startsWith("village_") || id.getPath().equals("pillager_outpost"));
+				})) {
+					String other = String.valueOf(registry.getKey(start.getStructure()));
+					var obb = start.getBoundingBox();
+					if (!seen.add(other + obb)) continue;
+					LOG.info("LT {} neighbour {} at {} {} .. {} {}", name, other, obb.minX(), obb.minZ(), obb.maxX(), obb.maxZ());
+					check(!obb.intersects(near), name + ": overlaps " + other + " (" + obb + ")");
+				}
+			}
+		}
+	}
+
 	/**
 	 * Checks the boss, crew and chest of the lair near pos. A natural lair (camera != null) is also checked for anyone
 	 * stuck in a block and for its height above the sea, and the camera is set to look down at it.
@@ -496,6 +517,7 @@ public class LairsClientTest implements FabricClientGameTest {
 				boss.getMaxHealth(), boss.blockPosition(), sea, boss.getBlockY() - sea, inBlock);
 		check(setUp && boss.isBoss(), name + ": the boss wasn't set up (setUp=" + setUp + ", boss=" + boss.isBoss() + ")");
 		if (camera != null) {
+			neighbours(level, name, bb);
 			check(inBlock == null, name + ": the boss is stuck in " + inBlock);
 			if (lair.sea) {
 				check(boss.getBlockY() > sea && boss.getBlockY() < sea + 6, name + ": the arena is " + (boss.getBlockY() - sea) + " blocks above the sea");

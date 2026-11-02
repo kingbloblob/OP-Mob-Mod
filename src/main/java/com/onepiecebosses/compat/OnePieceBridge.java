@@ -166,4 +166,13 @@ public final class OnePieceBridge {
 		}
 		return new TownSpot(town.plaza != null ? town.plaza : town.box.getCenter(), town.name());
 	}
+
+	/**
+	 * The main mod's cheap biome check for a structure start at chunk n (no layout), so LairNeighbours only lays out
+	 * the main mod's builds that can really start near a lair.
+	 */
+	public static boolean startBiomeFits(net.minecraft.world.level.levelgen.structure.Structure structure,
+			net.minecraft.world.level.ChunkPos n, net.minecraft.world.level.levelgen.structure.Structure.GenerationContext ctx) {
+		return com.onepiecemod.world.StructureSpacing.startBiomeFits(structure, n, ctx);
+	}
 }
