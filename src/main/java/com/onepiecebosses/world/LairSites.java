@@ -26,6 +26,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
  * run up the side of the mountain next door. This samples the ground on a 7x7 grid over the lair's real footprint and,
  * if it's too steep or too wet (or, for a sea lair, too dry), slides the whole lair to the nearest spot within
  * {@link #MAX_SHIFT} blocks that fits. If none does, the lair isn't built there and the next spot in the set gets it.
+ * A spot must also keep clear of the main mod's structures (LairNeighbours).
  * Hooked around the calls to Structure.findValidGenerationPoint in Structure.generate and StructureCheck (LairSiteMixin,
  * StructureCheckSiteMixin), so /locate agrees with world generation; /place
  * structure skips it (PlaceCommandMixin).
@@ -49,6 +50,12 @@ public final class LairSites {
 	private static final int MAX_WET = 6;
 	/** Fewest of the 49 samples under a sea lair that must be water (most of it: reef and beach lairs keep a bit of shore). */
 	private static final int MIN_WET_SEA = 29;
+	/**
+	 * Most the dry ground under and round a sea lair may stand over the sea (the highest sample is ignored, a lone
+	 * rock). A sea lair isn't fitted to the land, so a hill in its footprint was dug straight through: ryan 2026-11-02
+	 * found the Scrapheap Reef cut into a hillside under a castle. Beaches and low shores still pass.
+	 */
+	private static final int MAX_SEA_SHORE = 5;
 	private static final int STEP = 16;
 	/** Furthest a lair slides to find flat ground. */
 	private static final int MAX_SHIFT = 48;
@@ -76,15 +83,25 @@ public final class LairSites {
 		int sx = ctx.chunkPos().getMinBlockX(), sz = ctx.chunkPos().getMinBlockZ();
 		int minX = sx - REACH * 16, maxX = sx + 15 + REACH * 16, minZ = sz - REACH * 16, maxZ = sz + 15 + REACH * 16;
 		int shift = MAX_SHIFT;
+		// Other structures near the lair (LairNeighbours), worked out only once a spot passes the ground check: it lays
+		// out the main mod's builds round about, which is far slower than sampling the ground.
+		List<BoundingBox> neighbours = null;
 
 		for (int[] o : spiral(shift)) {
 			BoundingBox moved = box.moved(o[0], 0, o[1]);
 			if ((o[0] != 0 || o[1] != 0) && (moved.minX() < minX || moved.maxX() > maxX || moved.minZ() < minZ || moved.maxZ() > maxZ)) continue;
 			Ground g = sample(ctx, box.moved(o[0], 0, o[1]));
-			boolean fits = sea ? g.wet >= MIN_WET_SEA : g.wet <= MAX_WET && g.spread() <= MAX_SPREAD && g.peak() <= MAX_RISE;
-			if (DEBUG) BossesMod.LOGGER.info("lair site {} at {} {} offset {},{}: wet {} spread {} peak {} -> {}", id.getPath(),
-					start.getX(), start.getZ(), o[0], o[1], g.wet, g.spread(), g.peak(), fits);
+			int seaLevel = ctx.chunkGenerator().getSeaLevel();
+			boolean fits = sea ? g.wet >= MIN_WET_SEA && g.shore(seaLevel) <= MAX_SEA_SHORE
+					: g.wet <= MAX_WET && g.spread() <= MAX_SPREAD && g.peak() <= MAX_RISE;
+			if (DEBUG) BossesMod.LOGGER.info("lair site {} at {} {} offset {},{}: wet {} spread {} peak {} shore {} -> {}", id.getPath(),
+					start.getX(), start.getZ(), o[0], o[1], g.wet, g.spread(), g.peak(), g.shore(seaLevel), fits);
 			if (!fits) continue;
+			if (neighbours == null) neighbours = LairNeighbours.blockers(ctx, box, MAX_SHIFT);
+			if (!LairNeighbours.clear(moved, neighbours)) {
+				if (DEBUG) BossesMod.LOGGER.info("lair site {} offset {},{}: too close to another structure", id.getPath(), o[0], o[1]);
+				continue;
+			}
 			int dy = 0;
 			if (!sea) {
 				// Sit the lair on the ground under the footprint (a little low, so the yard cuts into the slope rather
@@ -111,6 +128,11 @@ public final class LairSites {
 		/** How far the highest sample stands over the floor the lair will sit on. */
 		int peak() {
 			return dry.isEmpty() ? 0 : dry.get(dry.size() - 1) - low();
+		}
+
+		/** How far the dry ground stands over the sea, ignoring the single highest sample. */
+		int shore(int seaLevel) {
+			return dry.size() < 2 ? 0 : dry.get(dry.size() - 2) - seaLevel;
 		}
 
 		/** The lower third of the dry ground. */
