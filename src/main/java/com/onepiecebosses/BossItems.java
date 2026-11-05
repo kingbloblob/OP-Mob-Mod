@@ -62,6 +62,7 @@ public final class BossItems {
 					KEYS.values().forEach(output::accept);
 					LairChests.ITEMS.values().forEach(output::accept);
 					output.accept(LAIR_CHARTER);
+					output.accept(com.onepiecebosses.bounty.BountyBoard.ITEM);
 				})
 				.build());
 	}
