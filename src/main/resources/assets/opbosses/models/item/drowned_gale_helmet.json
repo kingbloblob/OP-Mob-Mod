@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "opbosses:item/drowned_gale_helmet"
+  }
+}

@@ -11,10 +11,11 @@ import com.onepiecebosses.BossItems;
 import com.onepiecebosses.boss.RogueBossEntity;
 import com.onepiecebosses.boss.RogueData;
 import com.onepiecebosses.compat.OnePieceBridge;
+import com.onepiecebosses.gear.GearItems;
 
 /**
  * What a rogue boss gives on top of the main mod's boss rewards (Berries, XP, Hard and Expert prizes, bounty):
- * its trophy on a first win, the key to its lair's chest every time, and the rest of its bounty.
+ * its trophy on a first win, the key to its lair's chest and its gear Remnants every time, and the rest of its bounty.
  * (The main mod's paper already reports every boss's first defeat.) RogueBossEntity calls these.
  */
 public final class BossRewards {
@@ -41,6 +42,17 @@ public final class BossRewards {
 		Item trophy = BossItems.TROPHIES.get(boss.rogue().trophy);
 		if (trophy != null) {
 			boss.spawnAtLocation(level, new ItemStack(trophy));
+		}
+	}
+
+	/**
+	 * The boss's Remnants, every time it's beaten as a boss: 2 on Normal, 3 on Hard, 4 on Expert.
+	 * Three of them and a diamond piece craft a piece of its gear set (see gear/GearItems).
+	 */
+	public static void dropRemnants(RogueBossEntity boss, ServerLevel level) {
+		GearItems.Set set = GearItems.SETS.get(boss.rogue().id);
+		if (set != null) {
+			boss.spawnAtLocation(level, new ItemStack(set.remnant(), 2 + boss.getDifficulty()));
 		}
 	}
 

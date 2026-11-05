@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_boilerheart",
+  "ingredients": [
+    "minecraft:diamond_helmet",
+    "opbosses:remnant_boilerheart_gantz",
+    "opbosses:remnant_boilerheart_gantz",
+    "opbosses:remnant_boilerheart_gantz"
+  ],
+  "result": {
+    "id": "opbosses:boilerheart_helmet",
+    "count": 1
+  }
+}

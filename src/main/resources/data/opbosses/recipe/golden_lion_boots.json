@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_golden_lion",
+  "ingredients": [
+    "minecraft:diamond_boots",
+    "opbosses:remnant_shiki_golden_lion",
+    "opbosses:remnant_shiki_golden_lion",
+    "opbosses:remnant_shiki_golden_lion"
+  ],
+  "result": {
+    "id": "opbosses:golden_lion_boots",
+    "count": 1
+  }
+}

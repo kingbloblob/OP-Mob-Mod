@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_scrapheap",
+  "ingredients": [
+    "minecraft:diamond_sword",
+    "opbosses:remnant_saltjaw_rourke",
+    "opbosses:remnant_saltjaw_rourke",
+    "opbosses:remnant_saltjaw_rourke"
+  ],
+  "result": {
+    "id": "opbosses:anchor_cleaver",
+    "count": 1
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "opbosses:clank_clank"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "opbosses:clank_clank"
+      }
+    ]
+  }
+}

@@ -9,6 +9,8 @@ import net.fabricmc.api.ModInitializer;
 
 import com.onepiecebosses.boss.RogueBosses;
 import com.onepiecebosses.crew.CrewKits;
+import com.onepiecebosses.gear.GearItems;
+import com.onepiecebosses.gear.GearSets;
 import com.onepiecebosses.loot.LairChests;
 import com.onepiecebosses.loot.RumorDrops;
 import com.onepiecebosses.world.WorldMobs;
@@ -31,6 +33,8 @@ public class BossesMod implements ModInitializer {
 		RogueBosses.initialize();
 		LairChests.initialize();
 		BossItems.initialize();
+		GearItems.initialize(); // Each boss's Remnant, armour set and weapon.
+		GearSets.initialize();
 		RumorDrops.initialize();
 		WorldMobs.initialize(); // Wandering bounty hunters and rookie pirate raids.
 		LOGGER.info("One Piece Bosses: {} rogue bosses loaded", com.onepiecebosses.boss.RogueData.all().size());

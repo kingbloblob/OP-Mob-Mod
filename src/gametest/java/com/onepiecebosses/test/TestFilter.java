@@ -12,10 +12,11 @@ import java.util.stream.Collectors;
  *     gradlew runClientGameTest -Dopbosses.tests=bosses -Dopbosses.only=uta_diva,zephyr_z
  *     gradlew runClientGameTest -Dopbosses.tests=models               (model portraits)
  *     gradlew runClientGameTest -Dopbosses.tests=mobs -Dopbosses.only=raids   (only the pirate raids)
+ *     gradlew runClientGameTest -Dopbosses.tests=gear -Dopbosses.only=gild_tesoro   (boss gear: drops, set bonus, screenshots)
  *     gradlew runClientGameTest -Dopbosses.tests=places -Dopbosses.only=angel_beach   (screenshots of a main-mod structure)
  *
- * opbosses.tests: any of bosses, lairs, mobs, models, places (default "bosses,lairs,mobs"). opbosses.only: boss ids or lair
- * names (default: all of them); a lair is picked by its own name or its boss's id; the world mobs are "hunters" and "raids".
+ * opbosses.tests: any of bosses, lairs, mobs, models, places, gear (default "bosses,lairs,mobs"). opbosses.only: boss ids or lair
+ * names (default: all of them); a lair is picked by its own name or its boss's id, a gear set by its boss's id or set name; the world mobs are "hunters" and "raids".
  */
 final class TestFilter {
 	private TestFilter() {

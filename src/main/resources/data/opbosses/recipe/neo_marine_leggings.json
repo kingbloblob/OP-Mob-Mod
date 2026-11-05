@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_neo_marine",
+  "ingredients": [
+    "minecraft:diamond_leggings",
+    "opbosses:remnant_zephyr_z",
+    "opbosses:remnant_zephyr_z",
+    "opbosses:remnant_zephyr_z"
+  ],
+  "result": {
+    "id": "opbosses:neo_marine_leggings",
+    "count": 1
+  }
+}

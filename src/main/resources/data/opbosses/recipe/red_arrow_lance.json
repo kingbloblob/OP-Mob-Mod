@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_lily_carnation",
+  "ingredients": [
+    "minecraft:diamond_sword",
+    "opbosses:remnant_baron_omatsuri",
+    "opbosses:remnant_baron_omatsuri",
+    "opbosses:remnant_baron_omatsuri"
+  ],
+  "result": {
+    "id": "opbosses:red_arrow_lance",
+    "count": 1
+  }
+}

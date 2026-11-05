@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_moa_moa",
+  "ingredients": [
+    "minecraft:diamond_chestplate",
+    "opbosses:remnant_byrnndi_world",
+    "opbosses:remnant_byrnndi_world",
+    "opbosses:remnant_byrnndi_world"
+  ],
+  "result": {
+    "id": "opbosses:moa_moa_chestplate",
+    "count": 1
+  }
+}

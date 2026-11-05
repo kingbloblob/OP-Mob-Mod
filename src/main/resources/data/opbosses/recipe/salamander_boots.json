@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_salamander",
+  "ingredients": [
+    "minecraft:diamond_boots",
+    "opbosses:remnant_gasparde",
+    "opbosses:remnant_gasparde",
+    "opbosses:remnant_gasparde"
+  ],
+  "result": {
+    "id": "opbosses:salamander_boots",
+    "count": 1
+  }
+}

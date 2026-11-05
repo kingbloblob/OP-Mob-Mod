@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_diva",
+  "ingredients": [
+    "minecraft:diamond_sword",
+    "opbosses:remnant_uta_diva",
+    "opbosses:remnant_uta_diva",
+    "opbosses:remnant_uta_diva"
+  ],
+  "result": {
+    "id": "opbosses:diva_microphone",
+    "count": 1
+  }
+}

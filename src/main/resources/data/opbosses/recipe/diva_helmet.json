@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_diva",
+  "ingredients": [
+    "minecraft:diamond_helmet",
+    "opbosses:remnant_uta_diva",
+    "opbosses:remnant_uta_diva",
+    "opbosses:remnant_uta_diva"
+  ],
+  "result": {
+    "id": "opbosses:diva_helmet",
+    "count": 1
+  }
+}

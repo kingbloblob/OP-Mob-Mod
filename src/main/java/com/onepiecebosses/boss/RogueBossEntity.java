@@ -242,6 +242,7 @@ public class RogueBossEntity extends CharacterEntity {
 		super.dropCustomDeathLoot(level, source, recentlyHit);
 		if (isBoss()) {
 			BossRewards.dropKey(this, level);
+			BossRewards.dropRemnants(this, level);
 		}
 		if (isBoss() && isFirstWin()) {
 			BossRewards.dropTrophy(this, level);
