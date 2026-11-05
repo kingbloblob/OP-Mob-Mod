@@ -231,7 +231,7 @@ public class SeaKingBossEntity extends SeaKingEntity {
 		Vec3 under = new Vec3(ship.getX(), sea - 3, ship.getZ());
 		this.setPos(under.x, under.y, under.z);
 		this.setDeltaMovement(0, 1.4, 0);
-		this.hurtMarked = true;
+		this.needsSync = true;
 		float hull = kind == Kind.IRONSCALE ? 70f : 45f;
 		ShipHull.damage(ship, hull, null, under.add(0, 2, 0), null);
 		level.sendParticles(ParticleTypes.SPLASH, under.x, sea + 1, under.z, 220, 3.5, 3.0, 3.5, 0.5);
@@ -349,7 +349,7 @@ public class SeaKingBossEntity extends SeaKingEntity {
 		Vec3 to = ship.position().subtract(position());
 		Vec3 dash = new Vec3(to.x, 0, to.z).normalize().scale(1.8);
 		this.setDeltaMovement(dash.x, 0.2, dash.z);
-		this.hurtMarked = true;
+		this.needsSync = true;
 		ShipHull.damage(ship, 22f, null, ship.position().add(-dash.x * 2, 1, -dash.z * 2), null);
 		level.playSound(null, ship.blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.HOSTILE, 3.0f, 0.4f);
 		for (ServerPlayer aboard : ShipEntity.playersAboard(ship)) {
@@ -366,7 +366,7 @@ public class SeaKingBossEntity extends SeaKingEntity {
 			if (i == 0) {
 				at = player.position(); // One always lands right on them.
 			}
-			LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level, EntitySpawnReason.TRIGGERED);
+			LightningBolt bolt = net.minecraft.world.entity.EntityTypes.LIGHTNING_BOLT.create(level, EntitySpawnReason.TRIGGERED);
 			if (bolt != null) {
 				bolt.setVisualOnly(true); // No fires on deck; the damage is ours.
 				bolt.snapTo(at.x, at.y, at.z);

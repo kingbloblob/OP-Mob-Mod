@@ -231,7 +231,7 @@ public final class BossShips {
 			case "tithe_cathedral" -> {
 				// Its bell tolls across the water: everyone on deck pays the tithe.
 				for (int i = 0; i < 3; i++) {
-					level.playSound(null, BlockPos.containing(from), SoundEvents.BELL_BLOCK.value(), SoundSource.HOSTILE, 5.0f, 0.5f + i * 0.08f);
+					level.playSound(null, BlockPos.containing(from), SoundEvents.BELL_BLOCK, SoundSource.HOSTILE, 5.0f, 0.5f + i * 0.08f);
 				}
 				level.sendParticles(ParticleTypes.SOUL, to.x, to.y + 1, to.z, 60, 4, 1.5, 4, 0.03);
 				ShipHull.damage(target, 18f, null, to, ship);
