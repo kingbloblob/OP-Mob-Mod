@@ -156,13 +156,13 @@ public final class SeaBosses {
 		return king;
 	}
 
-	/** Deep water 18 to 30 blocks from the player (or their ship), 8 below the surface. */
+	/** Deep water 14 to 36 blocks from the player (or their ship), 8 below the surface. */
 	@Nullable
 	private static Vec3 deepSpotNear(ServerLevel level, ServerPlayer player) {
 		RandomSource random = level.getRandom();
-		for (int attempt = 0; attempt < 24; attempt++) {
+		for (int attempt = 0; attempt < 48; attempt++) {
 			double angle = random.nextDouble() * Math.PI * 2;
-			double far = 18 + random.nextInt(13);
+			double far = 14 + random.nextInt(23);
 			int x = Mth.floor(player.getX() + Math.cos(angle) * far);
 			int z = Mth.floor(player.getZ() + Math.sin(angle) * far);
 			if (SeaKingSpawner.isDeepWater(level, new BlockPos(x, level.getSeaLevel() - 5, z))) {
@@ -231,7 +231,7 @@ public final class SeaBosses {
 		}
 		SeaKingBossEntity king = sendSeaKing((ServerLevel) player.level(), player, kind);
 		c.getSource().sendSuccess(() -> Component.literal(king != null ? "Sent " + kind.id + " after " + player.getName().getString()
-				: "No Sea King came: it needs deep water (8+ blocks) 18 to 30 blocks from the player"), false);
+				: "No Sea King came: it needs deep water (8+ blocks) 14 to 36 blocks from the player"), false);
 		return king != null ? 1 : 0;
 	}
 }

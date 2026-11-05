@@ -65,6 +65,7 @@ public class SeaClientTest implements FabricClientGameTest {
 	private static final List<String> FAILURES = new java.util.concurrent.CopyOnWriteArrayList<>();
 
 	private BlockPos sea;
+	private static final List<BlockPos> USED = new java.util.ArrayList<>();
 	private ShipEntity own;
 
 	@Override
@@ -181,7 +182,7 @@ public class SeaClientTest implements FabricClientGameTest {
 			}
 			flagship[0] = ship;
 			// Bring her in close for the camera and the special.
-			Vec3 at = own.position().add(0, 0, 38);
+			Vec3 at = own.position().add(0, 0, 45);
 			ship.snapTo(at.x, ship.getY(), at.z, 90f, 0f);
 			check(ShipBrain.isAi(ship) && ShipBrain.factionOf(ship) == ShipBrain.Faction.PIRATE, id + ": isn't an enemy pirate ship");
 			check(id.equals(BossShips.idOf(ship)) && ship.entityTags().contains(BossShips.TAG), id + ": is missing its tags " + ship.entityTags());
@@ -209,7 +210,7 @@ public class SeaClientTest implements FabricClientGameTest {
 		// Her special hits the player's ship.
 		server(sp, s -> {
 			ServerPlayer p = player(s);
-			own.boardOnDeck(p);
+			p.startRiding(own);
 			float before = ShipHull.get(own);
 			check(BossShips.fireSpecial(flagship[0], own), id + ": fireSpecial says she isn't a flagship");
 			float after = ShipHull.get(own);
@@ -231,6 +232,8 @@ public class SeaClientTest implements FabricClientGameTest {
 			ServerPlayer p = player(s);
 			ShipEntity ship = flagship[0];
 			ship.setAttached(ShipHull.HULL, ShipHull.max(ship) * 0.3f);
+			p.stopRiding();
+			own.snapTo(own.getX(), own.getY(), own.getZ() - 60, own.getYRot(), 0f); // Clear of where she docks.
 			InteractionResult result = board(p, ship);
 			LOG.info("SEA {} boarding: {}, player at {}", id, result, p.blockPosition().toShortString());
 			check(result == InteractionResult.SUCCESS, id + ": boarding her at 30% hull didn't work (" + result + ")");
@@ -305,12 +308,15 @@ public class SeaClientTest implements FabricClientGameTest {
 		float[] hull = new float[1];
 		server(sp, s -> {
 			ServerPlayer p = player(s);
-			own.boardOnDeck(p);
+			// At the helm (riding the ship counts as aboard at once); the breach screenshot is from the deck.
+			p.getAbilities().flying = false;
+			p.onUpdateAbilities();
+			check(p.startRiding(own), kind.id + ": couldn't take the helm of the player's ship");
 			hull[0] = ShipHull.get(own);
 			king[0].setNoAi(false);
 			king[0].hunt(p);
 			king[0].ambushIn(5);
-			look(p, own.position().add(-20, 10, -14), own.position());
+			LOG.info("SEA {} ambush set, aboard {}", kind.id, ShipEntity.aboard(p) == own);
 		});
 		context.waitTicks(80); // 5 + 70 ticks of warning
 		clearChat(context);
@@ -362,12 +368,26 @@ public class SeaClientTest implements FabricClientGameTest {
 				p.stopRiding();
 				own.discard();
 			}
-			// Somewhere fresh each time: the last flagship was docked into blocks where she was boarded.
-			BlockPos spot = sea.offset(0, 0, -160 * index);
-			Pair<BlockPos, Holder<Biome>> ocean = level.findClosestBiome3d(h -> h.is(BiomeTags.IS_DEEP_OCEAN), spot, 400, 16, 64);
-			if (ocean != null) {
-				spot = new BlockPos(ocean.getFirst().getX(), sea.getY(), ocean.getFirst().getZ());
+			// Somewhere fresh each time, far from the others (a boarded flagship is docked into blocks where she was), with
+			// deep water all around (a Sea King needs 8 blocks of it).
+			BlockPos spot = null;
+			for (int tries = 0; tries < 12 && spot == null; tries++) {
+				BlockPos from = sea.offset(320 * (tries % 4) - 480, 0, -400 * index - 300 * (tries / 4));
+				Pair<BlockPos, Holder<Biome>> ocean = level.findClosestBiome3d(h -> h.is(BiomeTags.IS_DEEP_OCEAN), from, 600, 16, 64);
+				if (ocean == null) {
+					continue;
+				}
+				BlockPos c = new BlockPos(ocean.getFirst().getX(), sea.getY(), ocean.getFirst().getZ());
+				if (USED.stream().anyMatch(u -> u.distSqr(c) < 220 * 220)) {
+					continue;
+				}
+				level.getChunk(c); // Loads it, so the water check below is real.
+				spot = c;
 			}
+			if (spot == null) {
+				spot = sea.offset(0, 0, -400 * index);
+			}
+			USED.add(spot);
 			p.teleportTo(level, spot.getX() + 0.5, spot.getY() + 10, spot.getZ() + 0.5, Set.of(), 0f, 20f, true);
 		});
 		context.waitTicks(40);
@@ -385,7 +405,15 @@ public class SeaClientTest implements FabricClientGameTest {
 			own = ShipTemplates.spawn(level, small.id, spot.getX(), level.getSeaLevel(), spot.getZ(), 0f);
 			check(own != null, "couldn't launch the player's ship " + small.id);
 			if (own != null) {
-				own.boardOnDeck(p);
+				int deep = 0;
+				for (int a = 0; a < 8; a++) {
+					double r = Math.toRadians(a * 45);
+					if (com.onepiecemod.sea.SeaKingSpawner.isDeepWater(level, spot.offset((int) (Math.cos(r) * 24), -5, (int) (Math.sin(r) * 24)))) {
+						deep++;
+					}
+				}
+				LOG.info("SEA deep water in {} of 8 directions around {}", deep, spot.toShortString());
+				p.startRiding(own);
 				LOG.info("SEA sailing '{}' at {}, aboard {}", own.getName().getString(), own.blockPosition().toShortString(), ShipEntity.aboard(p) == own);
 			}
 		});
