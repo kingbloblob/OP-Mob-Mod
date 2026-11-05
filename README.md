@@ -49,12 +49,29 @@ The models and their skins come from `tools/gen_models.py` (needs Pillow): chang
 ## How the fights work
 
 - **Underneath they're the One Piece Mod's own bosses**, so everything its story bosses do, rogues do too: the health bar, phases at 66% and 33%, warning circles before attacks, Expert rage, healing when you run, Berries and XP, and Hard and Expert rematches with better prizes. Their special attacks are the main mod's boss powers.
-- **Their crew** arrives when the fight starts and again at phase 2 (more on Hard and Expert), and scatters when the boss falls. Crews are the main mod's pirate NPCs, so they use its fighting styles and skins. `/npc spawn scrapdeck_raider` and friends work too.
+- **Their crew** arrives when the fight starts, again at phase 2 and one last time at phase 3 (more on Hard and Expert, and the boss shouts its last call), and scatters when the boss falls. Crews are the main mod's pirate NPCs, so they use its fighting styles and skins. `/npc spawn scrapdeck_raider` and friends work too.
 - **Their lines**: each rogue has something to say when the fight starts, at each phase and when beaten.
 - **Bounty**: a first win raises your bounty by the rogue's own amount (12M for Rourke up to 600M for Nereus Vane). Rematches add 10% of the tier value, like any boss. The paper reports first wins, and Arsenal's meito count rogues as named bosses.
 - **Trophy**: each rogue drops their trophy the first time someone nearby beats them at that difficulty.
 - **Lair key**: each rogue drops the key to their lair's chest every time they're beaten ("Key to The Gran Tesoro" and so on). The chest is locked: hold the key in your main hand to open it. Without it the chest won't open or break, except in creative.
 - **Lair Restoration Charter**: craft one (gold ingots around a diamond, paper and a compass: `GDG / PCP / GPG`) and use it inside a lair once its boss is beaten. The whole lair is rebuilt where it stands: every block, the boss and crew, and a fresh locked chest with new loot. It's used up. It also works on the One Piece Mod's boss structures whose boss lives in the structure (Buggy's Big Top, Loguetown, Rain Dinners, Shandora, Dressrosa Palace, Onigashima, Whole Cake Chateau and the rest listed in `opbosses/rebuildable.json`, from `tools/gen_rebuildable.py`).
+
+## Their arenas
+
+Every lair fights back. What each one does is in `src/main/resources/opbosses/arenas.json`.
+
+- **Battle themes**: each lair has its own, written for this mod (Rourke's accordion stomp over clanking chains, Corvina's music box in the fog, Tsurugi's flute and taiko, Gantz's anvil beat, Tesoro's casino big band, Uta's concert, Ratchet's ticking clockwork...). It plays through the One Piece Mod's music player whenever you're near the boss, fading in and looping like its own boss themes, and the victory fanfare still plays when the boss falls. They follow the Music volume slider. The themes come from `tools/gen_music.py`, which uses the main mod's own synthesizer: `ONEPIECE_SOUNDS=<one-piece-mod>/tools/sounds python3 tools/gen_music.py [lair ...]`.
+- **Boss bar**: the bar takes the lair's colour (green for the Scrapheap Reef, gold for the Gran Tesoro, pink for Uta's stage...). Corvina's and Gale's fights bring the bar's thick fog down on you, and Tsurugi, Nereus and Byrnndi World darken the sky in phase 3. Hard and Expert keep the main mod's notched bar.
+- **Hazards**: from phase 2, and a second one from phase 3, the lair throws something at the players in the fight every few seconds (faster in phase 3 and on Hard and Expert). Everything is marked first, with a red ring, crumbling blocks or a bubbling vent about 1.5 seconds before it lands:
+  - **collapse**: the floor caves in under you. Only ever a shallow pit (never over caves, water or lava, never chests or unbreakable blocks), and it closes again 10 seconds later or the moment the boss falls, lifting anyone still in it.
+  - **debris**: rubble, cannon shells, gold or candy falls on the marked spots.
+  - **geyser**: a vent erupts under you and throws you up (steam, stage pyrotechnics, lava, molten gold).
+  - **cloud**: a lingering cloud (Corvina's lantern smoke blinds, Tsurugi's cursed mist withers, Kreuz's gas poisons, Uta's song spins the stage).
+  - **lightning**: marked bolts (they never set the lair on fire).
+  - **tide**: a shockwave from the boss throws everyone back (Nereus's waves, El Drago's roar, Byrnndi World's fist).
+  - **fog**: darkness washes over the arena now and then.
+
+  Each hazard announces itself once in chat when it starts ("The rotten scrap deck starts to give way!").
 
 ## Finding them
 
@@ -76,6 +93,8 @@ Two kinds of mobs that fill gaps the One Piece Mod leaves open. Its own Marine s
 | --- | --- |
 | `src/main/resources/opbosses/bosses.json` | **Every rogue: stats, powers, prizes, bounty, crew, lines, signature, rumors and trophy.** Same format as the main mod's `characters.json`, plus this mod's fields. |
 | `src/main/resources/opbosses/crews.json` | **The crews.** Same format as the main mod's `npc_kits.json`. |
+| `src/main/resources/opbosses/arenas.json` | **Each boss's arena:** its lair's battle theme, boss bar colour, fog, last-wave shout and hazards. A boss with no entry fights in a plain arena with the main mod's music. |
+| `tools/gen_music.py` | **The lairs' battle themes.** Each is two short motifs, a key, a tempo and a band; run it after a change (see Their arenas). |
 | `src/main/java/com/onepiecebosses/boss/RogueSignatures.java` | The phase 3 signature moves. A boss can also use any of the main mod's (`slash_line`, `black_hole`, `rain_fire`...). |
 | `src/main/java/com/onepiecebosses/boss/RogueBossEntity.java` | The boss mob: the main mod's boss with our data, plus crew, lines and signature. |
 | `src/main/java/com/onepiecebosses/world/` | **The world mobs:** wandering bounty hunters (`WanderingHunters`), pirate raids (`PirateRaids`), their kits in `opbosses/world_mobs.json`. Spawn rates are the constants at the top of each spawner. |
@@ -87,7 +106,7 @@ Two kinds of mobs that fill gaps the One Piece Mod leaves open. Its own Marine s
 | `tools/lairs/more_rogue_lairs.py` | Khamsin's, Gale's, Vasco's and Kreuz's lairs and their chest loot (gen_lairs.py builds them too). |
 | `tools/lairs/film_lairs.py` | The film villains' lairs and their chest loot (gen_lairs.py builds them too). |
 
-To add a rogue: add an entry to `bosses.json` (and a crew to `crews.json` if it has one), give it a body in `ROGUES` in `tools/gen_models.py` and its trophy a look in `TROPHIES` in `tools/gen_assets.py`, then run both (`python3 tools/gen_models.py .` and `python3 tools/gen_assets.py src/main/resources`, needs Pillow).
+To add a rogue: add an entry to `bosses.json` (and a crew to `crews.json` if it has one) and its arena to `arenas.json` (a theme in `THEMES` in `tools/gen_music.py` if it gets its own), give it a body in `ROGUES` in `tools/gen_models.py` and its trophy a look in `TROPHIES` in `tools/gen_assets.py`, then run both (`python3 tools/gen_models.py .` and `python3 tools/gen_assets.py src/main/resources`, needs Pillow).
 
 ## Their lairs
 
@@ -127,7 +146,7 @@ The One Piece Mod isn't on a maven, so build against its jar, the same way as On
 1. In the One Piece Mod, run `./gradlew build`.
 2. Copy `build/libs/onepiece-0.1.0.jar` into this repo's `libs/` folder (change `onepiece_jar` in `gradle.properties` if the name differs).
 3. Run `./gradlew build` here. The jar lands in `build/libs/`; put it in your `mods/` folder next to the One Piece Mod.
-4. To test, run `./gradlew runClientGameTest`. A game window opens, fights every boss in a test world and closes: Rumor Poster spawn, crew waves, phase lines, signature moves, trophy, bounty (including a long-range kill), the Hard rematch and Rumor Poster drops. It fails with a list of what went wrong, checks the bounty hunters and a pirate raid, and saves screenshots to `build/run/clientGameTest/screenshots`. The tests are in `src/gametest` and never go into the mod jar, and a normal `runClient` or modpack launch never runs them. To replay only what a change touches, add `-Dopbosses.tests=bosses`, `lairs` or `mobs` (or `models` for model portraits) and `-Dopbosses.only=<boss ids or lair names>` (`hunters` or `raids` for the world mobs).
+4. To test, run `./gradlew runClientGameTest`. A game window opens, fights every boss in a test world and closes: Rumor Poster spawn, crew waves, phase lines, signature moves, trophy, bounty (including a long-range kill), the Hard rematch and Rumor Poster drops. It fails with a list of what went wrong, checks the bounty hunters and a pirate raid, and saves screenshots to `build/run/clientGameTest/screenshots`. The tests are in `src/gametest` and never go into the mod jar, and a normal `runClient` or modpack launch never runs them. To replay only what a change touches, add `-Dopbosses.tests=bosses`, `arenas`, `lairs` or `mobs` (or `models` for model portraits) and `-Dopbosses.only=<boss ids or lair names>` (`hunters` or `raids` for the world mobs).
 
 ## Planned
 

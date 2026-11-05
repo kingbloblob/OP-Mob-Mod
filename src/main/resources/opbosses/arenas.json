@@ -1,0 +1,161 @@
+{
+	"_help": "Each boss's arena, by boss id (see ArenaData.java and ArenaEvents.java). music: its lair's battle theme (assets/opbosses/sounds/music/<music>.ogg, made by tools/gen_music.py). bar: the boss bar's colour (pink, blue, red, green, yellow, purple, white). fogFrom / darkenFrom: the phase the boss bar's fog or darkened sky starts at (0 = never). finalWave: shouted when the crew's last wave comes in at phase 3. hazards: what the arena throws at you, each from its phase (2 or 3). Types: collapse (the floor caves in under you for a while), debris (rubble falls on a marked spot; block = what falls), geyser (a vent erupts under you; particle, fire), cloud (a lingering cloud; effect, particle), lightning (a marked bolt), tide (a shockwave from the boss that throws everyone back; particle), fog (darkness pulses in the boss bar's fog). warn: said once, when the hazard starts. A boss with no entry fights in a plain arena with the main mod's music.",
+	"saltjaw_rourke": {
+		"music": "scrapheap_reef", "bar": "green",
+		"finalWave": "All hands! Strip 'em for parts!",
+		"hazards": [
+			{"type": "debris", "from": 2, "block": "minecraft:iron_bars", "warn": "Scrap rains down from the rusted cranes above!"},
+			{"type": "collapse", "from": 3, "warn": "The rotten scrap deck starts to give way!"}
+		]
+	},
+	"corvina_fog_widow": {
+		"music": "lantern_house", "bar": "purple", "fogFrom": 1,
+		"finalWave": "Lanterns out, children. Find them in the dark.",
+		"hazards": [
+			{"type": "fog", "from": 2, "warn": "The fog thickens until you can barely see the lanterns."},
+			{"type": "cloud", "from": 3, "effect": "minecraft:blindness", "particle": "minecraft:campfire_cosy_smoke", "warn": "Choking smoke pours from the widow's lanterns!"}
+		]
+	},
+	"iron_tide_graves": {
+		"music": "fort_iron_tide", "bar": "blue",
+		"finalWave": "Garrison, fall in! Fix bayonets!",
+		"hazards": [
+			{"type": "debris", "from": 2, "block": "minecraft:iron_block", "warn": "The fort's cannons start shelling the yard!"},
+			{"type": "collapse", "from": 3, "warn": "Cannon fire has cracked the parade ground!"}
+		]
+	},
+	"hollow_ronin_tsurugi": {
+		"music": "hollow_shrine", "bar": "white", "darkenFrom": 3,
+		"hazards": [
+			{"type": "cloud", "from": 2, "effect": "minecraft:wither", "particle": "minecraft:soul", "warn": "A cursed mist seeps up between the shrine stones."},
+			{"type": "lightning", "from": 3, "warn": "The empty armor calls the storm down on the shrine!"}
+		]
+	},
+	"boilerheart_gantz": {
+		"music": "shipbreakers_foundry", "bar": "red",
+		"finalWave": "Stoke the furnaces! Feed 'em to the fire!",
+		"hazards": [
+			{"type": "geyser", "from": 2, "particle": "minecraft:flame", "fire": true, "warn": "Steam vents in the foundry floor start to blow!"},
+			{"type": "collapse", "from": 3, "warn": "The overheated floor plates buckle and drop away!"}
+		]
+	},
+	"nereus_vane": {
+		"music": "abyssal_temple", "bar": "blue", "darkenFrom": 3,
+		"finalWave": "Rise, faithful! The abyss is hungry!",
+		"hazards": [
+			{"type": "tide", "from": 2, "particle": "minecraft:splash", "warn": "The temple floods with crashing waves!"},
+			{"type": "cloud", "from": 3, "effect": "minecraft:mining_fatigue", "particle": "minecraft:bubble_pop", "warn": "The crushing pressure of the deep presses in."}
+		]
+	},
+	"khamsin_sandshackle": {
+		"music": "sunken_kasbah", "bar": "yellow",
+		"finalWave": "Shackle them! Drag them under the sand!",
+		"hazards": [
+			{"type": "cloud", "from": 2, "effect": "minecraft:slowness", "particle": "minecraft:white_ash", "warn": "A sandstorm howls through the kasbah!"},
+			{"type": "collapse", "from": 3, "warn": "The sand under the kasbah starts to swallow the floor!"}
+		]
+	},
+	"mortimer_gale": {
+		"music": "gilded_wake", "bar": "green", "fogFrom": 2,
+		"finalWave": "Up from the depths, crew! One more voyage!",
+		"hazards": [
+			{"type": "fog", "from": 2, "warn": "A cold sea fog rolls over the Gilded Wake."},
+			{"type": "lightning", "from": 3, "warn": "The gale brings a storm down on the ghost ship!"}
+		]
+	},
+	"vasco_tidebreaker": {
+		"music": "leviathan_pens", "bar": "blue",
+		"finalWave": "Open the pens! Let the beasts eat!",
+		"hazards": [
+			{"type": "geyser", "from": 2, "particle": "minecraft:splash", "warn": "The Sea Kings thrash, and water blasts up through the grates!"},
+			{"type": "tide", "from": 3, "particle": "minecraft:splash", "warn": "Something enormous slams into the pens!"}
+		]
+	},
+	"doctor_kreuz": {
+		"music": "laboratory_null", "bar": "purple",
+		"finalWave": "Activate every prototype. Data is data.",
+		"hazards": [
+			{"type": "lightning", "from": 2, "warn": "The lab's capacitors start discharging!"},
+			{"type": "cloud", "from": 3, "effect": "minecraft:poison", "particle": "minecraft:sneeze", "warn": "Toxic gas vents into the laboratory!"}
+		]
+	},
+	"gild_tesoro": {
+		"music": "gran_tesoro", "bar": "yellow",
+		"finalWave": "Security! The show must go on!",
+		"hazards": [
+			{"type": "debris", "from": 2, "block": "minecraft:gold_block", "warn": "Gold rains down from the casino ceiling!"},
+			{"type": "geyser", "from": 3, "particle": "minecraft:wax_on", "warn": "Molten gold bursts up through the floor!"}
+		]
+	},
+	"uta_diva": {
+		"music": "elegia_stage", "bar": "pink",
+		"finalWave": "Everyone, sing with me!",
+		"hazards": [
+			{"type": "geyser", "from": 2, "particle": "minecraft:flame", "fire": true, "warn": "Stage pyrotechnics fire off around you!"},
+			{"type": "cloud", "from": 3, "effect": "minecraft:nausea", "particle": "minecraft:note", "warn": "Uta's song makes the whole stage spin!"}
+		]
+	},
+	"zephyr_z": {
+		"music": "end_point", "bar": "white",
+		"finalWave": "Neo Marines, with me! This ends here!",
+		"hazards": [
+			{"type": "geyser", "from": 2, "particle": "minecraft:lava", "fire": true, "warn": "The End Point's volcano rumbles, and lava vents open!"},
+			{"type": "debris", "from": 3, "block": "minecraft:magma_block", "warn": "Burning rock rains from the erupting volcano!"}
+		]
+	},
+	"douglas_bullet": {
+		"music": "ironclad_colosseum", "bar": "red",
+		"hazards": [
+			{"type": "collapse", "from": 2, "warn": "The colosseum floor cracks under Bullet's weight!"},
+			{"type": "debris", "from": 3, "block": "minecraft:iron_block", "warn": "Scrap metal from the Gasha fortress crashes down!"}
+		]
+	},
+	"shiki_golden_lion": {
+		"music": "merveille", "bar": "yellow",
+		"finalWave": "Pirates of the Golden Lion! Show them the sky!",
+		"hazards": [
+			{"type": "debris", "from": 2, "block": "minecraft:stone", "warn": "Shiki floats boulders up and drops them on you!"},
+			{"type": "tide", "from": 3, "particle": "minecraft:cloud", "warn": "Shiki whips the wind into a storm!"}
+		]
+	},
+	"el_drago": {
+		"music": "gold_island", "bar": "yellow",
+		"finalWave": "Crew! Drown them out!",
+		"hazards": [
+			{"type": "tide", "from": 2, "particle": "minecraft:sonic_boom", "warn": "El Drago's roar shakes the whole island!"},
+			{"type": "collapse", "from": 3, "warn": "The roar cracks the ground wide open!"}
+		]
+	},
+	"gasparde": {
+		"music": "salamander", "bar": "purple",
+		"finalWave": "Men, to arms! No one leaves the Salamander!",
+		"hazards": [
+			{"type": "cloud", "from": 2, "effect": "minecraft:slowness", "particle": "minecraft:dripping_honey", "warn": "Sticky syrup oozes across the deck!"},
+			{"type": "debris", "from": 3, "block": "minecraft:honey_block", "warn": "Gasparde flings hardened candy down on you!"}
+		]
+	},
+	"baron_omatsuri": {
+		"music": "omatsuri_island", "bar": "pink",
+		"finalWave": "Everyone, enjoy the festival! Forever!",
+		"hazards": [
+			{"type": "cloud", "from": 2, "effect": "minecraft:poison", "particle": "minecraft:spore_blossom_air", "warn": "The lily's poison pollen drifts over the festival grounds!"},
+			{"type": "debris", "from": 3, "block": "minecraft:red_concrete", "warn": "A storm of lily arrows comes down!"}
+		]
+	},
+	"ratchet": {
+		"music": "karakuri_castle", "bar": "green",
+		"finalWave": "Karakuri soldiers, deploy!",
+		"hazards": [
+			{"type": "collapse", "from": 2, "warn": "Trap doors snap open all over the castle floor!"},
+			{"type": "geyser", "from": 3, "particle": "minecraft:cloud", "warn": "The castle's boilers start venting steam!"}
+		]
+	},
+	"byrnndi_world": {
+		"music": "groseade", "bar": "red", "darkenFrom": 3,
+		"finalWave": "World Pirates! Crush them like ants!",
+		"hazards": [
+			{"type": "debris", "from": 2, "block": "minecraft:stone_bricks", "warn": "Giant rubble crashes down from the Groseade!"},
+			{"type": "tide", "from": 3, "particle": "minecraft:explosion", "warn": "Byrnndi World's giant fist shakes the ground!"}
+		]
+	}
+}

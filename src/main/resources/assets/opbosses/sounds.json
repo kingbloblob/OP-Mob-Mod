@@ -1,0 +1,162 @@
+{
+  "music.lair.scrapheap_reef": {
+    "sounds": [
+      {
+        "name": "opbosses:music/scrapheap_reef",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.lantern_house": {
+    "sounds": [
+      {
+        "name": "opbosses:music/lantern_house",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.fort_iron_tide": {
+    "sounds": [
+      {
+        "name": "opbosses:music/fort_iron_tide",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.hollow_shrine": {
+    "sounds": [
+      {
+        "name": "opbosses:music/hollow_shrine",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.shipbreakers_foundry": {
+    "sounds": [
+      {
+        "name": "opbosses:music/shipbreakers_foundry",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.abyssal_temple": {
+    "sounds": [
+      {
+        "name": "opbosses:music/abyssal_temple",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.sunken_kasbah": {
+    "sounds": [
+      {
+        "name": "opbosses:music/sunken_kasbah",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.gilded_wake": {
+    "sounds": [
+      {
+        "name": "opbosses:music/gilded_wake",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.leviathan_pens": {
+    "sounds": [
+      {
+        "name": "opbosses:music/leviathan_pens",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.laboratory_null": {
+    "sounds": [
+      {
+        "name": "opbosses:music/laboratory_null",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.gran_tesoro": {
+    "sounds": [
+      {
+        "name": "opbosses:music/gran_tesoro",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.elegia_stage": {
+    "sounds": [
+      {
+        "name": "opbosses:music/elegia_stage",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.end_point": {
+    "sounds": [
+      {
+        "name": "opbosses:music/end_point",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.ironclad_colosseum": {
+    "sounds": [
+      {
+        "name": "opbosses:music/ironclad_colosseum",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.merveille": {
+    "sounds": [
+      {
+        "name": "opbosses:music/merveille",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.gold_island": {
+    "sounds": [
+      {
+        "name": "opbosses:music/gold_island",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.salamander": {
+    "sounds": [
+      {
+        "name": "opbosses:music/salamander",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.omatsuri_island": {
+    "sounds": [
+      {
+        "name": "opbosses:music/omatsuri_island",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.karakuri_castle": {
+    "sounds": [
+      {
+        "name": "opbosses:music/karakuri_castle",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.groseade": {
+    "sounds": [
+      {
+        "name": "opbosses:music/groseade",
+        "stream": true
+      }
+    ]
+  }
+}

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import net.fabricmc.api.ModInitializer;
 
+import com.onepiecebosses.boss.ArenaMusic;
 import com.onepiecebosses.boss.RogueBosses;
 import com.onepiecebosses.crew.CrewKits;
 import com.onepiecebosses.loot.LairChests;
@@ -29,6 +30,7 @@ public class BossesMod implements ModInitializer {
 	public void onInitialize() {
 		CrewKits.initialize(); // Before the bosses, so their crews exist when a saved boss loads.
 		RogueBosses.initialize();
+		ArenaMusic.initialize(); // The lairs' battle themes (arenas.json).
 		LairChests.initialize();
 		BossItems.initialize();
 		RumorDrops.initialize();

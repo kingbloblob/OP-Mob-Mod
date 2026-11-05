@@ -36,7 +36,9 @@ import com.onepiecemod.character.CharacterEntity;
  * runs the fight: boss bar, phases at 66% and 33%, wind-ups, Hard and Expert rematches, Berries and bounty.
  *
  * On top of that this class adds what the main mod only does for its story bosses (whose fight data comes from
- * its own boss_fights.json): the boss's lines, its crew from crews.json, and its own phase 3 signature move.
+ * its own boss_fights.json): the boss's lines, its crew from crews.json (a wave at the start, at phase 2 and a last one
+ * at phase 3), and its own phase 3 signature move. Its lair's arena (ArenaEvents, from arenas.json) adds the boss bar's
+ * colour and the hazards; the lair's battle theme is picked on the client (client/mixin/MusicDirectorMixin).
  */
 public class RogueBossEntity extends CharacterEntity {
 	/** Players this far away hear the boss's lines. */
@@ -48,6 +50,7 @@ public class RogueBossEntity extends CharacterEntity {
 
 	private final BossStrikes strikes = new BossStrikes();
 	private final List<UUID> crew = new ArrayList<>();
+	private final ArenaEvents arena = new ArenaEvents(this);
 	private int phaseSeen = 0; // 0 = not worked out yet (fresh spawn or just loaded)
 	private boolean introDone = false;
 	private int signatureCooldown = 60;
@@ -81,6 +84,11 @@ public class RogueBossEntity extends CharacterEntity {
 		}
 	}
 
+	/** This boss's lair hazards and boss bar look. */
+	public ArenaEvents arena() {
+		return arena;
+	}
+
 	public RogueData rogue() {
 		RogueData data = RogueData.get(getCharacterId());
 		return data != null ? data : RogueData.fallback();
@@ -108,11 +116,16 @@ public class RogueBossEntity extends CharacterEntity {
 		} else if (phase > phaseSeen) {
 			phaseSeen = phase;
 			shout(level, phase == 2 ? rogue().phase2 : rogue().phase3);
-			if (phase == 2 && fighting) {
-				callCrew(level, target); // Second wave.
+			if (fighting) {
+				if (phase == 3) {
+					shout(level, ArenaData.of(getCharacterId()).finalWave); // The last wave.
+				}
+				callCrew(level, target); // Phase 2's wave, then phase 3's.
 			}
 			signatureCooldown = 40; // The first signature comes soon after phase 3 starts.
 		}
+
+		arena.tick(level, phaseSeen, fighting);
 
 		if (phaseSeen >= 3 && fighting && distanceTo(target) < 20 && --signatureCooldown <= 0) {
 			signatureCooldown = SIGNATURE_TICKS - 40 * getDifficulty();
@@ -233,8 +246,18 @@ public class RogueBossEntity extends CharacterEntity {
 				}
 			}
 			crew.clear();
+			arena.end(level); // The floor comes back.
 		}
 		super.die(source);
+	}
+
+	@Override
+	public void remove(RemovalReason reason) {
+		// Killed or discarded (not just unloaded with its chunk): put any collapsed floor back now.
+		if (reason.shouldDestroy() && level() instanceof ServerLevel level) {
+			arena.end(level);
+		}
+		super.remove(reason);
 	}
 
 	@Override
@@ -254,11 +277,13 @@ public class RogueBossEntity extends CharacterEntity {
 	protected void addAdditionalSaveData(ValueOutput output) {
 		super.addAdditionalSaveData(output);
 		output.putBoolean("RogueIntro", introDone);
+		output.putString("ArenaHoles", arena.saveHoles());
 	}
 
 	@Override
 	protected void readAdditionalSaveData(ValueInput input) {
 		super.readAdditionalSaveData(input);
 		introDone = input.getBooleanOr("RogueIntro", false);
+		arena.loadHoles(input.getStringOr("ArenaHoles", ""));
 	}
 }
