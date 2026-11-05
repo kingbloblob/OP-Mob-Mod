@@ -278,12 +278,12 @@ public final class GearSignatures {
 
 		// Let the swing that set this off land in full, and whatever else hits them next.
 		for (LivingEntity foe : hurt) {
-			foe.invulnerableTime = 0;
+			foe.setInvulnerableTime(0);
 		}
 	}
 
 	private static void hit(ServerPlayer player, LivingEntity foe, float damage, ServerLevel level, List<LivingEntity> hurt) {
-		foe.invulnerableTime = 0;
+		foe.setInvulnerableTime(0);
 		foe.hurtServer(level, player.damageSources().playerAttack(player), damage);
 		hurt.add(foe);
 	}
