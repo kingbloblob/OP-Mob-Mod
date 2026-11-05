@@ -414,7 +414,7 @@
 			"crews": ["Thornback Pirates"],
 			"name": "{rank} {name}",
 			"ranks": ["Sword-hand", "Duelist", "Blade Mate"],
-			"skins": ["ronin", "deckhand"],
+			"skins": ["bounty_hunter", "deckhand"],
 			"loadouts": [
 				{"style": "sword", "weight": 3, "weapons": ["minecraft:iron_sword", "minecraft:stone_sword"]},
 				{"style": "rokushiki", "weight": 1, "weapons": []}
@@ -430,7 +430,7 @@
 			"crews": ["Thornback Pirates"],
 			"name": "Captain {epithet} {name}",
 			"ranks": ["Captain"],
-			"skins": ["ronin", "pirate_captain"],
+			"skins": ["bounty_hunter", "pirate_captain"],
 			"loadouts": [
 				{"style": "sword", "weight": 3, "weapons": ["minecraft:diamond_sword"]},
 				{"style": "haki", "weight": 1, "weapons": []}

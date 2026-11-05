@@ -132,6 +132,14 @@ public class RivalCrewsClientTest implements FabricClientGameTest {
 			check(band.stream().allMatch(p -> "Red Tusk Pirates".equals(p.getCrew())), "not everyone sails with the Red Tusk Pirates");
 		});
 		context.waitTicks(400);
+		server(sp, s -> {
+			// Stand back from wherever the captain led them, looking east at the crew.
+			RivalPirateEntity captain = pirates(s).stream().filter(RivalPirateEntity::isCaptain).findFirst().orElse(null);
+			if (captain != null) {
+				player(s).teleportTo(level(s), captain.getX() - 11, captain.getY() + 3, captain.getZ(), Set.of(), -90f, 15f, true);
+			}
+		});
+		context.waitTicks(10);
 		context.takeScreenshot("rival_crews_roam");
 		server(sp, s -> {
 			List<RivalPirateEntity> band = pirates(s);
@@ -164,8 +172,10 @@ public class RivalCrewsClientTest implements FabricClientGameTest {
 		server(sp, s -> {
 			clearMobs(s);
 			mode(s, GameType.CREATIVE);
-			RivalCrews.spawnBand(level(s), RivalCrews.get("thornback"), HOME.offset(14, 0, 0), level(s).getRandom(), false);
-			RivalCrews.spawnBand(level(s), RivalCrews.get("gilded_gull"), HOME.offset(-6, 0, 0), level(s).getRandom(), false);
+			// Watching from a little way off, looking east at both crews.
+			player(s).teleportTo(level(s), HOME.getX() + 0.5, HOME.getY() + 4, HOME.getZ() + 0.5, Set.of(), -90f, 15f, true);
+			RivalCrews.spawnBand(level(s), RivalCrews.get("thornback"), HOME.offset(30, 0, 0), level(s).getRandom(), false);
+			RivalCrews.spawnBand(level(s), RivalCrews.get("gilded_gull"), HOME.offset(12, 0, 0), level(s).getRandom(), false);
 		});
 		boolean ownCrew = false;
 		for (int i = 0; i < 6; i++) {
