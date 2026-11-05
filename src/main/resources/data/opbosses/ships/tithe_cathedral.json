@@ -1,0 +1,13 @@
+{
+  "name": "The Tithe Cathedral",
+  "template": "opbosses:ships/tithe_cathedral",
+  "bow": "east",
+  "waterline": 3.9,
+  "faction": "boss",
+  "tiers": [],
+  "crew": "Red Tithe Order",
+  "length": 56,
+  "beam": 21,
+  "height": 50,
+  "blocks": 4483
+}

@@ -23,6 +23,15 @@
   "item.opbosses.red_arrow": "Red Arrow of Omatsuri",
   "item.opbosses.clockwork_gear": "Karakuri Clockwork Gear",
   "item.opbosses.broken_horn": "World's Broken Horn",
+  "item.opbosses.sea_king_harpoon": "Harpoon Queen's Harpoon",
+  "item.opbosses.red_tithe_censer": "Red Tithe Censer",
+  "item.opbosses.cinder_heart": "Cinder Heart",
+  "entity.opbosses.gulpmaw": "Gulpmaw, the Lantern Deep",
+  "item.opbosses.gulpmaw_lure": "Gulpmaw's Lure",
+  "entity.opbosses.ironscale": "Ironscale, the Keelbreaker",
+  "item.opbosses.ironscale_plate": "Ironscale Plate",
+  "entity.opbosses.thundercoil": "Thundercoil, the Storm Serpent",
+  "item.opbosses.thundercoil_fang": "Thundercoil Fang",
   "item.opbosses.lair_charter": "Lair Restoration Charter",
   "block.opbosses.scrapheap_reef_chest": "Rourke's Sea Chest",
   "block.opbosses.lantern_house_chest": "The Widow's Casket",
@@ -43,5 +52,8 @@
   "block.opbosses.salamander_chest": "Gasparde's Syrup Safe",
   "block.opbosses.omatsuri_island_chest": "Festival Prize Box",
   "block.opbosses.karakuri_castle_chest": "Clockwork Turtle Chest",
-  "block.opbosses.groseade_chest": "World's War Chest"
+  "block.opbosses.groseade_chest": "World's War Chest",
+  "block.opbosses.widowmaker_chest": "Maribel's Scrimshaw Chest",
+  "block.opbosses.tithe_cathedral_chest": "The Tithe Reliquary",
+  "block.opbosses.cinderwake_chest": "Ashgrave's Furnace Safe"
 }

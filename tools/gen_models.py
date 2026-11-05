@@ -274,6 +274,77 @@ ROGUES = {
             B('leg', -2, 18, -3, 4, 2, 5, '#3a4a5a', 'rivets'),
         ]),
 
+    # ---------------- the sea bosses (captains of the flagships, see tools/ships) ----------------
+    # "Harpoon Queen" Maribel Sedge: a rangy, long-limbed whaler in a yellow oilskin coat that sweeps the deck, a
+    # sou'wester hat with a brim like a dinghy, a thick red braid, a necklace of Sea King fangs, a quiver of harpoons
+    # on her back, one arm in a huge whaler's gauntlet and sea boots up to her thighs.
+    "maribel_sedge": dict(
+        pivots=dict(head=(0, -8, 0), body=(0, -8, 0), arm=(-5, -6, 0), leg=(-2, 6, 0)),
+        boxes=[
+            B('head', -3, -7, -3, 6, 7, 6, '#d8a888', None, front='face', eyes='#3a6a7a', brows='#a83a1a', mouth='grin', scar=True),
+            B('head', -7, -7.5, -7, 14, 1, 14, '#c8a030', 'leather'),                     # sou'wester brim
+            B('head', -3.5, -11, -3.5, 7, 4, 7, '#c8a030', 'leather', front='hatband'),   # its crown
+            B('head', -1, -1, 3, 2, 14, 2, '#b83a1a', 'hair'),                             # the red braid
+            B('body', -4, 0, -2.5, 8, 7, 5, '#e0b838', 'cloth', front='vest'),             # oilskin over her shirt
+            B('body', -4.5, -0.5, -2.9, 9, 1, 0.5, '#f0ece0', 'teeth'),                    # Sea King fang necklace
+            B('body', -3.5, 7, -2, 7, 6, 4, '#4a3a2a', 'leather', front='belt'),
+            B('body', -5, 0, 0, 10, 26, 1, '#d8ac30', 'cloth', sway=1, pivot=(0, 1, 2.8)), # the long oilskin coat
+            B('body', -0.5, -9, -0.5, 1, 16, 1, '#8a8a90', 'iron', rot=(0, 0, 0.3), pivot=(-2, 2, 4)),  # harpoons in the quiver
+            B('body', -0.5, -9, -0.5, 1, 15, 1, '#8a8a90', 'iron', rot=(0, 0, -0.2), pivot=(1, 2, 4)),
+            B('body', -2, 0, -1.5, 4, 8, 3, '#5a3a20', 'leather', pivot=(0, 2, 4)),      # the quiver
+            B('arm', -2, -1, -2, 4, 6, 4, '#e0b838', 'cloth'),                             # oilskin shoulder
+            B('arm', -1.25, 5, -1.25, 2.5, 9, 2.5, '#d8a888', 'tattoo', only='left'),
+            B('arm', -1.5, 14, -1.5, 3, 2, 3, '#d8a888', only='left'),
+            B('arm', -2.5, 5, -2.5, 5, 9, 5, '#5a3a20', 'leather', only='right'),         # the whaler's gauntlet
+            B('arm', -3, 14, -3, 6, 4, 6, '#4a3020', 'rivets', front='knuckles', only='right'),
+            B('leg', -1.5, 0, -1.5, 3, 10, 3, '#3a3a4a', 'cloth'),
+            B('leg', -2, 10, -2.5, 4, 8, 5, '#2a2a2a', 'leather'),                         # sea boots
+        ]),
+    # Cardinal Severo Lume, the Red Tithe: impossibly tall and gaunt, a pale long-jawed face under a towering red
+    # mitre with gold bands, a crimson robe falling to the deck in a train, a high gold collar, arms like candles that
+    # reach his knees, and a gold chain with a coin of the Tithe on his chest.
+    "severo_lume": dict(
+        pivots=dict(head=(0, -12, 0), body=(0, -12, 0), arm=(-5, -10, 0), leg=(-1.6, 7, 0)),
+        boxes=[
+            B('head', -3, -8, -3, 6, 8, 6, '#ece0d8', None, front='face', eyes='#c02020', brows='#e8e8ec', mouth='smirk', narrow=True),
+            B('head', -3.5, -17, -2.5, 7, 9, 5, '#b01c1c', 'robe', front='hatband'),     # the mitre
+            B('head', -3.6, -12, -2.6, 7.2, 1, 5.2, '#e8c040', 'gold'),                  # its gold bands
+            B('head', -0.5, -17, -2.7, 1, 9, 0.5, '#e8c040', 'gold'),
+            B('body', -4.5, -1.5, -3, 9, 3, 6, '#e8c040', 'gold'),                       # the high gold collar
+            B('body', -3.5, 1, -2, 7, 11, 4, '#b01c1c', 'robe'),
+            B('body', -1.5, 3, -2.3, 3, 3, 0.5, '#e8c040', 'gold'),                      # the Tithe coin
+            B('body', -5, 12, -3, 10, 7, 6, '#9a1818', 'robe'),                          # robe skirt over the legs
+            B('body', -6, 0, 0, 12, 31, 1, '#8a1414', 'robe', sway=1, pivot=(0, 1, 2.8)),  # the train
+            B('arm', -1.5, -1, -1.5, 3, 4, 3, '#b01c1c', 'robe'),
+            B('arm', -1, 3, -1, 2, 14, 2, '#b01c1c', 'robe'),                            # sleeves
+            B('arm', -1.5, 15, -1.5, 3, 2, 3, '#e8c040', 'gold'),                        # gold cuffs
+            B('arm', -1, 17, -1, 2, 2, 2, '#ece0d8'),
+            B('leg', -1.5, 0, -1.5, 3, 15, 3, '#7a1010', 'robe'),
+            B('leg', -1.6, 15, -2.4, 3.2, 2, 4, '#e8c040', 'gold'),                      # gold slippers
+        ]),
+    # Kael Ashgrave, the Ash Corsair: a furnace of a man. Shoulders like a smokestack deck with two iron funnels
+    # venting from his pauldrons, charred grey skin cracked with ember light, a burning mane, coal-red eyes, a coat of
+    # scorched black leather open on a chest crossed by bandoliers of fire shot, forearms in iron, big iron boots.
+    "kael_ashgrave": dict(
+        pivots=dict(head=(0, -6, -1), body=(0, -5, 0), arm=(-10, -3, 0), leg=(-2.6, 12, 0)),
+        boxes=[
+            B('head', -3.5, -7, -3.5, 7, 7, 7, '#6a6466', 'soot', front='face', eyes='#ff6020', brows='#2a1a10', mouth='grit', scar=True),
+            B('head', -4.5, -11, -2, 9, 6, 7, '#ff8a20', 'mane'),                          # the burning mane
+            B('head', -3, -12, 0, 6, 3, 5, '#ffd040', 'mane'),
+            B('body', -8, 0, -4, 16, 7, 8, '#6a6466', 'muscle', front='pecs'),             # chest and shoulders
+            B('body', -6, 7, -3.5, 12, 7, 7, '#1e1a1c', 'leather', front='belt'),
+            B('body', -8.5, -0.5, -4.3, 17, 7.5, 1, '#2a2224', 'leather', front='lacing'), # bandoliers
+            B('body', -8.5, 0, 0, 17, 20, 1, '#1e1a1c', 'tatters', sway=1, pivot=(0, 0, 4.5)),  # the scorched coat
+            B('arm', -4.5, -4, -4.5, 9, 5, 9, '#2a2a30', 'rivets'),                        # iron pauldron
+            B('arm', -1.5, -10, -1.5, 3, 6, 3, '#3a3a40', 'soot'),                         # its funnel
+            B('arm', -1.5, -11, -1.5, 3, 1, 3, '#ff8a20', 'glow'),                         # venting fire
+            B('arm', -3, 1, -3, 6, 7, 6, '#6a6466', 'muscle'),
+            B('arm', -3.5, 8, -3.5, 7, 7, 7, '#3a3a40', 'rivets'),                         # iron forearms
+            B('arm', -3, 15, -3, 6, 3, 6, '#5a5458', None, front='knuckles'),
+            B('leg', -2.5, 0, -2.5, 5, 8, 5, '#1e1a1c', 'leather'),
+            B('leg', -3, 8, -3.5, 6, 4, 7, '#2a2a30', 'rivets'),                           # iron boots
+        ]),
+
     # ---------------- the film villains ----------------
     # Douglas Bullet: a gorilla of a man. Traps up to his ears, a head sunk between them, arms thicker than his
     # body that hang to his ankles, and the Clank-Clank Fruit's scrap fused into gauntlets and a riveted back plate.

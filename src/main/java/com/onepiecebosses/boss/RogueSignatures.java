@@ -248,6 +248,39 @@ public final class RogueSignatures {
 				strikes.signature("rain_rock", boss, target, level, damage * 1.1f, extra + 4);
 				strikes.signature("ground_wave", boss, target, level, damage, extra);
 			}
+			case "harpoon_volley" -> { // Maribel fires a harpoon into you and reels you in, while her whalers' harpoons rain down.
+				pull(target, boss, 1.6);
+				target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 50 + 20 * extra, 2));
+				level.playSound(null, boss.blockPosition(), SoundEvents.FISHING_BOBBER_THROW, SoundSource.HOSTILE, 2.0f, 0.5f);
+				level.playSound(null, target.blockPosition(), SoundEvents.CHAIN_BREAK, SoundSource.HOSTILE, 1.5f, 0.6f);
+				strikes.signature("rain_metal", boss, target, level, damage, extra + 2);
+			}
+			case "tithe_of_bells" -> { // Lume's bell tolls: everyone near pays a tenth of their life, and it mends him, then judgment light falls.
+				float paid = 0;
+				for (Player player : playersNear(boss, level, 14)) {
+					float tithe = Math.max(1.0f, player.getHealth() * 0.1f * (1 + extra));
+					player.hurtServer(level, boss.damageSources().magic(), tithe);
+					player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 60 + 20 * extra, 0));
+					level.sendParticles(ParticleTypes.SOUL, player.getX(), player.getY() + 1, player.getZ(), 10, 0.3, 0.6, 0.3, 0.03);
+					paid += tithe;
+				}
+				boss.heal(paid);
+				for (int i = 0; i < 3; i++) {
+					level.playSound(null, boss.blockPosition(), SoundEvents.BELL_BLOCK, SoundSource.HOSTILE, 3.0f, 0.5f + i * 0.1f);
+				}
+				MoveFx.shockwave(level, boss.position(), 14, MoveFx.DARK, MoveFx.DARK_OUT);
+				strikes.signature("rain_light", boss, target, level, damage, extra + 1);
+			}
+			case "cinder_broadside" -> { // Kael: fire shot from every gun, the deck itself bursts into flame around him.
+				strikes.signature("rain_fire", boss, target, level, damage, extra + 3);
+				strikes.signature("ground_wave", boss, target, level, damage * 0.8f, extra);
+				for (Player player : playersNear(boss, level, 10)) {
+					player.igniteForSeconds(5 + 2 * extra);
+				}
+				MoveFx.shockwave(level, boss.position(), 10, MoveFx.FIRE, MoveFx.FIRE_OUT);
+				level.sendParticles(ParticleTypes.LAVA, boss.getX(), boss.getY() + 1, boss.getZ(), 30, 2.0, 1.0, 2.0, 0.1);
+				level.playSound(null, boss.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE, 2.5f, 0.6f);
+			}
 			default -> strikes.signature(signature, boss, target, level, damage, extra); // Any main mod signature works too.
 		}
 	}

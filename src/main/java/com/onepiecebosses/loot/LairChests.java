@@ -49,13 +49,27 @@ public final class LairChests {
 	}
 	public static final List<String> LAIRS = List.copyOf(LAIR_BOSSES.keySet());
 
+	/**
+	 * The sea bosses' flagships (sea/BossShips) and their captains. Each has a strongroom chest, "<ship>_chest",
+	 * locked to the captain's key like a lair's. Kept apart from LAIR_BOSSES: a ship isn't a structure the Lair
+	 * Charter can reset, it sinks or docks wherever it was beaten.
+	 */
+	public static final Map<String, String> SHIP_BOSSES = new LinkedHashMap<>();
+	static {
+		SHIP_BOSSES.put("widowmaker", "maribel_sedge");
+		SHIP_BOSSES.put("tithe_cathedral", "severo_lume");
+		SHIP_BOSSES.put("cinderwake", "kael_ashgrave");
+	}
+
 	/** Lair name -> its chest block. */
 	public static final Map<String, Block> BLOCKS = new LinkedHashMap<>();
 	public static final Map<String, Item> ITEMS = new LinkedHashMap<>();
 	public static BlockEntityType<LairChestBlockEntity> ENTITY;
 
 	public static void initialize() {
-		for (String lair : LAIRS) {
+		List<String> chests = new java.util.ArrayList<>(LAIRS);
+		chests.addAll(SHIP_BOSSES.keySet());
+		for (String lair : chests) {
 			ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, BossesMod.id(lair + "_chest"));
 			// Blast-proof and immovable, so the loot can't be blown or pushed out of a lair.
 			Block block = Registry.register(BuiltInRegistries.BLOCK, key, new LairChestBlock(BlockBehaviour.Properties.of()

@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "com.onepiecebosses.sea.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"BoardingMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

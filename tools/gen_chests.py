@@ -823,6 +823,100 @@ def write(path, obj):
         fh.write('\n')
 
 
+# ---------------------------------------------------------------- the sea bosses' strongrooms (on their flagships)
+@chest("widowmaker", "Maribel's Scrimshaw Chest")
+def _():
+    # A whaler's chest of tarred planks bound in whalebone, a Sea King tooth for a hasp, scrimshaw on the lid.
+    wood = planks('#4a3828', '#22180e', 51)
+    front = planks('#4a3828', '#22180e', 52)
+    for x in range(3, 13):
+        put(front, x, 4, '#d8d0b8')                                      # a scrimshaw harpoon across the front
+    put(front, 12, 3, '#d8d0b8'); put(front, 12, 5, '#d8d0b8'); put(front, 13, 4, '#d8d0b8')
+    bone = new('#e4dcc4', 0.1, 53)
+    for y in range(0, S, 4):
+        for x in range(S):
+            put(bone, x, y, '#c8bea4')
+    lid = planks('#4a3828', '#22180e', 54)
+    for (x, y) in ((4, 4), (5, 5), (6, 6), (7, 6), (8, 6), (9, 5), (10, 4), (7, 3), (7, 4)):
+        put(lid, x, y, '#d8d0b8')                                        # a little Sea King etched on the lid
+    tooth = new('#f4f0e0', 0.06, 55)
+    tex = dict(wood=wood, front=front, bone=bone, lid=lid, tooth=tooth)
+    boxes = [
+        box([1, 0, 1], [15, 9, 15], dict(all='wood', front='front')),
+        box([1, 9, 1], [15, 13, 15], dict(all='wood', top='lid', front='front')),
+        box([0.5, 0, 0.5], [2, 13.5, 15.5], 'bone'),
+        box([14, 0, 0.5], [15.5, 13.5, 15.5], 'bone'),
+        box([0.5, 8.5, 0.4], [15.5, 9.5, 15.6], 'bone'),
+        box([7, 6, 0.2], [9, 12, 1], 'tooth'),
+        box([7.5, 4.5, 0.3], [8.5, 6, 0.9], 'tooth'),
+    ]
+    return tex, boxes
+
+
+@chest("tithe_cathedral", "The Tithe Reliquary")
+def _():
+    # A gilded reliquary: crimson velvet panels framed in gold, a pointed gothic lid, a gold coin of the Tithe.
+    velvet = new('#8a1414', 0.1, 61)
+    for y in range(S):
+        for x in range(S):
+            if (x + y) % 4 == 0:
+                put(velvet, x, y, '#a01c1c')
+    gold = lacquer('#e0b030', 62)
+    coin = new('#f0c840', 0.05, 63)
+    for y in range(3, 13):
+        put(coin, 8, y, '#2a2020')
+    for x in range(4, 13):
+        put(coin, x, 6, '#2a2020')
+    frame(coin, 0, 0, 15, 15, '#b08020')
+    roof = new('#2a2a30', 0.08, 64)
+    for y in range(0, S, 3):
+        for x in range(S):
+            put(roof, x, y, '#1a1a20')
+    tex = dict(velvet=velvet, gold=gold, coin=coin, roof=roof)
+    boxes = [
+        box([1, 0, 2], [15, 1.5, 14], 'gold'),
+        box([1.5, 1.5, 2.5], [14.5, 10, 13.5], 'velvet'),
+        box([1, 1.5, 2], [2.5, 10, 3.5], 'gold'),
+        box([13.5, 1.5, 2], [15, 10, 3.5], 'gold'),
+        box([1, 1.5, 12.5], [2.5, 10, 14], 'gold'),
+        box([13.5, 1.5, 12.5], [15, 10, 14], 'gold'),
+        box([1, 10, 2], [15, 11, 14], 'gold'),
+        box([2, 11, 3], [14, 13, 13], 'roof'),
+        box([4, 13, 5], [12, 15, 11], 'roof'),
+        box([7, 15, 7], [9, 16, 9], 'gold'),
+        box([5.5, 3, 2.1], [10.5, 8, 2.5], 'coin', full=True),
+    ]
+    return tex, boxes
+
+
+@chest("cinderwake", "Ashgrave's Furnace Safe")
+def _():
+    # An iron safe built like a furnace: blackened riveted plates, a glowing grate in the door, a wheel lock.
+    iron = metal('#2e2a2c', '#5a5458', 71, edge='#1a1618')
+    door = metal('#3a3436', '#6a6468', 72, edge='#1a1618')
+    grate = new('#ff8a20', 0.2, 73)
+    for x in range(0, S, 3):
+        for y in range(S):
+            put(grate, x, y, '#2a1a10')
+    for y in range(0, S, 4):
+        for x in range(S):
+            put(grate, x, y, '#2a1a10')
+    wheel = new('#8a8a90', 0.06, 74)
+    frame(wheel, 0, 0, 15, 15, '#5a5a60')
+    for i in range(S):
+        put(wheel, i, 7, '#5a5a60'); put(wheel, 7, i, '#5a5a60')
+    tex = dict(iron=iron, door=door, grate=grate, wheel=wheel)
+    boxes = [
+        box([1, 0, 1], [15, 14, 15], dict(all='iron', front='door')),
+        box([0.5, 13, 0.5], [15.5, 14.5, 15.5], 'iron'),
+        box([0.5, 0, 0.5], [15.5, 1, 15.5], 'iron'),
+        box([4, 2, 0.6], [12, 6, 1.1], 'grate', full=True),
+        box([6, 8, 0.4], [10, 12, 1], 'wheel', full=True),
+        box([2, 14.5, 6], [4, 16, 10], 'iron'),                          # a little chimney
+    ]
+    return tex, boxes
+
+
 def main(res):
     A = os.path.join(res, 'assets/opbosses')
     for cid, c in CHESTS.items():
