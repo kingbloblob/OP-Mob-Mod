@@ -5,10 +5,9 @@ import java.util.List;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -56,9 +55,10 @@ public final class CrewCamp {
 				}
 			}
 		}
-		Block wool = colored(rival.color, "wool", Blocks.BLACK_WOOL);
-		Block carpet = colored(rival.color, "carpet", Blocks.BLACK_CARPET);
-		Block banner = colored(rival.color, "banner", Blocks.BLACK_BANNER);
+		DyeColor dye = DyeColor.byName(rival.color, DyeColor.BLACK);
+		Block wool = Blocks.WOOL.pick(dye);
+		Block carpet = Blocks.CARPET.pick(dye);
+		Block banner = Blocks.BANNER.pick(dye);
 
 		// Level the ground: fill dips, clear bumps and plants, a trodden dirt floor around the fire.
 		for (int dx = X0; dx <= X1; dx++) {
@@ -160,11 +160,6 @@ public final class CrewCamp {
 
 	private static void set(ServerLevel level, BlockPos pos, BlockState state) {
 		level.setBlock(pos, state, Block.UPDATE_ALL);
-	}
-
-	private static Block colored(String color, String what, Block fallback) {
-		Identifier id = Identifier.fromNamespaceAndPath("minecraft", color + "_" + what);
-		return BuiltInRegistries.BLOCK.containsKey(id) ? BuiltInRegistries.BLOCK.getValue(id) : fallback;
 	}
 
 	/** The crew's plunder, spread around the chest. */
