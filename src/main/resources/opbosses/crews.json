@@ -304,6 +304,73 @@
 			"damage": 15,
 			"armor": 9,
 			"berries": 9
+		},
+		{
+			"id": "trump_pirate",
+			"faction": "pirate",
+			"crews": ["Trump Pirates"],
+			"name": "{rank} {name}",
+			"ranks": ["Spade Deckhand", "Clover Gunner", "Joker"],
+			"skins": ["deckhand", "pirate_captain"],
+			"loadouts": [
+				{"style": "brawler", "weight": 2, "weapons": []},
+				{"style": "gunner", "weight": 2, "weapons": ["onepiece:flintlock_pistol"]},
+				{"style": "bomber", "weight": 1, "weapons": []}
+			],
+			"health": 70,
+			"damage": 11,
+			"armor": 6,
+			"berries": 6
+		},
+		{
+			"id": "festival_pirate",
+			"faction": "pirate",
+			"crews": ["Festival Pirates"],
+			"name": "{rank} {name}",
+			"ranks": ["Festival Hand", "Fireworks Man", "Expo Barker"],
+			"skins": ["headliner", "deckhand"],
+			"loadouts": [
+				{"style": "bomber", "weight": 2, "weapons": []},
+				{"style": "gunner", "weight": 2, "weapons": ["onepiece:flintlock_pistol"]},
+				{"style": "sword", "weight": 1, "weapons": ["minecraft:iron_sword"]}
+			],
+			"health": 80,
+			"damage": 12,
+			"armor": 7,
+			"berries": 8
+		},
+		{
+			"id": "seven_star_swordsman",
+			"faction": "pirate",
+			"crews": ["Saga's Swordsmen"],
+			"name": "{rank} {name}",
+			"ranks": ["Dojo Swordsman", "Possessed Marine", "Sword Bearer"],
+			"skins": ["ronin", "marine_grunt"],
+			"loadouts": [
+				{"style": "sword", "weight": 3, "weapons": ["minecraft:iron_sword"]},
+				{"style": "haki", "weight": 1, "weapons": []}
+			],
+			"health": 85,
+			"damage": 13,
+			"armor": 7,
+			"berries": 7
+		},
+		{
+			"id": "butler_henchman",
+			"faction": "pirate",
+			"crews": ["Butler's Henchmen"],
+			"name": "{rank} {name}",
+			"ranks": ["Horn Hunter", "Hotdog's Brawler", "Heaby's Blade"],
+			"skins": ["bandit", "bounty_hunter"],
+			"loadouts": [
+				{"style": "heavy", "weight": 2, "weapons": ["minecraft:iron_axe"]},
+				{"style": "sword", "weight": 1, "weapons": ["minecraft:iron_sword"]},
+				{"style": "brawler", "weight": 1, "weapons": []}
+			],
+			"health": 70,
+			"damage": 11,
+			"armor": 6,
+			"berries": 6
 		}
 	]
 }
