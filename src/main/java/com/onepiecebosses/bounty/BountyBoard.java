@@ -197,7 +197,7 @@ public final class BountyBoard {
 		return switch (kind) {
 			case Hunt.RAIDERS -> {
 				int count = 4 + random.nextInt(4);
-				yield new Hunt(id, kind, "", count, 0, "Break up a rookie raiding crew (" + count + " raiders)", 25 + count * 3, rare, rareCount);
+				yield new Hunt(id, kind, "", count, 0, "Beat " + count + " rookie raiders", 25 + count * 3, rare, rareCount);
 			}
 			case Hunt.BEAST -> {
 				List<String> pool = beastPool(rogues);
