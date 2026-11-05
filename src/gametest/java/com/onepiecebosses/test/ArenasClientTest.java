@@ -125,6 +125,11 @@ public class ArenasClientTest implements FabricClientGameTest {
 
 	private void arenaTest(ClientGameTestContext context, TestSingleplayerContext sp, String id) throws Exception {
 		ArenaData arena = ArenaData.of(id);
+		// Twenty boss wins in a row on one island make the main mod send a Buster Call, whose shells blow craters in
+		// the arena floor and whose Marines join the fight. Wipe the slate before each boss: no bounty, no trouble.
+		cmd(sp, "worldevent bustercall stop");
+		cmd(sp, "execute as @p run worldevent trouble 0");
+		server(sp, s -> com.onepiecemod.bounty.Bounty.set(player(s), 0));
 		server(sp, s -> {
 			clearMobs(s);
 			arena(s.overworld());
