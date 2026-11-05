@@ -211,6 +211,8 @@ public class GearClientTest implements FabricClientGameTest {
 			ServerPlayer p = player(s);
 			p.teleportTo(s.overworld(), PX + 0.6, PY, PZ, Set.of(), 0f, 15f, true);
 		});
+		// Clear the chat, which otherwise covers the stand's leggings and boots.
+		context.runOnClient(client -> client.gui.hud.getChat().clearMessages(true));
 		context.waitTicks(15);
 		context.takeScreenshot("gear_" + name);
 		server(sp, s -> player(s).teleportTo(s.overworld(), PX - 0.6, PY, PZ + 6, Set.of(), 180f, 15f, true));
