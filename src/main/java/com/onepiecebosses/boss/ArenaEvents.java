@@ -162,7 +162,7 @@ public final class ArenaEvents {
 		Vec3 at = target.position();
 		int extra = boss.getDifficulty();
 		switch (hazard.type) {
-			case "collapse" -> strikes.add(new Strike(hazard, at, WARN_TICKS + 10));
+			case "collapse" -> strikes.add(new Strike(hazard, ground(level, at), WARN_TICKS + 10)); // Under them even mid-jump.
 			case "debris", "lightning" -> {
 				strikes.add(new Strike(hazard, at, WARN_TICKS));
 				for (int i = 0; i < extra + 1; i++) { // More around them, so standing still isn't the only answer.
@@ -187,6 +187,18 @@ public final class ArenaEvents {
 			default -> {
 			}
 		}
+	}
+
+	/** The floor under a spot (a player may be mid-jump or knocked into the air): up to 6 blocks down, else the spot itself. */
+	private static Vec3 ground(ServerLevel level, Vec3 at) {
+		BlockPos pos = BlockPos.containing(at);
+		for (int dy = 0; dy <= 6; dy++) {
+			BlockPos below = pos.below(dy + 1);
+			if (level.getBlockState(below).isFaceSturdy(level, below, Direction.UP)) {
+				return new Vec3(at.x, below.getY() + 1, at.z);
+			}
+		}
+		return at;
 	}
 
 	/** A spot on the ground a few blocks from `at`, or `at` itself if there's no floor there. */

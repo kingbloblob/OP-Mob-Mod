@@ -235,25 +235,39 @@ public class ArenasClientTest implements FabricClientGameTest {
 					check(bar.shouldCreateWorldFog() == (arena.fogFrom > 0), id + ": phase 3 fog is " + bar.shouldCreateWorldFog());
 					check(bar.shouldDarkenScreen() == (arena.darkenFrom > 0), id + ": phase 3 dark sky is " + bar.shouldDarkenScreen());
 				}
+				floorReport(s.overworld(), id, "before the win (open holes " + boss.arena().openHoles() + ")");
 				// The win: every collapsed block comes back.
 				boss.hurtServer(s.overworld(), player(s).damageSources().playerAttack(player(s)), 100_000);
 			}
 		});
 		context.waitTicks(10);
 		server(sp, s -> {
-			int missing = 0;
-			for (int x = -HALF + 1; x < HALF; x++) {
-				for (int z = -HALF + 1; z < HALF; z++) {
-					for (int y = FLOOR_TOP - 1; y <= FLOOR_TOP; y++) {
-						if (!s.overworld().getBlockState(new BlockPos(x, y, z)).is(Blocks.STONE)) {
-							missing++;
-						}
+			int missing = floorReport(s.overworld(), id, "after the win");
+			check(missing == 0, id + ": " + missing + " floor blocks weren't put back after the win");
+		});
+	}
+
+	/** Counts the arena's top two floor layers that aren't stone any more, and logs what's there instead and where. */
+	private static int floorReport(ServerLevel level, String id, String when) {
+		java.util.Map<String, Integer> found = new java.util.TreeMap<>();
+		int missing = 0, minX = 99, maxX = -99, minZ = 99, maxZ = -99;
+		for (int x = -HALF + 1; x < HALF; x++) {
+			for (int z = -HALF + 1; z < HALF; z++) {
+				for (int y = FLOOR_TOP - 1; y <= FLOOR_TOP; y++) {
+					net.minecraft.world.level.block.state.BlockState state = level.getBlockState(new BlockPos(x, y, z));
+					if (!state.is(Blocks.STONE)) {
+						missing++;
+						found.merge(BuiltInRegistries.BLOCK.getKey(state.getBlock()) + "@y" + y, 1, Integer::sum);
+						minX = Math.min(minX, x);
+						maxX = Math.max(maxX, x);
+						minZ = Math.min(minZ, z);
+						maxZ = Math.max(maxZ, z);
 					}
 				}
 			}
-			LOG.info("AT {} after the win: floor blocks missing={}", id, missing);
-			check(missing == 0, id + ": " + missing + " floor blocks weren't put back after the win");
-		});
+		}
+		LOG.info("AT {} {}: floor blocks missing={} {} x {}..{} z {}..{}", id, when, missing, found, minX, maxX, minZ, maxZ);
+		return missing;
 	}
 
 	private static RogueBossEntity boss(MinecraftServer s) {
