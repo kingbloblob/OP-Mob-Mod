@@ -42,8 +42,11 @@ public abstract class MusicDirectorMixin {
 		}
 	}
 
-	/** A lair theme is a battle theme too, so the victory fanfare follows it. */
-	@Inject(method = "isBattleSong", at = @At("HEAD"), cancellable = true)
+	/**
+	 * A lair theme is a battle theme too, so the victory fanfare follows it. Optional (require = 0): main mod builds
+	 * from before the fanfare have no isBattleSong, and there the lair theme simply fades out like any boss theme.
+	 */
+	@Inject(method = "isBattleSong", at = @At("HEAD"), cancellable = true, require = 0)
 	private static void opbosses$lairThemeIsBattle(Holder<SoundEvent> song, CallbackInfoReturnable<Boolean> cir) {
 		if (ArenaMusic.isTheme(song)) {
 			cir.setReturnValue(true);
