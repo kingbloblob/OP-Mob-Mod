@@ -84,6 +84,15 @@ Six original crews roam the land behind their captain: the Red Tusk Pirates (bra
 - **Beating the captain** raises your bounty (8M for the Red Tusk captain up to 15M for the Coral Fang) and the toughest crewmate left takes over as Acting Captain.
 - About one crew every 20 minutes out in the Overworld (never while another crew is close by): roughly a third are camps and a quarter are two crews clashing. Operators can call them with `/opbosses crew [crew]`, `/opbosses crew camp [crew]` and `/opbosses crew clash`. The crews are the `rivals` list in `src/main/resources/opbosses/crews.json` (captain kit, crew kits, size, colour, battle cry); the spawn rates are at the top of `crew/RivalCrews.java`.
 
+## Marine Bounty Board
+
+A notice board the Marines pin their hunts to. Craft one (three blue wool over paper, planks, paper, on two sticks) or take it from the creative tab, and right-click it.
+
+- Every Minecraft day the board shows **five fresh hunts**, the same on every board in the world: two **Wanted rogues** (one always from tiers 1 to 3) and three jobs against roaming mobs, one of each: **bring down pirates** (any pirate NPC: sea pirates, rogue crews, raiders), **break up a rookie raiding crew** and **cull a creature** that's been attacking travellers (a bananawani, a manticore...).
+- Click **[Take]** on one. One hunt at a time. Taking a rogue hunt hands you that rogue's Rumor Poster, so you can call them out (or find them in their lair). Everyone near a rogue when it falls gets the kill.
+- When it's done, go back to any board and right-click it to get paid in **Berries** (45 to 230 for a rogue, 25 to 70 for the rest), plus a **rare drop** on some hunts: a tougher rogue's Rumor Poster, two diamonds, or a Lair Restoration Charter for a tier 4 or 5 rogue. The reward shows on the board before you take it.
+- `/bountyboard` shows your hunt, `/bountyboard drop` gives it up. A hunt you took can't be taken again the same day.
+
 ## Changing or adding a rogue
 
 | File | What it does |
@@ -93,6 +102,7 @@ Six original crews roam the land behind their captain: the Red Tusk Pirates (bra
 | `src/main/java/com/onepiecebosses/boss/RogueSignatures.java` | The phase 3 signature moves. A boss can also use any of the main mod's (`slash_line`, `black_hole`, `rain_fire`...). |
 | `src/main/java/com/onepiecebosses/boss/RogueBossEntity.java` | The boss mob: the main mod's boss with our data, plus crew, lines and signature. |
 | `src/main/java/com/onepiecebosses/world/` | **The world mobs:** wandering bounty hunters (`WanderingHunters`), pirate raids (`PirateRaids`), their kits in `opbosses/world_mobs.json`. Spawn rates are the constants at the top of each spawner. |
+| `src/main/java/com/onepiecebosses/bounty/` | **The Marine Bounty Board:** the block, the daily hunts and their pay (`BountyBoard`). Its model and textures come from `tools/gen_board.py`. |
 | `src/main/java/com/onepiecebosses/compat/OnePieceBridge.java` | Every other call into the main mod. If it renames something, fix it here. |
 | `tools/gen_models.py` | **Each rogue's body shape and skin.** Writes `client/RogueModels.java` and the skins. |
 | `tools/gen_chests.py` | **Each lair's own chest:** the model, textures and name. Run `python3 tools/gen_chests.py src/main/resources` after a change (then `gen_assets.py` for the names). |
@@ -145,7 +155,7 @@ The One Piece Mod isn't on a maven, so build against its jar, the same way as On
 1. In the One Piece Mod, run `./gradlew build`.
 2. Copy `build/libs/onepiece-0.1.0.jar` into this repo's `libs/` folder (change `onepiece_jar` in `gradle.properties` if the name differs).
 3. Run `./gradlew build` here. The jar lands in `build/libs/`; put it in your `mods/` folder next to the One Piece Mod.
-4. To test, run `./gradlew runClientGameTest`. A game window opens, fights every boss in a test world and closes: Rumor Poster spawn, crew waves, phase lines, signature moves, trophy, bounty (including a long-range kill), the Hard rematch and Rumor Poster drops. It fails with a list of what went wrong, checks the bounty hunters, a pirate raid and the rival crews (a roaming crew, a clash and a treasure camp), and saves screenshots to `build/run/clientGameTest/screenshots`. The tests are in `src/gametest` and never go into the mod jar, and a normal `runClient` or modpack launch never runs them. To replay only what a change touches, add `-Dopbosses.tests=bosses`, `lairs`, `mobs` or `crews` (or `models` for model portraits) and `-Dopbosses.only=<boss ids or lair names>` (`hunters` or `raids` for the world mobs, `roam`, `clash` or `camp` for the crews).
+4. To test, run `./gradlew runClientGameTest`. A game window opens, fights every boss in a test world and closes: Rumor Poster spawn, crew waves, phase lines, signature moves, trophy, bounty (including a long-range kill), the Hard rematch and Rumor Poster drops. It fails with a list of what went wrong, checks the bounty hunters, a pirate raid, the rival crews (a roaming crew, a clash and a treasure camp) and the Marine Bounty Board, and saves screenshots to `build/run/clientGameTest/screenshots`. The tests are in `src/gametest` and never go into the mod jar, and a normal `runClient` or modpack launch never runs them. To replay only what a change touches, add `-Dopbosses.tests=bosses`, `lairs`, `mobs`, `crews` or `bounty` (or `models` for model portraits) and `-Dopbosses.only=<boss ids or lair names>` (`hunters` or `raids` for the world mobs, `roam`, `clash` or `camp` for the crews).
 
 ## Planned
 

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "opbosses:block/marine_bounty_board"
+    },
+    "facing=east": {
+      "model": "opbosses:block/marine_bounty_board",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "opbosses:block/marine_bounty_board",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "opbosses:block/marine_bounty_board",
+      "y": 270
+    }
+  }
+}
