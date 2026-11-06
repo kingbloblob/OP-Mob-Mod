@@ -53,8 +53,9 @@ def fade_edges(b, W, D, seed=1, band=9, corner=16):
                 edge = corner - math.hypot(corner - ex, corner - ez)
             if edge >= band * noise(x, z, seed):
                 continue
-            if any(p[0] == x and p[2] == z and p[1] >= 1 and s != AIR and s.split("[")[0] not in GROUND_COVER
-                   for p, s in _column(b, x, z)):
+            if (b.get(x, 0, z) or "").split("[")[0] not in SOFT_GROUND:
+                continue   # water, paving and so on stay
+            if any(s != AIR and s.split("[")[0] not in GROUND_COVER for p, s in _column(b, x, z)):
                 continue   # something stands here: keep what it stands on
             for y in range(-2, 4):
                 if (x, y, z) in b.blocks and (y <= 0 or b.blocks[(x, y, z)].split("[")[0] in GROUND_COVER):
@@ -63,6 +64,7 @@ def fade_edges(b, W, D, seed=1, band=9, corner=16):
     b.natural = natural
 
 
+SOFT_GROUND = {"minecraft:grass_block", "minecraft:coarse_dirt", "minecraft:podzol", "minecraft:moss_block", "minecraft:sand", "minecraft:rooted_dirt"}
 GROUND_COVER = {"minecraft:short_grass", "minecraft:tall_grass", "minecraft:fern", "minecraft:poppy", "minecraft:dandelion",
                 "minecraft:oxeye_daisy", "minecraft:cornflower", "minecraft:azure_bluet", "minecraft:sweet_berry_bush"}
 
@@ -412,3 +414,72 @@ def suit(b, cx, y, cz, name, s):
         for i, c in enumerate(row):
             if c == "1":
                 b.set(cx - 3 + i, y, cz - len(rows) // 2 + j, s)
+
+
+def ring_course(b, cx, cz, r, y, fam):
+    """A moulding round a round tower: upside-down stairs just outside a wall of radius r."""
+    for a in range(0, 360, 6):
+        x, z = round(cx + (r + 1) * math.cos(math.radians(a))), round(cz + (r + 1) * math.sin(math.radians(a)))
+        dx, dz = x - cx, z - cz
+        if b.get(x, y, z) in (None, AIR):
+            f = ("west" if dx > 0 else "east") if abs(dx) >= abs(dz) else ("north" if dz > 0 else "south")
+            b.set(x, y, z, stair(fam, f, "top"))
+
+
+def beam_ring(b, x0, z0, x1, z1, y, wood, only=None):
+    """A timber rail along the walls of a rectangle, stopping at openings."""
+    for x in range(x0, x1 + 1):
+        for z in (z0, z1):
+            if b.get(x, y, z) not in (None, AIR) and (only is None or b.get(x, y, z) == only):
+                b.set(x, y, z, log(wood, "x"))
+    for z in range(z0, z1 + 1):
+        for x in (x0, x1):
+            if b.get(x, y, z) not in (None, AIR) and (only is None or b.get(x, y, z) == only):
+                b.set(x, y, z, log(wood, "z"))
+
+
+def railing(b, x0, z0, x1, z1, y, wood, gaps=()):
+    """A fence round a rectangle at height y, with `gaps` (x, z) left open."""
+    cells = [(x, z) for x in range(x0, x1 + 1) for z in (z0, z1)] + [(x, z) for z in range(z0, z1 + 1) for x in (x0, x1)]
+    for (x, z) in cells:
+        if (x, z) not in gaps and b.get(x, y, z) in (None, AIR):
+            b.set(x, y, z, fence(wood))
+
+
+def bamboo(b, x, y, z, rnd, n=8, r=3):
+    """A clump of bamboo, thick in the middle."""
+    for _ in range(n):
+        px, pz = x + rnd.randint(-r, r), z + rnd.randint(-r, r)
+        if b.get(px, y, pz) in (None, AIR) and (b.get(px, y - 1, pz) or "").split("[")[0] in SOFT_GROUND:
+            for yy in range(y, y + rnd.randint(4, 8)):
+                if b.get(px, yy, pz) not in (None, AIR):
+                    break
+                b.set(px, yy, pz, "minecraft:bamboo[age=0,leaves=none,stage=0]")
+
+
+def vines(b, rnd, chance=0.1, kind="jungle"):
+    """Vines hanging off the underside of leaves."""
+    leaf = leaves(kind)
+    for (x, y, z), s in list(b.blocks.items()):
+        if s == leaf and b.get(x, y - 1, z) in (None, AIR) and rnd.random() < chance:
+            b.set(x, y - 1, z, "minecraft:vine[east=false,north=false,south=false,up=true,west=false]")
+
+
+CONES = {"minecraft:red_concrete": ("red_nether_brick", "minecraft:red_nether_bricks")}
+
+
+def cone_family(roof):
+    """The stair family closest to a tower's roof block."""
+    if roof in CONES:
+        return CONES[roof]
+    name = roof.split(":")[1].split("[")[0]
+    for end in ("_bricks", "_tiles", "_planks"):
+        if name.endswith(end):
+            return (name[: -len(end)] + end[:-1], roof)
+    for (word, fam, fill) in (("black", "blackstone", "minecraft:blackstone"), ("dark", "dark_oak", "minecraft:dark_oak_planks"), ("gray", "deepslate_tile", "minecraft:deepslate_tiles"),
+                              ("blue", "warped", "minecraft:warped_planks"), ("cyan", "waxed_oxidized_cut_copper", "minecraft:waxed_oxidized_cut_copper"),
+                              ("green", "waxed_oxidized_cut_copper", "minecraft:waxed_oxidized_cut_copper"), ("purple", "purpur", "minecraft:purpur_block"),
+                              ("white", "quartz", "minecraft:quartz_block"), ("yellow", "smooth_sandstone", "minecraft:smooth_sandstone"), ("orange", "cut_copper", "minecraft:cut_copper")):
+        if word in name:
+            return (fam, fill)
+    return ("dark_oak", "minecraft:dark_oak_planks")
