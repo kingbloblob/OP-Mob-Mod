@@ -9,6 +9,7 @@
     "fabric-client-gametest": [
       "com.onepiecebosses.test.BossesClientTest",
       "com.onepiecebosses.test.ArenasClientTest",
+      "com.onepiecebosses.test.BountyClientTest",
       "com.onepiecebosses.test.LairsClientTest",
       "com.onepiecebosses.test.ModelShotsClientTest",
       "com.onepiecebosses.test.PlacesClientTest",

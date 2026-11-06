@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "WWW",
+    "PFP",
+    "S S"
+  ],
+  "key": {
+    "W": "minecraft:blue_wool",
+    "P": "minecraft:paper",
+    "F": "#minecraft:planks",
+    "S": "minecraft:stick"
+  },
+  "result": {
+    "id": "opbosses:marine_bounty_board",
+    "count": 1
+  }
+}

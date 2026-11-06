@@ -74,6 +74,15 @@ public final class OnePieceBridge {
 		return entity instanceof HumanNpc npc ? npc.getKitId() : null;
 	}
 
+	/** True for a main mod NPC (or one of ours built on it) whose kit is a pirate one: sea pirates, rogue crews, rookie raiders. */
+	public static boolean isPirateNpc(LivingEntity entity) {
+		if (!(entity instanceof HumanNpc npc)) {
+			return false;
+		}
+		NpcKit kit = NpcKit.get(npc.getKitId());
+		return kit != null && "pirate".equals(kit.faction);
+	}
+
 	/** True for players who ate a fruit, and for bosses who have one. */
 	public static boolean isFruitUser(LivingEntity entity) {
 		return SeastoneEffects.isFruitUser(entity);

@@ -233,6 +233,7 @@ def main(res):
                {"parent": "minecraft:item/generated", "textures": {"layer0": "opbosses:item/lair_charter"}})
     write_json(os.path.join(assets, "items", "lair_charter.json"), {"model": {"type": "minecraft:model", "model": "opbosses:item/lair_charter"}})
     lang["item.opbosses.lair_charter"] = "Lair Restoration Charter"
+    lang["block.opbosses.marine_bounty_board"] = "Marine Bounty Board"  # drawn by gen_board.py
     for cid, c in CHESTS.items():
         lang["block.opbosses." + cid + "_chest"] = c["name"]
     write_json(os.path.join(assets, "lang/en_us.json"), lang)

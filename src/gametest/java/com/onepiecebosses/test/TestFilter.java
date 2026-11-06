@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 /**
  * Which in-world tests run, so a change only replays what it touches. Pass them to Gradle:
  *
- *     gradlew runClientGameTest                                       (bosses, arenas, lairs, world mobs and crews, everything)
+ *     gradlew runClientGameTest                                       (bosses, arenas, lairs, world mobs, crews and the bounty board, everything)
  *     gradlew runClientGameTest -Dopbosses.tests=lairs                (only the lair test)
  *     gradlew runClientGameTest -Dopbosses.tests=bosses -Dopbosses.only=uta_diva,zephyr_z
  *     gradlew runClientGameTest -Dopbosses.tests=arenas -Dopbosses.only=uta_diva   (lair music, boss bar, hazards, last wave)
@@ -15,8 +15,9 @@ import java.util.stream.Collectors;
  *     gradlew runClientGameTest -Dopbosses.tests=mobs -Dopbosses.only=raids   (only the pirate raids)
  *     gradlew runClientGameTest -Dopbosses.tests=crews                (the rival pirate crews)
  *     gradlew runClientGameTest -Dopbosses.tests=places -Dopbosses.only=angel_beach   (screenshots of a main-mod structure)
+ *     gradlew runClientGameTest -Dopbosses.tests=bounty               (the Marine Bounty Board)
  *
- * opbosses.tests: any of bosses, arenas, lairs, mobs, crews, models, places (default "bosses,arenas,lairs,mobs,crews"). opbosses.only: boss ids or lair
+ * opbosses.tests: any of bosses, arenas, lairs, mobs, crews, models, places, bounty (default "bosses,arenas,lairs,mobs,crews,bounty"). opbosses.only: boss ids or lair
  * names (default: all of them); a lair is picked by its own name or its boss's id; the world mobs are "hunters" and "raids"; the rival crews are "roam", "clash" and "camp".
  */
 final class TestFilter {
@@ -29,7 +30,7 @@ final class TestFilter {
 	}
 
 	static boolean runs(String test) {
-		return list("opbosses.tests", "bosses,arenas,lairs,mobs,crews").contains(test);
+		return list("opbosses.tests", "bosses,arenas,lairs,mobs,crews,bounty").contains(test);
 	}
 
 	static boolean picks(String... ids) {

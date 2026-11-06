@@ -9,6 +9,7 @@ import net.fabricmc.api.ModInitializer;
 
 import com.onepiecebosses.boss.ArenaMusic;
 import com.onepiecebosses.boss.RogueBosses;
+import com.onepiecebosses.bounty.BountyBoard;
 import com.onepiecebosses.crew.CrewKits;
 import com.onepiecebosses.crew.RivalCrews;
 import com.onepiecebosses.loot.LairChests;
@@ -33,6 +34,7 @@ public class BossesMod implements ModInitializer {
 		RogueBosses.initialize();
 		ArenaMusic.initialize(); // The lairs' battle themes (arenas.json).
 		LairChests.initialize();
+		BountyBoard.initialize(); // The Marine Bounty Board and its daily hunts.
 		BossItems.initialize();
 		RumorDrops.initialize();
 		WorldMobs.initialize(); // Wandering bounty hunters and rookie pirate raids.
