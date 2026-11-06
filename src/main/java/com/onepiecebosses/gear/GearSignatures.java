@@ -352,7 +352,7 @@ public final class GearSignatures {
 				}
 				player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 120, 0));
 				MoveFx.shockwave(level, player.position(), 8, MoveFx.FIRE, MoveFx.FIRE_OUT);
-				level.sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(), player.getY() + 1, player.getZ(), 40, 2, 1, 2, 0.05);
+				level.sendParticles(ParticleTypes.LARGE_SMOKE, target.getX(), target.getY() + 1, target.getZ(), 15, 1.5, 0.8, 1.5, 0.05); // At the target: around the player it blinds the first-person view.
 				level.playSound(null, player.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 1.5f, 0.9f);
 			}
 			default -> hit(player, target, damage, level, hurt);
