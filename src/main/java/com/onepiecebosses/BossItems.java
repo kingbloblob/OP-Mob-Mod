@@ -59,9 +59,11 @@ public final class BossItems {
 				.displayItems((params, output) -> {
 					RUMORS.values().forEach(output::accept);
 					TROPHIES.values().forEach(output::accept);
+					com.onepiecebosses.sea.SeaKings.TROPHIES.values().forEach(output::accept);
 					KEYS.values().forEach(output::accept);
 					LairChests.ITEMS.values().forEach(output::accept);
 					output.accept(LAIR_CHARTER);
+					output.accept(com.onepiecebosses.bounty.BountyBoard.ITEM);
 				})
 				.build());
 	}

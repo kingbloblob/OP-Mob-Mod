@@ -274,6 +274,77 @@ ROGUES = {
             B('leg', -2, 18, -3, 4, 2, 5, '#3a4a5a', 'rivets'),
         ]),
 
+    # ---------------- the sea bosses (captains of the flagships, see tools/ships) ----------------
+    # "Harpoon Queen" Maribel Sedge: a rangy, long-limbed whaler in a yellow oilskin coat that sweeps the deck, a
+    # sou'wester hat with a brim like a dinghy, a thick red braid, a necklace of Sea King fangs, a quiver of harpoons
+    # on her back, one arm in a huge whaler's gauntlet and sea boots up to her thighs.
+    "maribel_sedge": dict(
+        pivots=dict(head=(0, -8, 0), body=(0, -8, 0), arm=(-5, -6, 0), leg=(-2, 6, 0)),
+        boxes=[
+            B('head', -3, -7, -3, 6, 7, 6, '#d8a888', None, front='face', eyes='#3a6a7a', brows='#a83a1a', mouth='grin', scar=True),
+            B('head', -7, -7.5, -7, 14, 1, 14, '#c8a030', 'leather'),                     # sou'wester brim
+            B('head', -3.5, -11, -3.5, 7, 4, 7, '#c8a030', 'leather', front='hatband'),   # its crown
+            B('head', -1, -1, 3, 2, 14, 2, '#b83a1a', 'hair'),                             # the red braid
+            B('body', -4, 0, -2.5, 8, 7, 5, '#e0b838', 'cloth', front='vest'),             # oilskin over her shirt
+            B('body', -4.5, -0.5, -2.9, 9, 1, 0.5, '#f0ece0', 'teeth'),                    # Sea King fang necklace
+            B('body', -3.5, 7, -2, 7, 6, 4, '#4a3a2a', 'leather', front='belt'),
+            B('body', -5, 0, 0, 10, 26, 1, '#d8ac30', 'cloth', sway=1, pivot=(0, 1, 2.8)), # the long oilskin coat
+            B('body', -0.5, -9, -0.5, 1, 16, 1, '#8a8a90', 'iron', rot=(0, 0, 0.3), pivot=(-2, 2, 4)),  # harpoons in the quiver
+            B('body', -0.5, -9, -0.5, 1, 15, 1, '#8a8a90', 'iron', rot=(0, 0, -0.2), pivot=(1, 2, 4)),
+            B('body', -2, 0, -1.5, 4, 8, 3, '#5a3a20', 'leather', pivot=(0, 2, 4)),      # the quiver
+            B('arm', -2, -1, -2, 4, 6, 4, '#e0b838', 'cloth'),                             # oilskin shoulder
+            B('arm', -1.25, 5, -1.25, 2.5, 9, 2.5, '#d8a888', 'tattoo', only='left'),
+            B('arm', -1.5, 14, -1.5, 3, 2, 3, '#d8a888', only='left'),
+            B('arm', -2.5, 5, -2.5, 5, 9, 5, '#5a3a20', 'leather', only='right'),         # the whaler's gauntlet
+            B('arm', -3, 14, -3, 6, 4, 6, '#4a3020', 'rivets', front='knuckles', only='right'),
+            B('leg', -1.5, 0, -1.5, 3, 10, 3, '#3a3a4a', 'cloth'),
+            B('leg', -2, 10, -2.5, 4, 8, 5, '#2a2a2a', 'leather'),                         # sea boots
+        ]),
+    # Cardinal Severo Lume, the Red Tithe: impossibly tall and gaunt, a pale long-jawed face under a towering red
+    # mitre with gold bands, a crimson robe falling to the deck in a train, a high gold collar, arms like candles that
+    # reach his knees, and a gold chain with a coin of the Tithe on his chest.
+    "severo_lume": dict(
+        pivots=dict(head=(0, -12, 0), body=(0, -12, 0), arm=(-5, -10, 0), leg=(-1.6, 7, 0)),
+        boxes=[
+            B('head', -3, -8, -3, 6, 8, 6, '#ece0d8', None, front='face', eyes='#c02020', brows='#e8e8ec', mouth='smirk', narrow=True),
+            B('head', -3.5, -17, -2.5, 7, 9, 5, '#b01c1c', 'robe', front='hatband'),     # the mitre
+            B('head', -3.6, -12, -2.6, 7.2, 1, 5.2, '#e8c040', 'gold'),                  # its gold bands
+            B('head', -0.5, -17, -2.7, 1, 9, 0.5, '#e8c040', 'gold'),
+            B('body', -4.5, -1.5, -3, 9, 3, 6, '#e8c040', 'gold'),                       # the high gold collar
+            B('body', -3.5, 1, -2, 7, 11, 4, '#b01c1c', 'robe'),
+            B('body', -1.5, 3, -2.3, 3, 3, 0.5, '#e8c040', 'gold'),                      # the Tithe coin
+            B('body', -5, 12, -3, 10, 7, 6, '#9a1818', 'robe'),                          # robe skirt over the legs
+            B('body', -6, 0, 0, 12, 31, 1, '#8a1414', 'robe', sway=1, pivot=(0, 1, 2.8)),  # the train
+            B('arm', -1.5, -1, -1.5, 3, 4, 3, '#b01c1c', 'robe'),
+            B('arm', -1, 3, -1, 2, 14, 2, '#b01c1c', 'robe'),                            # sleeves
+            B('arm', -1.5, 15, -1.5, 3, 2, 3, '#e8c040', 'gold'),                        # gold cuffs
+            B('arm', -1, 17, -1, 2, 2, 2, '#ece0d8'),
+            B('leg', -1.5, 0, -1.5, 3, 15, 3, '#7a1010', 'robe'),
+            B('leg', -1.6, 15, -2.4, 3.2, 2, 4, '#e8c040', 'gold'),                      # gold slippers
+        ]),
+    # Kael Ashgrave, the Ash Corsair: a furnace of a man. Shoulders like a smokestack deck with two iron funnels
+    # venting from his pauldrons, charred grey skin cracked with ember light, a burning mane, coal-red eyes, a coat of
+    # scorched black leather open on a chest crossed by bandoliers of fire shot, forearms in iron, big iron boots.
+    "kael_ashgrave": dict(
+        pivots=dict(head=(0, -6, -1), body=(0, -5, 0), arm=(-10, -3, 0), leg=(-2.6, 12, 0)),
+        boxes=[
+            B('head', -3.5, -7, -3.5, 7, 7, 7, '#6a6466', 'soot', front='face', eyes='#ff6020', brows='#2a1a10', mouth='grit', scar=True),
+            B('head', -4.5, -11, -2, 9, 6, 7, '#ff8a20', 'mane'),                          # the burning mane
+            B('head', -3, -12, 0, 6, 3, 5, '#ffd040', 'mane'),
+            B('body', -8, 0, -4, 16, 7, 8, '#6a6466', 'muscle', front='pecs'),             # chest and shoulders
+            B('body', -6, 7, -3.5, 12, 7, 7, '#1e1a1c', 'leather', front='belt'),
+            B('body', -8.5, -0.5, -4.3, 17, 7.5, 1, '#2a2224', 'leather', front='lacing'), # bandoliers
+            B('body', -8.5, 0, 0, 17, 20, 1, '#1e1a1c', 'tatters', sway=1, pivot=(0, 0, 4.5)),  # the scorched coat
+            B('arm', -4.5, -4, -4.5, 9, 5, 9, '#2a2a30', 'rivets'),                        # iron pauldron
+            B('arm', -1.5, -10, -1.5, 3, 6, 3, '#3a3a40', 'soot'),                         # its funnel
+            B('arm', -1.5, -11, -1.5, 3, 1, 3, '#ff8a20', 'glow'),                         # venting fire
+            B('arm', -3, 1, -3, 6, 7, 6, '#6a6466', 'muscle'),
+            B('arm', -3.5, 8, -3.5, 7, 7, 7, '#3a3a40', 'rivets'),                         # iron forearms
+            B('arm', -3, 15, -3, 6, 3, 6, '#5a5458', None, front='knuckles'),
+            B('leg', -2.5, 0, -2.5, 5, 8, 5, '#1e1a1c', 'leather'),
+            B('leg', -3, 8, -3.5, 6, 4, 7, '#2a2a30', 'rivets'),                           # iron boots
+        ]),
+
     # ---------------- the film villains ----------------
     # Douglas Bullet: a gorilla of a man. Traps up to his ears, a head sunk between them, arms thicker than his
     # body that hang to his ankles, and the Clank-Clank Fruit's scrap fused into gauntlets and a riveted back plate.
@@ -522,6 +593,103 @@ ROGUES = {
             B('leg', -2, 0, -2, 4, 13, 4, '#3a6a3a', 'cloth'),
             B('leg', -2.4, 13, -3, 4.8, 3, 5.6, '#6a4a2a', 'leather'),
         ]),
+    # Bear King (Clockwork Island Adventure): a big man with black hair and whiskers under a big teddy-bear hat. A furred
+    # captain's jacket with a golden spade for a collar, a blue shirt with the card pips (clover, heart, diamond) left
+    # unbuttoned, relatively thin hairy arms and chest, and fur bands round his wrists. The Kachi Kachi Fruit makes his
+    # fists hard and hot.
+    "bear_king": dict(
+        pivots=dict(head=(0, -6, 0), body=(0, -6, 0), arm=(-6.4, -4, 0), leg=(-2.4, 9, 0)),
+        boxes=[
+            B('head', -3.6, -7.5, -3.6, 7.2, 7.5, 7.2, '#d8a47c', None, front='face', eyes='#202020', brows='#141414', mouth='grin'),
+            B('head', -3.8, -7.6, -1, 7.6, 5, 4.8, '#18181c', 'hair'),                        # black hair under the hat
+            B('head', -3.2, -2.6, -3.9, 2.2, 0.5, 0.4, '#18181c', None, mirror=True),         # whiskers
+            B('head', -3.6, -2, -3.9, 1.2, 0.5, 0.4, '#18181c', None, mirror=True),
+            B('head', -4.4, -13, -4.4, 8.8, 5.6, 8.8, '#8a5a32', 'fur', front='teddy'),       # the teddy-bear hat
+            B('head', -4.6, -14.6, -1.2, 2.4, 2.4, 1.6, '#8a5a32', 'fur', mirror=True),       # its ears
+            B('head', -1.5, -10.4, -5.4, 3, 2, 1, '#c89a6a', 'fur'),                          # its snout
+            B('body', -5.6, -4.5, 1.2, 11.2, 5.5, 1, '#e8c040', 'gold', front='spade'),       # the golden spade collar
+            B('body', -4.6, 0, -2.6, 9.2, 11, 5.2, '#3a6ac8', 'cloth', front='pips'),         # blue shirt, open at the neck
+            B('body', -5.2, -0.5, -3.0, 2.2, 13, 6, '#7a2a2a', 'cloth', mirror=True),         # the open jacket
+            B('body', -5.4, -0.8, -3.2, 10.8, 1.6, 6.4, '#ece6d8', 'fur'),                    # its fur trim at the shoulders
+            B('body', -4.8, 11, -2.8, 9.6, 2, 5.6, '#2a1a14', 'leather', front='buckle'),
+            B('body', -4.6, 13, -2.6, 9.2, 2, 5.2, '#2a2a34', 'cloth'),
+            B('body', -5.4, 0, 0, 10.8, 13, 1, '#7a2a2a', 'cloth', sway=1, pivot=(0, 1, 3.1)),   # jacket tails
+            B('arm', -2.4, -2, -2.4, 4.6, 6, 4.8, '#7a2a2a', 'cloth'),
+            B('arm', -1.7, 4, -1.7, 3.4, 5.5, 3.4, '#d8a47c', 'hairy'),                       # thin, hairy forearms
+            B('arm', -2.1, 9.2, -2.1, 4.2, 1.6, 4.2, '#ece6d8', 'fur'),                       # fur wrist bands
+            B('arm', -1.9, 10.8, -1.9, 3.8, 2.8, 3.8, '#d8a47c', None, front='knuckles'),
+            B('leg', -2.3, 0, -2.3, 4.6, 12, 4.6, '#2a2a34', 'cloth'),
+            B('leg', -2.6, 12, -3, 5.2, 3, 5.6, '#1a1410', 'leather'),
+        ]),
+    # Buena Festa (Stampede): a middle-aged showman with a huge dark afro and his glasses pushed up into it. A fancy
+    # buttoned coat over a buttoned shirt, a belt wrapped round his chest, pinstripe trousers and boots.
+    "buena_festa": dict(
+        pivots=dict(head=(0, -7, 0), body=(0, -7, 0), arm=(-5.4, -5, 0), leg=(-2.1, 8, 0)),
+        boxes=[
+            B('head', -3.4, -7.4, -3.4, 6.8, 7.4, 6.8, '#d8a884', None, front='face', eyes='#2a2a2a', brows='#1e1612', mouth='grin'),
+            B('head', -5.4, -15, -5, 10.8, 8.6, 10.4, '#1e1612', 'afro'),                     # the afro
+            B('head', -4.6, -8.2, -2.2, 1.4, 5, 6, '#1e1612', 'afro', mirror=True),           # down past his ears
+            B('head', -3.4, -9.4, -5.6, 2.8, 1.8, 0.6, '#d8c070', None, front='lens'),        # glasses up in the afro
+            B('head', 0.6, -9.4, -5.6, 2.8, 1.8, 0.6, '#d8c070', None, front='lens'),
+            B('head', -1.2, -2.2, -3.7, 2.4, 1.2, 0.4, '#1e1612'),                            # moustache
+            B('body', -3, -0.8, -2.8, 6, 2, 1, '#f4f0e8', 'cloth'),                           # shirt collar
+            B('body', -4.5, 0, -2.5, 9, 12, 5, '#a8324a', 'cloth', front='festa_coat'),
+            B('body', -4.7, 4, -2.7, 9.4, 1.4, 5.4, '#3a2418', 'leather', front='buckle'),    # the belt round his chest
+            B('body', -4.6, 12, -2.6, 9.2, 3, 5.2, '#4a4a52', 'pinstripe'),
+            B('body', -4.8, 0, 0, 9.6, 15, 1, '#a8324a', 'cloth', sway=1, pivot=(0, 10, 2.7)),   # coat tails
+            B('arm', -2, -1.5, -2, 4, 11, 4, '#a8324a', 'cloth', front='cuff'),
+            B('arm', -1.7, 9.5, -1.7, 3.4, 2.6, 3.4, '#d8a884'),
+            B('arm', -0.6, 10.5, -4.6, 1.2, 1.6, 3.4, '#5a3a22', 'wood', only='right'),       # his flintlock
+            B('leg', -2, 0, -2, 4, 13, 4, '#4a4a52', 'pinstripe'),
+            B('leg', -2.3, 13, -2.8, 4.6, 3, 5.2, '#2a1a14', 'leather'),
+        ]),
+    # Saga (Curse of the Sacred Sword): a tall man with tanned skin and long white hair worn loose down his back, a red
+    # robe, a white band on his left arm and red shoes. His right arm hangs (it was crippled at sea); the Seven Star
+    # Sword sits at his hip.
+    "saga": dict(
+        pivots=dict(head=(0, -10, 0), body=(0, -10, 0), arm=(-5, -8, 0), leg=(-1.9, 6, 0)),
+        boxes=[
+            B('head', -3.3, -7.8, -3.3, 6.6, 7.8, 6.6, '#b07850', None, front='face', eyes='#3a2a20', brows='#e8e8ee', mouth=None, narrow=True),
+            B('head', -3.6, -8.6, -3.6, 7.2, 2, 7.2, '#ececf2', 'hair'),
+            B('head', -4.1, -7.4, -3.2, 1, 7, 6, '#ececf2', 'hair', mirror=True),             # loose at the sides
+            B('head', -3.6, -3.2, -3.6, 2.4, 2, 0.6, '#ececf2', 'hair'),                      # a fringe across one eye
+            B('head', -4, -7, 3, 8, 6, 1.2, '#ececf2', 'hair'),
+            B('body', -4, -1, 0, 8, 14, 1.2, '#ececf2', 'hair', sway=1, pivot=(0, 1, 3.4)),   # long white hair down his back
+            B('body', -4.2, 0, -2.3, 8.4, 11, 4.6, '#b02424', 'robe', front='saga_robe'),
+            B('body', -4.4, 10, -2.5, 8.8, 2, 5, '#f0ece4', 'cloth'),                          # white sash
+            B('body', -4.5, 12, -2.6, 9, 4, 5.2, '#b02424', 'robe'),
+            B('body', -4.6, 0, 0, 9.2, 8, 1, '#b02424', 'robe', sway=-1, pivot=(0, 16, -2.6)),  # robe to the knees, front
+            B('body', -4.6, 0, 0, 9.2, 8, 1, '#b02424', 'robe', sway=1, pivot=(0, 16, 2.2)),    # and back
+            B('body', 4.5, 0, -0.6, 1.2, 12, 1.2, '#2a2420', 'leather', rot=(0.5, 0, 0), pivot=(0, 11, -1)),   # the Seven Star Sword's scabbard
+            B('body', 4.5, -3.4, -0.6, 1.2, 3.4, 1.2, '#3a7a4a', 'leather', rot=(0.5, 0, 0), pivot=(0, 11, -1)),   # its green-wrapped hilt
+            B('arm', -1.7, -1.5, -1.7, 3.4, 12.5, 3.4, '#b02424', 'robe', front='cuff'),
+            B('arm', -1.9, 3, -1.9, 3.8, 1.6, 3.8, '#f4f4f0', 'cloth', only='left'),          # white armband
+            B('arm', -1.5, 11, -1.5, 3, 2.5, 3, '#b07850'),
+            B('leg', -1.7, 0, -1.7, 3.4, 16, 3.4, '#2a2024', 'cloth'),
+            B('leg', -1.9, 16, -2.6, 3.8, 2, 4.4, '#b02424', 'leather'),                      # red shoes
+        ]),
+    # Count Butler (Chopper's Kingdom on the Island of Strange Animals): a tall, thin, pale gentleman scientist with
+    # slicked-back hair and a monocle, a long tailcoat with a white cravat, and the violin he hypnotises animals with.
+    # (The wiki gives no colours for him, so these are ours.) His phase 3 is the golden horns.
+    "count_butler": dict(
+        pivots=dict(head=(0, -10, 0), body=(0, -10, 0), arm=(-4.6, -8, 0), leg=(-1.7, 6, 0)),
+        boxes=[
+            B('head', -3.1, -8.4, -3.2, 6.2, 8.4, 6.4, '#ecd8c8', None, front='face', eyes='#5a2a6a', brows='#2a1a30', mouth='smirk', monocle=True),
+            B('head', -2.4, -0.6, -3.6, 4.8, 1.6, 1, '#e4ccbc'),                              # long chin
+            B('head', -3.4, -9.2, -3.4, 6.8, 2, 6.8, '#3a2440', 'hair'),                      # slicked back
+            B('head', -3.4, -8, 2.6, 6.8, 6, 1.4, '#3a2440', 'hair'),
+            B('head', -3.5, -7.6, -2.4, 0.6, 3, 5, '#3a2440', 'hair', mirror=True),
+            B('body', -2.2, -0.8, -2.8, 4.4, 2.6, 1, '#f4f4f0', 'frills'),                    # white cravat
+            B('body', -3.6, 0, -2.1, 7.2, 12, 4.2, '#5a2a6a', 'cloth', front='butler_coat'),
+            B('body', -3.4, 12, -2, 6.8, 4, 4, '#2a2030', 'cloth'),
+            B('body', -3.6, 0, 0, 3.4, 16, 1, '#5a2a6a', 'cloth', sway=1, pivot=(0, 9, 2.2), mirror=True),   # the two tails
+            B('arm', -1.5, -1.5, -1.5, 3, 12, 3, '#5a2a6a', 'cloth', front='cuff'),
+            B('arm', -1.3, 10.5, -1.3, 2.6, 2.2, 2.6, '#f4f4f0', 'cloth'),                    # white gloves
+            B('arm', -1.2, 6, -6, 2.4, 1.6, 6.5, '#a8582a', 'wood', front='violin', only='left'),   # the violin
+            B('arm', -0.4, 11.5, -6, 0.6, 0.6, 7, '#e8e0c8', None, only='right'),             # and its bow
+            B('leg', -1.5, 0, -1.5, 3, 16, 3, '#2a2030', 'cloth'),
+            B('leg', -1.7, 16, -2.5, 3.4, 2, 4.2, '#141014', 'leather'),
+        ]),
 }
 
 # ---------------- painting ----------------
@@ -620,6 +788,14 @@ def paint_face_texture(img, x0, y0, w, h, colour, pattern, rnd, face):
                 c = shade(base, 1.12) if y % 3 == 0 else shade(base, 0.95 + 0.06 * n)
                 if y == h - 1 and x % 2:
                     c = (0, 0, 0)   # scalloped hem (cut out)
+            elif pattern == 'hairy':
+                c = shade(base, 0.95 + 0.06 * n)
+                if n < 0.22:
+                    c = (40, 30, 26)   # body hair
+            elif pattern == 'pinstripe':
+                c = shade(base, 1.45) if x % 3 == 0 else shade(base, 0.95 + 0.06 * n)
+            elif pattern == 'afro':
+                c = shade(base, 0.75 + 0.5 * ((x * 5 + y * 7 + int(n * 4)) % 4) / 4)
             elif pattern == 'stripes':
                 c = shade(base, 0.62) if x % 3 == 0 else shade(base, 0.95 + 0.1 * n)
                 if y == h - 1 and (x * 7) % 3 == 0:
@@ -725,6 +901,8 @@ def decorate_front(img, x0, y0, w, h, box):
                 dot(img, ex + (1 if ex < cx else -1) * 0, ey, box['eyes'])
                 if box.get('lashes'):
                     dot(img, ex, ey - 1, '#101010')
+        if box.get('monocle'):
+            dot(img, cx + 2, ey - 1, '#e8c040'); dot(img, cx + 3, ey, '#e8c040'); dot(img, cx + 2, ey + 1, '#e8c040'); dot(img, cx + 1, ey, '#e8c040')
         if box.get('shades'):
             for dx in range(-(w // 2) + 1, w // 2 - 1):
                 dot(img, cx + dx, ey, box['shades']); dot(img, cx + dx, ey - 1, '#141418')
@@ -985,6 +1163,50 @@ def decorate_front(img, x0, y0, w, h, box):
         for x in range(cx - 2, cx + 2):
             dot(img, x, y0 + 5, '#c09820'); dot(img, x, y0 + 7, '#c09820')               # pocket
         dot(img, x0 + 1, y0 + 4, '#f0e0a0'); dot(img, x0 + w - 2, y0 + 4, '#f0e0a0')
+    elif kind == 'teddy':
+        # The teddy-bear hat's face: two button eyes over its snout.
+        ey = y0 + h - 3
+        dot(img, cx - 2, ey, '#141414'); dot(img, cx + 1, ey, '#141414')
+    elif kind == 'spade':
+        # A golden spade standing up behind his head.
+        for y in range(h):
+            half = min(y + 1, w // 2) if y < h - 2 else 1
+            for x in range(cx - half, cx + half):
+                dot(img, x, y0 + y, '#f8d860')
+        dot(img, cx - 1, y0 + h - 1, '#b08820'); dot(img, cx, y0 + h - 1, '#b08820')
+    elif kind == 'pips':
+        for y in range(0, 3):   # open at the neck
+            for x in range(cx - 2 + y, cx + 2 - y):
+                dot(img, x, y0 + y, '#d8a47c')
+        dot(img, x0 + 1, y0 + 4, '#1a1a1a'); dot(img, x0 + w - 2, y0 + 5, '#d02020')       # clover and heart
+        dot(img, cx, y0 + 7, '#d02020'); dot(img, x0 + 2, y0 + 8, '#1a1a1a')               # diamond, spade
+        for y in range(4, h, 2):
+            dot(img, cx, y0 + y, '#f0f0f0')
+    elif kind == 'festa_coat':
+        for y in range(h):
+            dot(img, cx - 1, y0 + y, '#f4f0e8'); dot(img, cx, y0 + y, '#f4f0e8')               # the shirt
+        for y in range(1, h, 3):
+            dot(img, cx - 2, y0 + y, '#e8c040'); dot(img, cx + 1, y0 + y, '#e8c040')            # gold buttons
+        for y in range(h):
+            dot(img, x0, y0 + y, '#e8c040'); dot(img, x0 + w - 1, y0 + y, '#e8c040')           # gold trim
+    elif kind == 'saga_robe':
+        for y in range(h):   # the crossed front of the robe
+            dot(img, cx - 2 + y // 3, y0 + y, '#701414')
+        for y in range(0, 3):
+            for x in range(cx - 1, cx + 1 + (2 - y)):
+                dot(img, x, y0 + y, '#b07850')
+    elif kind == 'butler_coat':
+        for y in range(h):
+            o = max(0, 2 - y // 4)
+            for x in range(cx - o, cx + o):
+                dot(img, x, y0 + y, '#e8e4dc')   # white waistcoat
+        for y in (2, 5, 8):
+            dot(img, cx - 2, y0 + y, '#e8c040')
+    elif kind == 'violin':
+        for y in range(h):
+            for x in range(w):
+                if x in (1, w - 2):
+                    dot(img, x0 + x, y0 + y, '#4a2a14')   # the strings' shadow
     elif kind == 'bands':
         for y in range(2, h, 5):
             for x in range(w):

@@ -1,0 +1,13 @@
+{
+  "name": "Cinderwake",
+  "template": "opbosses:ships/cinderwake",
+  "bow": "east",
+  "waterline": 3.9,
+  "faction": "boss",
+  "tiers": [],
+  "crew": "Ashgrave Corsairs",
+  "length": 60,
+  "beam": 21,
+  "height": 49,
+  "blocks": 4247
+}

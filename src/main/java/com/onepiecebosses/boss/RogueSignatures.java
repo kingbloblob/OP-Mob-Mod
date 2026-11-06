@@ -248,6 +248,86 @@ public final class RogueSignatures {
 				strikes.signature("rain_rock", boss, target, level, damage * 1.1f, extra + 4);
 				strikes.signature("ground_wave", boss, target, level, damage, extra);
 			}
+			case "hot_boiling_special" -> { // Bear King: the Kachi Kachi Fruit hardens him like stone and his fists boil; then the King Cannon's drill shells.
+				boss.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 80 + 20 * extra, 1));
+				Vec3 away = target.position().subtract(boss.position()).multiply(1, 0, 1).normalize().scale(1.6);
+				target.setDeltaMovement(away.x, 0.6, away.z);
+				target.needsSync = true;
+				target.igniteForSeconds(4 + 2 * extra);
+				level.sendParticles(ParticleTypes.LAVA, boss.getX(), boss.getY() + 1.4, boss.getZ(), 20, 0.6, 0.6, 0.6, 0.0);
+				level.playSound(null, boss.blockPosition(), SoundEvents.BLAZE_SHOOT, SoundSource.HOSTILE, 2.0f, 0.6f);
+				level.playSound(null, boss.blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.HOSTILE, 1.5f, 0.5f);
+				strikes.signature("ground_wave", boss, target, level, damage, extra);
+				strikes.signature("rain_metal", boss, target, level, damage * 0.8f, extra + 1); // the drilling shells
+			}
+			case "festival_finale" -> { // Festa: the Expo's grand finale, fireworks bursting over everyone (dazzled, lit up), then they rain down.
+				for (Player player : playersNear(boss, level, 14)) {
+					player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 30 + 10 * extra, 0));
+					player.addEffect(new MobEffectInstance(MobEffects.GLOWING, 120 + 20 * extra, 0));
+					level.sendParticles(ParticleTypes.FIREWORK, player.getX(), player.getY() + 3, player.getZ(), 40, 1.2, 0.8, 1.2, 0.15);
+				}
+				for (int i = 0; i < 16; i++) {
+					double a = Math.PI * 2 * i / 16;
+					level.sendParticles(ParticleTypes.FIREWORK, boss.getX() + Math.cos(a) * 5, boss.getY() + 6, boss.getZ() + Math.sin(a) * 5, 12, 0.5, 0.5, 0.5, 0.2);
+				}
+				level.playSound(null, boss.blockPosition(), SoundEvents.FIREWORK_ROCKET_LARGE_BLAST, SoundSource.HOSTILE, 3.0f, 0.8f);
+				level.playSound(null, boss.blockPosition(), SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.HOSTILE, 3.0f, 1.0f);
+				strikes.signature("rain_fire", boss, target, level, damage, extra + 3);
+			}
+			case "dark_fire_slash" -> { // Saga: Youkazan, a cut of the Seven Star Sword's green fire down the line, and its curse withers whoever's close.
+				strikes.signature("slash_line", boss, target, level, damage * 1.1f, extra);
+				for (Player player : playersNear(boss, level, 9)) {
+					player.addEffect(new MobEffectInstance(MobEffects.WITHER, 60 + 20 * extra, 1));
+					level.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX(), player.getY() + 1, player.getZ(), 25, 0.4, 0.8, 0.4, 0.03);
+				}
+				MoveFx.shockwave(level, boss.position(), 9, 0xFF60E070, 0xFF206030);
+				level.playSound(null, boss.blockPosition(), SoundEvents.WITHER_SHOOT, SoundSource.HOSTILE, 2.0f, 0.7f);
+				strikes.signature("rain_curse", boss, target, level, damage * 0.8f, extra + 1);
+			}
+			case "golden_horn_frenzy" -> { // Butler: he eats the golden horns and turns into a giant golden beast with fiery horns, and charges.
+				boss.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 140 + 20 * extra, 1));
+				boss.addEffect(new MobEffectInstance(MobEffects.SPEED, 100 + 20 * extra, 1));
+				boss.heal(boss.getMaxHealth() * 0.04f);
+				level.sendParticles(ParticleTypes.FLAME, boss.getX(), boss.getY() + 2.4, boss.getZ(), 40, 0.5, 0.4, 0.5, 0.04);
+				level.playSound(null, boss.blockPosition(), SoundEvents.RAVAGER_ROAR, SoundSource.HOSTILE, 3.0f, 0.7f);
+				pull(target, boss, 1.5); // he hooks you on his horns
+				target.igniteForSeconds(3 + extra);
+				strikes.signature("slash_line", boss, target, level, damage, extra);
+				strikes.signature("rain_fire", boss, target, level, damage * 0.7f, extra);
+			}
+			case "harpoon_volley" -> { // Maribel fires a harpoon into you and reels you in, while her whalers' harpoons rain down.
+				pull(target, boss, 1.6);
+				target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 50 + 20 * extra, 2));
+				level.playSound(null, boss.blockPosition(), SoundEvents.FISHING_BOBBER_THROW, SoundSource.HOSTILE, 2.0f, 0.5f);
+				level.playSound(null, target.blockPosition(), SoundEvents.CHAIN_BREAK, SoundSource.HOSTILE, 1.5f, 0.6f);
+				strikes.signature("rain_metal", boss, target, level, damage, extra + 2);
+			}
+			case "tithe_of_bells" -> { // Lume's bell tolls: everyone near pays a tenth of their life, and it mends him, then judgment light falls.
+				float paid = 0;
+				for (Player player : playersNear(boss, level, 14)) {
+					float tithe = Math.max(1.0f, player.getHealth() * 0.1f * (1 + extra));
+					player.hurtServer(level, boss.damageSources().magic(), tithe);
+					player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 60 + 20 * extra, 0));
+					level.sendParticles(ParticleTypes.SOUL, player.getX(), player.getY() + 1, player.getZ(), 10, 0.3, 0.6, 0.3, 0.03);
+					paid += tithe;
+				}
+				boss.heal(paid);
+				for (int i = 0; i < 3; i++) {
+					level.playSound(null, boss.blockPosition(), SoundEvents.BELL_BLOCK, SoundSource.HOSTILE, 3.0f, 0.5f + i * 0.1f);
+				}
+				MoveFx.shockwave(level, boss.position(), 14, MoveFx.DARK, MoveFx.DARK_OUT);
+				strikes.signature("rain_light", boss, target, level, damage, extra + 1);
+			}
+			case "cinder_broadside" -> { // Kael: fire shot from every gun, the deck itself bursts into flame around him.
+				strikes.signature("rain_fire", boss, target, level, damage, extra + 3);
+				strikes.signature("ground_wave", boss, target, level, damage * 0.8f, extra);
+				for (Player player : playersNear(boss, level, 10)) {
+					player.igniteForSeconds(5 + 2 * extra);
+				}
+				MoveFx.shockwave(level, boss.position(), 10, MoveFx.FIRE, MoveFx.FIRE_OUT);
+				level.sendParticles(ParticleTypes.LAVA, boss.getX(), boss.getY() + 1, boss.getZ(), 30, 2.0, 1.0, 2.0, 0.1);
+				level.playSound(null, boss.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE, 2.5f, 0.6f);
+			}
 			default -> strikes.signature(signature, boss, target, level, damage, extra); // Any main mod signature works too.
 		}
 	}

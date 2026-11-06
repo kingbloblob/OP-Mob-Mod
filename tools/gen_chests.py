@@ -789,6 +789,140 @@ def _():
     return tex, boxes
 
 
+@chest("clockwork_island", "Trump Card Strongbox")
+def _():
+    # Bear King's strongbox from Trump Castle: a red lacquered box with gold corners, the four card suits on its face, a
+    # clock dial on the lid and a golden spade standing up behind it like his collar.
+    red = lacquer('#9a2424', 82)
+    front = lacquer('#9a2424', 83)
+    rect(front, 1, 6, 14, 13, '#f4ecd8')   # a playing card across the front
+    for (x, c) in ((3, '#1a1a1a'), (6, '#d02020'), (9, '#1a1a1a'), (12, '#d02020')):
+        rect(front, x, 8, x + 1, 9, c); put(front, x, 10, c)
+    gold = metal('#d8b040', '#f8e080', 84)
+    dial = new('#f4ecd8', 0.04, 85)
+    frame(dial, 0, 0, 15, 15, '#d8b040')
+    for (x, y) in ((7, 1), (14, 7), (7, 14), (1, 7)):
+        rect(dial, x, y, x + 1, y + 1, '#1a1a1a')
+    for i in range(5):
+        put(dial, 7 + i // 2, 7 - i, '#1a1a1a'); put(dial, 8, 8 + i // 2, '#c82020')
+    spade = new('#f0c840', 0.1, 86)
+    tex = dict(red=red, front=front, gold=gold, dial=dial, spade=spade)
+    boxes = [
+        box([1, 0, 2], [15, 10, 14], dict(all='red', front='front')),
+        box([0.6, 10, 1.6], [15.4, 12, 14.4], 'red'),
+        box([0.4, -0.01, 1.4], [2.4, 12.4, 3.4], 'gold'),
+        box([13.6, -0.01, 1.4], [15.6, 12.4, 3.4], 'gold'),
+        box([0.4, -0.01, 12.6], [2.4, 12.4, 14.6], 'gold'),
+        box([13.6, -0.01, 12.6], [15.6, 12.4, 14.6], 'gold'),
+        box([4.5, 12, 4], [11.5, 12.8, 11], 'dial', full=True),          # the clock on the lid
+        box([6, 12, 12.5], [10, 15, 13.5], 'spade'),                     # the spade behind it
+        box([5, 15, 12.5], [11, 17, 13.5], 'spade'),
+        box([7, 17, 12.5], [9, 18.5, 13.5], 'spade'),
+    ]
+    return tex, boxes
+
+
+@chest("delta_island", "Festival Treasure Chest")
+def _():
+    # The Pirates Expo's prize chest: Festa's bait. Striped like a festival tent, gold-trimmed, a rocket of fireworks
+    # tied to each side and a big gold star on the lid.
+    stripes = new('#d83a4a', 0.06, 87)
+    for y in range(S):
+        for x in range(S):
+            if (x // 3) % 2:
+                put(stripes, x, y, '#f4ece0')
+    front = stripes.copy()
+    rect(front, 5, 5, 10, 10, '#e8c040'); rect(front, 6, 6, 9, 9, '#2a1a14')   # a gold lock plate
+    gold = metal('#e8c040', '#fff0a0', 88)
+    rocket = new('#3a7ad8', 0.1, 89)
+    for y in range(0, S, 4):
+        for x in range(S):
+            put(rocket, x, y, '#f4ece0')
+    star = new('#f8d040', 0.06, 90)
+    tex = dict(stripes=stripes, front=front, gold=gold, rocket=rocket, star=star)
+    boxes = [
+        box([1.5, 0, 2], [14.5, 10, 14], dict(all='stripes', front='front')),
+        box([1, 10, 1.5], [15, 11.5, 14.5], 'gold'),
+        box([2, 11.5, 2.5], [14, 13, 13.5], 'stripes'),
+        box([-0.5, 1, 6.5], [1.5, 12, 8.5], 'rocket'),                   # fireworks rockets on the sides
+        box([14.5, 1, 6.5], [16.5, 12, 8.5], 'rocket'),
+        box([0, 12, 7], [1, 14, 8], 'gold'),
+        box([15, 12, 7], [16, 14, 8], 'gold'),
+        box([6.5, 13, 7], [9.5, 17, 8.5], 'star'),                       # the star on top
+        box([5, 14.2, 7], [11, 15.8, 8.5], 'star'),
+    ]
+    return tex, boxes
+
+
+@chest("asuka_island", "Seven Star Reliquary")
+def _():
+    # The shrine box the Seven Star Sword was sealed in: black lacquer with red bands, seven gold stars like the Big
+    # Dipper across the front, paper seals, and the cursed sword laid across the lid, still smouldering green.
+    black = lacquer('#1a1418', 91)
+    front = lacquer('#1a1418', 92)
+    for (x, y) in ((2, 5), (4, 6), (6, 6), (8, 7), (10, 9), (12, 8), (13, 11)):
+        put(front, x, y, '#f0d060'); put(front, x + 1, y, '#c8a040')
+    band = new('#a82020', 0.08, 93)
+    seal = new('#f0e8d0', 0.05, 94)
+    for y in range(3, 13, 3):
+        rect(seal, 6, y, 9, y, '#a82020')
+    blade = new('#d8e0dc', 0.06, 95)
+    for x in range(S):
+        put(blade, x, 0, '#60e070')
+    hilt = new('#2a6a3a', 0.12, 96)
+    for x in range(0, S, 2):
+        put(hilt, x, 8, '#e8c040')
+    tex = dict(black=black, front=front, band=band, seal=seal, blade=blade, hilt=hilt)
+    boxes = [
+        box([1, 0, 2], [15, 10, 14], dict(all='black', front='front')),
+        box([0.5, 10, 1.5], [15.5, 12, 14.5], 'black'),
+        box([0.4, 2, 1.4], [15.6, 3.5, 14.6], 'band'),
+        box([0.4, 10.2, 1.4], [15.6, 11.2, 14.6], 'band'),
+        box([3, 4, 1.6], [5, 10, 2], 'seal'),                            # paper seals over the lid's edge
+        box([11, 4, 1.6], [13, 10, 2], 'seal'),
+        box([2, 12, 7.5], [11, 12.8, 8.5], 'blade'),                     # the sword on the lid
+        box([11, 11.8, 7], [11.6, 13.2, 9], 'band'),                     # its guard
+        box([11.6, 12, 7.6], [15, 12.8, 8.4], 'hilt'),
+        box([1, 12, 6], [3, 13, 10], 'seal'),                            # the shrine's stand under its tip
+    ]
+    return tex, boxes
+
+
+@chest("crown_island", "Butler's Specimen Case")
+def _():
+    # Count Butler's specimen case: polished purple wood and brass, a glass top over the golden horns he came to
+    # eat, and a crown of gold on the corner for Crown Island's animal king.
+    wood = planks('#4a2448', '#2a1428', 97)
+    front = planks('#4a2448', '#2a1428', 98)
+    rect(front, 6, 6, 9, 9, '#d8b040'); put(front, 7, 8, '#2a1428'); put(front, 8, 8, '#2a1428')
+    brass = metal('#c89a40', '#f0d080', 99)
+    glass = new('#a8d0d8', 0.06, 100)
+    for i in range(S):
+        put(glass, i, i // 2, '#e8f4f8')
+    horn = new('#f0c040', 0.12, 101)
+    for y in range(0, S, 3):
+        for x in range(S):
+            put(horn, x, y, '#d89820')
+    tex = dict(wood=wood, front=front, brass=brass, glass=glass, horn=horn)
+    boxes = [
+        box([1, 0, 2], [15, 9, 14], dict(all='wood', front='front')),
+        box([0.6, 9, 1.6], [15.4, 10.5, 14.4], 'brass'),
+        box([1.5, 10.5, 2.5], [14.5, 14, 13.5], 'glass'),                 # the glass case
+        box([4, 10.5, 6], [6, 13, 8], 'horn'),                            # the golden horns inside
+        box([4.6, 13, 6.6], [5.4, 13.8, 7.4], 'horn'),
+        box([10, 10.5, 6], [12, 13, 8], 'horn'),
+        box([10.6, 13, 6.6], [11.4, 13.8, 7.4], 'horn'),
+        box([0.6, -0.01, 1.6], [2, 10.5, 3], 'brass'),
+        box([14, -0.01, 1.6], [15.4, 10.5, 3], 'brass'),
+        box([12.5, 14, 2.5], [14.5, 15, 4.5], 'brass'),                   # a little crown on the corner
+        box([12.5, 15, 2.5], [13, 16, 3], 'brass'),
+        box([14, 15, 2.5], [14.5, 16, 3], 'brass'),
+        box([12.5, 15, 4], [13, 16, 4.5], 'brass'),
+        box([14, 15, 4], [14.5, 16, 4.5], 'brass'),
+    ]
+    return tex, boxes
+
+
 # ---------------------------------------------------------------- writing
 
 FACE = dict(north='front', south='back', east='side', west='side', up='top', down='bottom')
@@ -821,6 +955,100 @@ def write(path, obj):
     with open(path, 'w') as fh:
         json.dump(obj, fh, indent=2)
         fh.write('\n')
+
+
+# ---------------------------------------------------------------- the sea bosses' strongrooms (on their flagships)
+@chest("widowmaker", "Maribel's Scrimshaw Chest")
+def _():
+    # A whaler's chest of tarred planks bound in whalebone, a Sea King tooth for a hasp, scrimshaw on the lid.
+    wood = planks('#4a3828', '#22180e', 51)
+    front = planks('#4a3828', '#22180e', 52)
+    for x in range(3, 13):
+        put(front, x, 4, '#d8d0b8')                                      # a scrimshaw harpoon across the front
+    put(front, 12, 3, '#d8d0b8'); put(front, 12, 5, '#d8d0b8'); put(front, 13, 4, '#d8d0b8')
+    bone = new('#e4dcc4', 0.1, 53)
+    for y in range(0, S, 4):
+        for x in range(S):
+            put(bone, x, y, '#c8bea4')
+    lid = planks('#4a3828', '#22180e', 54)
+    for (x, y) in ((4, 4), (5, 5), (6, 6), (7, 6), (8, 6), (9, 5), (10, 4), (7, 3), (7, 4)):
+        put(lid, x, y, '#d8d0b8')                                        # a little Sea King etched on the lid
+    tooth = new('#f4f0e0', 0.06, 55)
+    tex = dict(wood=wood, front=front, bone=bone, lid=lid, tooth=tooth)
+    boxes = [
+        box([1, 0, 1], [15, 9, 15], dict(all='wood', front='front')),
+        box([1, 9, 1], [15, 13, 15], dict(all='wood', top='lid', front='front')),
+        box([0.5, 0, 0.5], [2, 13.5, 15.5], 'bone'),
+        box([14, 0, 0.5], [15.5, 13.5, 15.5], 'bone'),
+        box([0.5, 8.5, 0.4], [15.5, 9.5, 15.6], 'bone'),
+        box([7, 6, 0.2], [9, 12, 1], 'tooth'),
+        box([7.5, 4.5, 0.3], [8.5, 6, 0.9], 'tooth'),
+    ]
+    return tex, boxes
+
+
+@chest("tithe_cathedral", "The Tithe Reliquary")
+def _():
+    # A gilded reliquary: crimson velvet panels framed in gold, a pointed gothic lid, a gold coin of the Tithe.
+    velvet = new('#8a1414', 0.1, 61)
+    for y in range(S):
+        for x in range(S):
+            if (x + y) % 4 == 0:
+                put(velvet, x, y, '#a01c1c')
+    gold = lacquer('#e0b030', 62)
+    coin = new('#f0c840', 0.05, 63)
+    for y in range(3, 13):
+        put(coin, 8, y, '#2a2020')
+    for x in range(4, 13):
+        put(coin, x, 6, '#2a2020')
+    frame(coin, 0, 0, 15, 15, '#b08020')
+    roof = new('#2a2a30', 0.08, 64)
+    for y in range(0, S, 3):
+        for x in range(S):
+            put(roof, x, y, '#1a1a20')
+    tex = dict(velvet=velvet, gold=gold, coin=coin, roof=roof)
+    boxes = [
+        box([1, 0, 2], [15, 1.5, 14], 'gold'),
+        box([1.5, 1.5, 2.5], [14.5, 10, 13.5], 'velvet'),
+        box([1, 1.5, 2], [2.5, 10, 3.5], 'gold'),
+        box([13.5, 1.5, 2], [15, 10, 3.5], 'gold'),
+        box([1, 1.5, 12.5], [2.5, 10, 14], 'gold'),
+        box([13.5, 1.5, 12.5], [15, 10, 14], 'gold'),
+        box([1, 10, 2], [15, 11, 14], 'gold'),
+        box([2, 11, 3], [14, 13, 13], 'roof'),
+        box([4, 13, 5], [12, 15, 11], 'roof'),
+        box([7, 15, 7], [9, 16, 9], 'gold'),
+        box([5.5, 3, 2.1], [10.5, 8, 2.5], 'coin', full=True),
+    ]
+    return tex, boxes
+
+
+@chest("cinderwake", "Ashgrave's Furnace Safe")
+def _():
+    # An iron safe built like a furnace: blackened riveted plates, a glowing grate in the door, a wheel lock.
+    iron = metal('#2e2a2c', '#5a5458', 71, edge='#1a1618')
+    door = metal('#3a3436', '#6a6468', 72, edge='#1a1618')
+    grate = new('#ff8a20', 0.2, 73)
+    for x in range(0, S, 3):
+        for y in range(S):
+            put(grate, x, y, '#2a1a10')
+    for y in range(0, S, 4):
+        for x in range(S):
+            put(grate, x, y, '#2a1a10')
+    wheel = new('#8a8a90', 0.06, 74)
+    frame(wheel, 0, 0, 15, 15, '#5a5a60')
+    for i in range(S):
+        put(wheel, i, 7, '#5a5a60'); put(wheel, 7, i, '#5a5a60')
+    tex = dict(iron=iron, door=door, grate=grate, wheel=wheel)
+    boxes = [
+        box([1, 0, 1], [15, 14, 15], dict(all='iron', front='door')),
+        box([0.5, 13, 0.5], [15.5, 14.5, 15.5], 'iron'),
+        box([0.5, 0, 0.5], [15.5, 1, 15.5], 'iron'),
+        box([4, 2, 0.6], [12, 6, 1.1], 'grate', full=True),
+        box([6, 8, 0.4], [10, 12, 1], 'wheel', full=True),
+        box([2, 14.5, 6], [4, 16, 10], 'iron'),                          # a little chimney
+    ]
+    return tex, boxes
 
 
 def main(res):

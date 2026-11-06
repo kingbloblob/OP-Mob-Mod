@@ -74,6 +74,15 @@ public final class OnePieceBridge {
 		return entity instanceof HumanNpc npc ? npc.getKitId() : null;
 	}
 
+	/** True for a main mod NPC (or one of ours built on it) whose kit is a pirate one: sea pirates, rogue crews, rookie raiders. */
+	public static boolean isPirateNpc(LivingEntity entity) {
+		if (!(entity instanceof HumanNpc npc)) {
+			return false;
+		}
+		NpcKit kit = NpcKit.get(npc.getKitId());
+		return kit != null && "pirate".equals(kit.faction);
+	}
+
 	/** True for players who ate a fruit, and for bosses who have one. */
 	public static boolean isFruitUser(LivingEntity entity) {
 		return SeastoneEffects.isFruitUser(entity);
@@ -112,6 +121,35 @@ public final class OnePieceBridge {
 		}
 		com.onepiecemod.character.CharacterData data = com.onepiecemod.character.CharacterData.get(id);
 		return data != null && data.name != null ? data.name : id.replace('_', ' ');
+	}
+
+	/** Makes a push given on the server actually move a player on their screen (the main mod's Motion.sync). */
+	public static void syncMotion(Entity entity) {
+		com.onepiecemod.util.Motion.sync(entity);
+	}
+
+	private static java.lang.reflect.Field bossBarField;
+	private static boolean bossBarMissing;
+
+	/**
+	 * A boss's boss bar. The main mod keeps it private on CharacterEntity (field "bossBar"), so the arenas reach it by
+	 * name to give it their lair's colour, fog and dark sky. Null if the field is gone (the bar then just keeps its own look).
+	 */
+	public static net.minecraft.server.level.ServerBossEvent bossBar(CharacterEntity boss) {
+		if (bossBarMissing) {
+			return null;
+		}
+		try {
+			if (bossBarField == null) {
+				bossBarField = CharacterEntity.class.getDeclaredField("bossBar");
+				bossBarField.setAccessible(true);
+			}
+			return (net.minecraft.server.level.ServerBossEvent) bossBarField.get(boss);
+		} catch (ReflectiveOperationException | ClassCastException e) {
+			bossBarMissing = true;
+			com.onepiecebosses.BossesMod.LOGGER.warn("One Piece Bosses: can't reach the main mod's boss bar, lair colours are off", e);
+			return null;
+		}
 	}
 
 	// ---- For the world mobs (world package) ----

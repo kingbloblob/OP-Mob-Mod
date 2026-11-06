@@ -1,13 +1,4 @@
 {
-  "fabric:load_conditions": [
-    {
-      "condition": "fabric:registry_contains",
-      "registry": "minecraft:item",
-      "values": [
-        "opbosses:remnant_bear_king"
-      ]
-    }
-  ],
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "group": "opbosses_trump",
