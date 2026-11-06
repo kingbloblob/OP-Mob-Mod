@@ -39,12 +39,28 @@
     {
       "structure": "opbosses:groseade",
       "weight": 1
+    },
+    {
+      "structure": "opbosses:clockwork_island",
+      "weight": 1
+    },
+    {
+      "structure": "opbosses:delta_island",
+      "weight": 1
+    },
+    {
+      "structure": "opbosses:asuka_island",
+      "weight": 1
+    },
+    {
+      "structure": "opbosses:crown_island",
+      "weight": 1
     }
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "spacing": 40,
-    "separation": 15,
+    "spacing": 35,
+    "separation": 13,
     "salt": 1408172177,
     "exclusion_zone": {
       "other_set": "opbosses:rogue_lairs",

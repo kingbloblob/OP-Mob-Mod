@@ -306,33 +306,49 @@
 			"berries": 9
 		},
 		{
-			"id": "sedge_whaler",
+			"id": "trump_pirate",
 			"faction": "pirate",
-			"crews": ["Sedge Whaling Company"],
+			"crews": ["Trump Pirates"],
 			"name": "{rank} {name}",
-			"ranks": ["Boatsteerer", "Harpooner", "Flenser", "Mate"],
-			"skins": ["deckhand", "bounty_hunter"],
+			"ranks": ["Spade Deckhand", "Clover Gunner", "Joker"],
+			"skins": ["deckhand", "pirate_captain"],
 			"loadouts": [
-				{"style": "sniper", "weight": 2, "weapons": ["minecraft:trident"]},
-				{"style": "heavy", "weight": 1, "weapons": ["minecraft:iron_axe"]},
-				{"style": "sword", "weight": 1, "weapons": ["minecraft:iron_sword"]}
+				{"style": "brawler", "weight": 2, "weapons": []},
+				{"style": "gunner", "weight": 2, "weapons": ["onepiece:flintlock_pistol"]},
+				{"style": "bomber", "weight": 1, "weapons": []}
 			],
-			"health": 52,
-			"damage": 9,
-			"armor": 4,
-			"berries": 4
+			"health": 70,
+			"damage": 11,
+			"armor": 6,
+			"berries": 6
 		},
 		{
-			"id": "tithe_acolyte",
+			"id": "festival_pirate",
 			"faction": "pirate",
-			"crews": ["Red Tithe Order"],
+			"crews": ["Festival Pirates"],
 			"name": "{rank} {name}",
-			"ranks": ["Acolyte", "Collector", "Deacon", "Inquisitor"],
-			"skins": ["baroque", "cp_agent"],
+			"ranks": ["Festival Hand", "Fireworks Man", "Expo Barker"],
+			"skins": ["headliner", "deckhand"],
 			"loadouts": [
-				{"style": "sword", "weight": 2, "weapons": ["minecraft:golden_sword"]},
-				{"style": "gunner", "weight": 1, "weapons": ["onepiece:flintlock_pistol"]},
-				{"style": "rokushiki", "weight": 1, "weapons": []}
+				{"style": "bomber", "weight": 2, "weapons": []},
+				{"style": "gunner", "weight": 2, "weapons": ["onepiece:flintlock_pistol"]},
+				{"style": "sword", "weight": 1, "weapons": ["minecraft:iron_sword"]}
+			],
+			"health": 80,
+			"damage": 12,
+			"armor": 7,
+			"berries": 8
+		},
+		{
+			"id": "seven_star_swordsman",
+			"faction": "pirate",
+			"crews": ["Saga's Swordsmen"],
+			"name": "{rank} {name}",
+			"ranks": ["Dojo Swordsman", "Possessed Marine", "Sword Bearer"],
+			"skins": ["ronin", "marine_grunt"],
+			"loadouts": [
+				{"style": "sword", "weight": 3, "weapons": ["minecraft:iron_sword"]},
+				{"style": "haki", "weight": 1, "weapons": []}
 			],
 			"health": 85,
 			"damage": 13,
@@ -340,21 +356,21 @@
 			"berries": 7
 		},
 		{
-			"id": "ashgrave_corsair",
+			"id": "butler_henchman",
 			"faction": "pirate",
-			"crews": ["Ashgrave Corsairs"],
+			"crews": ["Butler's Henchmen"],
 			"name": "{rank} {name}",
-			"ranks": ["Stoker", "Firebrand", "Ash Corsair", "Cinder Mate"],
-			"skins": ["gifter", "headliner"],
+			"ranks": ["Horn Hunter", "Hotdog's Brawler", "Heaby's Blade"],
+			"skins": ["bandit", "bounty_hunter"],
 			"loadouts": [
-				{"style": "bomber", "weight": 2, "weapons": []},
-				{"style": "heavy", "weight": 1, "weapons": ["minecraft:netherite_axe"]},
-				{"style": "gunner", "weight": 1, "weapons": ["onepiece:flintlock_pistol"]}
+				{"style": "heavy", "weight": 2, "weapons": ["minecraft:iron_axe"]},
+				{"style": "sword", "weight": 1, "weapons": ["minecraft:iron_sword"]},
+				{"style": "brawler", "weight": 1, "weapons": []}
 			],
-			"health": 105,
-			"damage": 16,
-			"armor": 9,
-			"berries": 9
+			"health": 70,
+			"damage": 11,
+			"armor": 6,
+			"berries": 6
 		},
 		{
 			"id": "red_tusk_brawler",
@@ -623,6 +639,57 @@
 			"max": 5,
 			"color": "light_blue",
 			"boast": "You never hear the Howling Gale coming. Only the shot."
+		},
+		{
+			"id": "sedge_whaler",
+			"faction": "pirate",
+			"crews": ["Sedge Whaling Company"],
+			"name": "{rank} {name}",
+			"ranks": ["Boatsteerer", "Harpooner", "Flenser", "Mate"],
+			"skins": ["deckhand", "bounty_hunter"],
+			"loadouts": [
+				{"style": "sniper", "weight": 2, "weapons": ["minecraft:trident"]},
+				{"style": "heavy", "weight": 1, "weapons": ["minecraft:iron_axe"]},
+				{"style": "sword", "weight": 1, "weapons": ["minecraft:iron_sword"]}
+			],
+			"health": 52,
+			"damage": 9,
+			"armor": 4,
+			"berries": 4
+		},
+		{
+			"id": "tithe_acolyte",
+			"faction": "pirate",
+			"crews": ["Red Tithe Order"],
+			"name": "{rank} {name}",
+			"ranks": ["Acolyte", "Collector", "Deacon", "Inquisitor"],
+			"skins": ["baroque", "cp_agent"],
+			"loadouts": [
+				{"style": "sword", "weight": 2, "weapons": ["minecraft:golden_sword"]},
+				{"style": "gunner", "weight": 1, "weapons": ["onepiece:flintlock_pistol"]},
+				{"style": "rokushiki", "weight": 1, "weapons": []}
+			],
+			"health": 85,
+			"damage": 13,
+			"armor": 7,
+			"berries": 7
+		},
+		{
+			"id": "ashgrave_corsair",
+			"faction": "pirate",
+			"crews": ["Ashgrave Corsairs"],
+			"name": "{rank} {name}",
+			"ranks": ["Stoker", "Firebrand", "Ash Corsair", "Cinder Mate"],
+			"skins": ["gifter", "headliner"],
+			"loadouts": [
+				{"style": "bomber", "weight": 2, "weapons": []},
+				{"style": "heavy", "weight": 1, "weapons": ["minecraft:netherite_axe"]},
+				{"style": "gunner", "weight": 1, "weapons": ["onepiece:flintlock_pistol"]}
+			],
+			"health": 105,
+			"damage": 16,
+			"armor": 9,
+			"berries": 9
 		}
 	]
 }

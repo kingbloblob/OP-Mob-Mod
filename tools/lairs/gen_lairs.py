@@ -2,6 +2,7 @@
 """Builds each rogue's lair: the structure (.nbt), how and where it generates, and its chest loot.
 
     python3 tools/lairs/gen_lairs.py .
+    python3 tools/lairs/gen_lairs.py . gold_island groseade      (only rebuild these lairs, leave the rest as they are)
 
 Writes into src/main/resources/data/opbosses/: structure/, worldgen/structure, worldgen/template_pool,
 worldgen/structure_set, tags/worldgen/biome/has_structure and loot_table/chests. Change a lair here and run it
@@ -1087,6 +1088,8 @@ import film_lairs  # noqa: E402
 film_lairs.add(lair, OCEANS, DEEP)
 import film_lairs_more  # noqa: E402
 film_lairs_more.add(lair, OCEANS, DEEP)
+import film_lairs_third  # noqa: E402
+film_lairs_third.add(lair, OCEANS, DEEP)
 
 
 # ============================================================ loot
@@ -1140,11 +1143,13 @@ LOOT = {
 
 # One rogue lair per this many chunks on average (the main mod's hard lairs are 40 / 14).
 SPACING, SEPARATION, SALT = 44, 16, 1408172101
-# The film villains' lairs are their own set, so adding them didn't make the rogue lairs any rarer.
-GROUPS = {"rogue_lairs": (SPACING, SEPARATION, SALT), "film_lairs": (40, 15, 1408172177)}
+# The film villains' lairs are their own set, so adding them didn't make the rogue lairs any rarer. With 14 of them the
+# spacing is a little tighter, so each one stays about as common as when there were ten (40 / 15).
+GROUPS = {"rogue_lairs": (SPACING, SEPARATION, SALT), "film_lairs": (35, 13, 1408172177)}
 LOOT.update(more_rogue_lairs.LOOT)
 LOOT.update(film_lairs.LOOT)
 LOOT.update(film_lairs_more.LOOT)
+LOOT.update(film_lairs_third.LOOT)
 # ...and never right next to one: a film lair stays at least 10 chunks from any rogue lair.
 EXCLUDE = {"film_lairs": {"exclusion_zone": {"other_set": "opbosses:rogue_lairs", "chunk_count": 10}}}
 
@@ -1156,14 +1161,20 @@ def write(path, obj):
         f.write('\n')
 
 
-def main(root):
+def main(root, only=()):
     D = os.path.join(root, 'src/main/resources/data/opbosses')
-    for p in ('structure', 'worldgen/template_pool', 'worldgen/structure', 'worldgen/structure_set', 'tags/worldgen/biome/has_structure', 'loot_table/chests'):
-        shutil.rmtree(f'{D}/{p}', ignore_errors=True)
+    unknown = set(only) - {l['name'] for l in LAIRS}
+    if unknown:
+        sys.exit('No such lair: ' + ', '.join(sorted(unknown)))
+    if not only:   # a full run starts clean, so a lair taken out leaves nothing behind
+        for p in ('structure', 'worldgen/template_pool', 'worldgen/structure', 'worldgen/structure_set', 'tags/worldgen/biome/has_structure', 'loot_table/chests'):
+            shutil.rmtree(f'{D}/{p}', ignore_errors=True)
     bosses = {b['id'] for b in json.load(open(os.path.join(root, 'src/main/resources/opbosses/bosses.json')))['bosses']}
     kits = {k['id'] for k in json.load(open(os.path.join(root, 'src/main/resources/opbosses/crews.json')))['kits']}
     rows = []
     for l in LAIRS:
+        if only and l['name'] not in only:
+            continue
         b = Lair()
         b.boss = l['boss']
         l['build'](b)
@@ -1203,4 +1214,4 @@ def main(root):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1] if len(sys.argv) > 1 else '.')
+    main(sys.argv[1] if len(sys.argv) > 1 else '.', sys.argv[2:])
