@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import net.fabricmc.api.ModInitializer;
 
 import com.onepiecebosses.boss.RogueBosses;
+import com.onepiecebosses.bounty.BountyBoard;
 import com.onepiecebosses.crew.CrewKits;
 import com.onepiecebosses.crew.RivalCrews;
 import com.onepiecebosses.loot.LairChests;
@@ -31,6 +32,7 @@ public class BossesMod implements ModInitializer {
 		CrewKits.initialize(); // Before the bosses, so their crews exist when a saved boss loads.
 		RogueBosses.initialize();
 		LairChests.initialize();
+		BountyBoard.initialize(); // The Marine Bounty Board and its daily hunts.
 		BossItems.initialize();
 		RumorDrops.initialize();
 		WorldMobs.initialize(); // Wandering bounty hunters and rookie pirate raids.
