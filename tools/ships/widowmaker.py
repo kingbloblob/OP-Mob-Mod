@@ -105,7 +105,7 @@ def patched(seed):
 
 
 def build():
-    s = BossShip("widowmaker", "The Widowmaker", captain="maribel_sedge", crew="Sedge Whaling Company")
+    s = BossShip("widowmaker", "Widowmaker", captain="maribel_sedge", crew="Sedge Whaling Company")
 
     s.hull(x0=X0, length=LEN, cz=CZ, beam=BEAM, keel_y=KEEL, deck_y=DECK, side=SIDE, bottom=BOTTOM, deck=DECKW,
            bow_len=14, stern_len=5, bow="sharp", stern="transom", sheer_bow=2, sheer_stern=1, fullness=0.62, flat=0.4,

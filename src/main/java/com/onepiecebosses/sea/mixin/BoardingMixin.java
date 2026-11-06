@@ -26,7 +26,11 @@ public abstract class BoardingMixin {
 
 	@Inject(method = "board", at = @At("HEAD"))
 	private static void opbosses$noteFlagship(ServerPlayer player, ShipEntity ship, CallbackInfoReturnable<InteractionResult> cir) {
-		opbosses$flagship.set(ship.entityTags().contains(BossShips.TAG) ? BossShips.idOf(ship) : null);
+		boolean flagship = ship.entityTags().contains(BossShips.TAG);
+		opbosses$flagship.set(flagship ? BossShips.idOf(ship) : null);
+		if (flagship && !ship.sinking && ship.level() instanceof ServerLevel level) {
+			BossShips.clearKeel(level, ship);
+		}
 	}
 
 	@Inject(method = "board", at = @At("RETURN"))

@@ -274,6 +274,45 @@ public final class BossShips {
 	// ---- Boarding: the captain is waiting on deck ----
 
 	/**
+	 * Boarding docks the ship into blocks, and the main mod refuses if any block of hers would land on something solid.
+	 * A flagship draws a lot of water, so kelp and coral under her keel would stop anyone ever boarding her: they're
+	 * cleared to water first. Returns how many blocks are still in the way (rock, another ship), and logs what they are.
+	 * BoardingMixin calls this just before Boarding.board.
+	 */
+	public static int clearKeel(ServerLevel level, ShipEntity ship) {
+		int quarterTurns = Math.floorMod(Math.round(Mth.wrapDegrees(ship.rotationSinceBuilt(1.0f)) / 90f), 4);
+		net.minecraft.world.level.block.Rotation rotation = switch (quarterTurns) {
+			case 1 -> net.minecraft.world.level.block.Rotation.CLOCKWISE_90;
+			case 2 -> net.minecraft.world.level.block.Rotation.CLOCKWISE_180;
+			case 3 -> net.minecraft.world.level.block.Rotation.COUNTERCLOCKWISE_90;
+			default -> net.minecraft.world.level.block.Rotation.NONE;
+		};
+		BlockPos anchor = BlockPos.containing(ship.getX(), Math.round(ship.getY()), ship.getZ());
+		int blocked = 0;
+		java.util.Map<String, Integer> what = new java.util.TreeMap<>();
+		for (ShipLayout.ShipBlock block : ship.getLayout().blocks) {
+			BlockPos target = anchor.offset(block.pos().rotate(rotation));
+			net.minecraft.world.level.block.state.BlockState state = level.getBlockState(target);
+			if (state.canBeReplaced()) {
+				continue;
+			}
+			if (state.is(net.minecraft.world.level.block.Blocks.KELP) || state.is(net.minecraft.world.level.block.Blocks.KELP_PLANT)
+					|| state.is(net.minecraft.tags.BlockTags.CORALS) || state.is(net.minecraft.tags.BlockTags.CORAL_BLOCKS)
+					|| state.is(net.minecraft.world.level.block.Blocks.SEA_PICKLE) || state.is(net.minecraft.world.level.block.Blocks.BUBBLE_COLUMN)) {
+				level.setBlock(target, net.minecraft.world.level.block.Blocks.WATER.defaultBlockState(), 2);
+				continue;
+			}
+			blocked++;
+			what.merge(net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(state.getBlock()).getPath(), 1, Integer::sum);
+		}
+		if (blocked > 0) {
+			com.onepiecebosses.BossesMod.LOGGER.info("Flagship {} can't dock at {}: {} blocks in the way {}", ship.getName().getString(),
+					anchor.toShortString(), blocked, what);
+		}
+		return blocked;
+	}
+
+	/**
 	 * A player just boarded a flagship (the main mod docked her into blocks and put the player on deck by the wheel):
 	 * her captain comes at them. BoardingMixin calls this.
 	 */

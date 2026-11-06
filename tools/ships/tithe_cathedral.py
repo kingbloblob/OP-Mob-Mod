@@ -80,7 +80,7 @@ def compose(w, h, rows, flip=False):
 
 
 def build():
-    s = BossShip("tithe_cathedral", "The Tithe Cathedral", captain="severo_lume", crew="Red Tithe Order")
+    s = BossShip("tithe_cathedral", "Tithe Cathedral", captain="severo_lume", crew="Red Tithe Order")
 
     s.hull(x0=X0, length=LEN, cz=CZ, beam=BEAM, keel_y=KEEL, deck_y=DECK, side=SIDE, bottom=BOTTOM, deck=DECKW,
            bow_len=15, stern_len=4, bow="sharp", stern="transom", sheer_bow=2, sheer_stern=0, fullness=0.66, flat=0.45,

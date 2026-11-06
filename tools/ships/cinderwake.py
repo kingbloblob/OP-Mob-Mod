@@ -98,7 +98,7 @@ def singed(seed, base=None):
 
 
 def build():
-    s = BossShip("cinderwake", "The Cinderwake", captain="kael_ashgrave", crew="Ashgrave Corsairs")
+    s = BossShip("cinderwake", "Cinderwake", captain="kael_ashgrave", crew="Ashgrave Corsairs")
 
     s.hull(x0=X0, length=LEN, cz=CZ, beam=BEAM, keel_y=KEEL, deck_y=DECK, side=SIDE, bottom=BOTTOM, deck=DECKW,
            bow_len=14, stern_len=4, bow="sharp", stern="transom", sheer_bow=2, sheer_stern=1, fullness=0.64, flat=0.42,

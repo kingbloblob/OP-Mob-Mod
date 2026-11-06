@@ -128,6 +128,34 @@ public class SeaKingBossEntity extends SeaKingEntity {
 		return dazed > 0;
 	}
 
+	/** The Sea King's boss bar (the main mod's, private) with this one's own name, in red. */
+	private void nameBar() {
+		try {
+			if (BAR == null) {
+				BAR = SeaKingEntity.class.getDeclaredField("bossBar");
+				BAR.setAccessible(true);
+			}
+			net.minecraft.server.level.ServerBossEvent bar = (net.minecraft.server.level.ServerBossEvent) BAR.get(this);
+			if (!getName().equals(bar.getName())) {
+				bar.setName(getName());
+				bar.setColor(net.minecraft.world.BossEvent.BossBarColor.RED);
+			}
+		} catch (ReflectiveOperationException | ClassCastException e) {
+			BAR_BROKEN = true;
+		}
+	}
+
+	@Override
+	public void setCustomName(Component name) {
+		super.setCustomName(name);
+		if (!this.level().isClientSide() && !BAR_BROKEN) {
+			nameBar();
+		}
+	}
+
+	private static java.lang.reflect.Field BAR;
+	private static boolean BAR_BROKEN;
+
 	// ---------- No taming, no riding ----------
 
 	@Override
@@ -154,6 +182,9 @@ public class SeaKingBossEntity extends SeaKingEntity {
 	@Override
 	protected void customServerAiStep(ServerLevel level) {
 		super.customServerAiStep(level);
+		if (tickCount % 20 == 0 && !BAR_BROKEN) {
+			nameBar();
+		}
 		ServerPlayer player = prey == null ? null : level.getServer().getPlayerList().getPlayer(prey);
 		if (player == null || !player.isAlive() || player.isSpectator() || player.level() != level || player.distanceTo(this) > LOSE_RANGE) {
 			if (getTarget() instanceof ServerPlayer other && other.isAlive()) {

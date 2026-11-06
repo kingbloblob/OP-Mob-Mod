@@ -189,7 +189,7 @@ public class SeaClientTest implements FabricClientGameTest {
 			float max = ShipHull.max(ship);
 			LOG.info("SEA {} named '{}', hull {}, tier {}", id, ship.getName().getString(), max, ShipBrain.tierOf(ship));
 			check(max > 700, id + ": hull " + max + " is no tougher than a big pirate ship's");
-			camera[0] = at.add(-30, 14, -22);
+			camera[0] = at.add(-44, 18, -34);
 			look(p, camera[0], at.add(0, 6, 0));
 		});
 		if (flagship[0] == null) {
@@ -292,10 +292,11 @@ public class SeaClientTest implements FabricClientGameTest {
 			check(Math.abs(k.getMaxHealth() - kind.health) < 1, kind.id + ": health " + k.getMaxHealth() + ", want " + kind.health);
 			check(k.getType() == SeaKings.TYPES.get(kind), kind.id + ": the wrong mob type");
 			// Surfaced beside the ship for its portrait.
-			Vec3 at = own.position().add(0, 0, 16);
+			// Well clear of the player's ship, seen side-on from the far side so the ship isn't in the way.
+			Vec3 at = own.position().add(0, 0, 40);
 			k.setNoAi(true);
-			k.snapTo(at.x, level.getSeaLevel() - 1.5, at.z, 90f, 0f);
-			look(p, at.add(-14, 7, -10), at.add(0, 1, 0));
+			k.snapTo(at.x, level.getSeaLevel() - 1.2, at.z, 90f, 0f);
+			look(p, at.add(-6, 8, 22), at.add(-4, 1, 0));
 		});
 		if (king[0] == null) {
 			return;
@@ -318,7 +319,10 @@ public class SeaClientTest implements FabricClientGameTest {
 			king[0].ambushIn(5);
 			LOG.info("SEA {} ambush set, aboard {}", kind.id, ShipEntity.aboard(p) == own);
 		});
-		context.waitTicks(80); // 5 + 70 ticks of warning
+		context.waitTicks(78); // 5 + 70 ticks of warning, then the breach
+		// Out of the splash, to see it rear up beside the ship.
+		server(sp, s -> look(player(s), own.position().add(-22, 9, 12), king[0].position().add(0, 3, 0)));
+		context.waitTicks(3);
 		clearChat(context);
 		context.takeScreenshot("sea_" + kind.id + "_breach");
 		context.waitTicks(20);
