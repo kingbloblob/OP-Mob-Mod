@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_cinderwake",
+  "ingredients": [
+    "minecraft:diamond_sword",
+    "opbosses:remnant_kael_ashgrave",
+    "opbosses:remnant_kael_ashgrave",
+    "opbosses:remnant_kael_ashgrave"
+  ],
+  "result": {
+    "id": "opbosses:ash_cutlass",
+    "count": 1
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_iron_tide",
+  "ingredients": [
+    "minecraft:diamond_boots",
+    "opbosses:remnant_iron_tide_graves",
+    "opbosses:remnant_iron_tide_graves",
+    "opbosses:remnant_iron_tide_graves"
+  ],
+  "result": {
+    "id": "opbosses:iron_tide_boots",
+    "count": 1
+  }
+}

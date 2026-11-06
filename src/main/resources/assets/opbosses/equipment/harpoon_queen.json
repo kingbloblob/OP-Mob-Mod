@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "opbosses:harpoon_queen"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "opbosses:harpoon_queen"
+      }
+    ]
+  }
+}

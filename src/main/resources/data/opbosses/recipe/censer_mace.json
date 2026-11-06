@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_red_tithe",
+  "ingredients": [
+    "minecraft:diamond_sword",
+    "opbosses:remnant_severo_lume",
+    "opbosses:remnant_severo_lume",
+    "opbosses:remnant_severo_lume"
+  ],
+  "result": {
+    "id": "opbosses:censer_mace",
+    "count": 1
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_golden_kirin",
+  "ingredients": [
+    "minecraft:diamond_sword",
+    "opbosses:remnant_count_butler",
+    "opbosses:remnant_count_butler",
+    "opbosses:remnant_count_butler"
+  ],
+  "result": {
+    "id": "opbosses:kirin_horn_spear",
+    "count": 1
+  }
+}

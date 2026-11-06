@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "opbosses:item/remnant_gild_tesoro"
+  }
+}

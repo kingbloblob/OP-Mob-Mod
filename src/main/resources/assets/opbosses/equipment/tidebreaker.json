@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "opbosses:tidebreaker"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "opbosses:tidebreaker"
+      }
+    ]
+  }
+}

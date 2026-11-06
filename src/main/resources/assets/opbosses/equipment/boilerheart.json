@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "opbosses:boilerheart"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "opbosses:boilerheart"
+      }
+    ]
+  }
+}

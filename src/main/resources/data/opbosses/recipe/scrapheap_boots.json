@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_scrapheap",
+  "ingredients": [
+    "minecraft:diamond_boots",
+    "opbosses:remnant_saltjaw_rourke",
+    "opbosses:remnant_saltjaw_rourke",
+    "opbosses:remnant_saltjaw_rourke"
+  ],
+  "result": {
+    "id": "opbosses:scrapheap_boots",
+    "count": 1
+  }
+}

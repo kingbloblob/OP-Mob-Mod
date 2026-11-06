@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_seven_star",
+  "ingredients": [
+    "minecraft:diamond_helmet",
+    "opbosses:remnant_saga",
+    "opbosses:remnant_saga",
+    "opbosses:remnant_saga"
+  ],
+  "result": {
+    "id": "opbosses:seven_star_helmet",
+    "count": 1
+  }
+}

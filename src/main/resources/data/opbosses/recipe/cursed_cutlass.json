@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_drowned_gale",
+  "ingredients": [
+    "minecraft:diamond_sword",
+    "opbosses:remnant_mortimer_gale",
+    "opbosses:remnant_mortimer_gale",
+    "opbosses:remnant_mortimer_gale"
+  ],
+  "result": {
+    "id": "opbosses:cursed_cutlass",
+    "count": 1
+  }
+}

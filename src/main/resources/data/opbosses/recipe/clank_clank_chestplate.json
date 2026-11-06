@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_clank_clank",
+  "ingredients": [
+    "minecraft:diamond_chestplate",
+    "opbosses:remnant_douglas_bullet",
+    "opbosses:remnant_douglas_bullet",
+    "opbosses:remnant_douglas_bullet"
+  ],
+  "result": {
+    "id": "opbosses:clank_clank_chestplate",
+    "count": 1
+  }
+}

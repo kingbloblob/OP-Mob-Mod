@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_golden_voice",
+  "ingredients": [
+    "minecraft:diamond_leggings",
+    "opbosses:remnant_el_drago",
+    "opbosses:remnant_el_drago",
+    "opbosses:remnant_el_drago"
+  ],
+  "result": {
+    "id": "opbosses:golden_voice_leggings",
+    "count": 1
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "opbosses:red_tithe"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "opbosses:red_tithe"
+      }
+    ]
+  }
+}

@@ -14,6 +14,7 @@ from PIL import Image, ImageDraw
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gen_chests import CHESTS  # noqa: E402  (the lair chests' names)
+from gen_gear import lang_entries as gear_lang  # noqa: E402  (the boss gear's names)
 
 # Trophy item: (main colour, shade, shape).
 TROPHIES = {
@@ -256,6 +257,7 @@ def main(res):
     lang["block.opbosses.marine_bounty_board"] = "Marine Bounty Board"  # drawn by gen_board.py
     for cid, c in CHESTS.items():
         lang["block.opbosses." + cid + "_chest"] = c["name"]
+    lang.update(gear_lang(res))
     write_json(os.path.join(assets, "lang/en_us.json"), lang)
     print("Drew %d bosses" % len(bosses))
 

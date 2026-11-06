@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_trump",
+  "ingredients": [
+    "minecraft:diamond_boots",
+    "opbosses:remnant_bear_king",
+    "opbosses:remnant_bear_king",
+    "opbosses:remnant_bear_king"
+  ],
+  "result": {
+    "id": "opbosses:trump_boots",
+    "count": 1
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_iron_tide",
+  "ingredients": [
+    "minecraft:diamond_sword",
+    "opbosses:remnant_iron_tide_graves",
+    "opbosses:remnant_iron_tide_graves",
+    "opbosses:remnant_iron_tide_graves"
+  ],
+  "result": {
+    "id": "opbosses:seastone_saber",
+    "count": 1
+  }
+}

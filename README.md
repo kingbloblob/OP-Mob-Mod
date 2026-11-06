@@ -77,6 +77,47 @@ Every lair fights back. What each one does is in `src/main/resources/opbosses/ar
 
   Each hazard announces itself once in chat when it starts ("The rotten scrap deck starts to give way!").
 
+## Boss gear
+
+Every boss drops its **Remnants** each time it's beaten (2 on Normal, 3 on Hard, 4 on Expert). Three Remnants and a diamond helmet, chestplate, leggings, boots or sword craft that piece of the boss's own gear set (shapeless, in a crafting table). The pieces repair with Remnants in an anvil.
+
+- **Armour** has diamond's defence; durability, toughness and knockback resistance rise with the boss's tier (tier 4 and 5 sets match or beat netherite and don't burn).
+- **Weapons** are swords underneath: diamond up to tier 3, netherite above. Hammers, mauls, anchors and halberds hit harder and slower; rapiers, claws, the mic and the laser blade lighter and faster.
+- **Full set bonus**: wearing all four pieces keeps the set's passive effects on you, and a full-strength hit unleashes a player-sized version of the boss's **signature move** every 30 seconds (18 with the set's own weapon in hand). The action bar says when it's ready. The moves only touch monsters, mobs hunting you and whatever you struck, never other players or pets.
+- Creative: the **One Piece: Boss Gear** tab.
+
+| Set | From | Tier | Weapon | Full set passive | Signature move |
+| --- | --- | --- | --- | --- | --- |
+| Scrapheap Salvage | "Saltjaw" Gully Rourke | 1 | Saltjaw's Anchor Cleaver | Water breathing in water | **Anchor Drag**: Your chain hauls the foe you strike to your feet, slows it, and a cut flies down the line. |
+| Fog Widow | Corvina, the Fog Widow | 2 | Widow's Veil Rapier | Night vision | **Widow's Veil**: Fog blinds every foe near you, you vanish, and you step out behind the one you struck. |
+| Iron Tide | Commodore Hollis "Iron Tide" Graves | 3 | Deserter's Seastone Saber | Resistance | **Seastone Volley**: Seastone shot rains on the foes around you, weighing them down and draining Devil Fruit users. |
+| Hollow Ronin | Tsurugi, the Hollow Ronin | 3 | Hollow Blade | Speed | **Hollow Cut**: A cut flies down the line in front of you, and the curse withers everything it passes. |
+| Boilerheart | Boilerheart Gantz | 4 | Boilerheart Hammer | Fire resistance | **Boiler Burst**: You vent scalding steam: every foe around you is burned and blown back. |
+| Abyssal Herald | Nereus Vane, Herald of the Deep | 5 | Nereus's Abyssal Trident | Conduit power in water, Dolphins grace in water | **Tidal Judgment**: A whirlpool drags the foes around you into the one you struck, and the deep weighs on them. |
+| Sandshackle | Khamsin "Sandshackle" Rahd | 2 | Khamsin's Chain Scimitar | Haste | **Sandshackle Storm**: Sand blinds the foes around you, and your chain drags in the one you struck and claps it in irons. |
+| Drowned Gale | Captain Mortimer Gale of the Gilded Wake | 3 | Gale's Cursed Cutlass | Water breathing in water | **The Doubloon's Curse**: Cursed gold withers the foes around you, and the years it takes from them mend you. |
+| Tidebreaker | "Tidebreaker" Vasco Morrow, the Sea King Tamer | 4 | Tidebreaker Harpoon | Dolphins grace in water | **Leviathan Charge**: You surge forward like a Sea King, and the foes in your path are thrown into the air in a wall of seawater. |
+| Prototype | Dr. Aldous Kreuz, the Prototype Doctor | 5 | Prototype Laser Blade | Haste, Resistance | **Prototype Barrage**: A paw-pad blast throws back the foes around you, lasers strike them, and a deflector shield covers you. |
+| Gran Tesoro | Gild Tesoro, the Golden Emperor | 4 | Tesoro's Golden Cane | Luck II | **Golden Finale**: Gold grabs every foe around you and holds them nearly still while molten gold strikes them. |
+| Diva of Elegia | Uta, the World's Diva | 5 | Diva's Microphone | Regeneration | **Uta World**: Your song lulls every foe around you (slow, weak and dazed), notes fall on them, and you are healed. |
+| Neo Marine | "Z", Admiral Zephyr of the Neo Marines | 5 | Battle Smasher | Strength | **Battle Smasher**: A seastone haymaker blasts the foe you struck far away, draining Devil Fruit users near it. |
+| Clank-Clank Fortress | Douglas Bullet, the Demon Heir | 5 | Clank-Clank Maul | Resistance | **Gashapon Fortress**: Scrap fuses onto you as armour (resistance and absorption) while it slams into the foes around you. |
+| Golden Lion | Shiki, the Golden Lion | 5 | Oto, the Lion's Blade | Slow falling while falling | **Lion Float**: The foes around you float up into the sky, and then you let go. |
+| Golden Voice | El Drago, the Golden Roar | 3 | El Drago's Golden Claw | Jump boost | **Goe Goe Blast**: A roar flies down the line in front of you, hurting, dazing and blowing back every foe it hits. |
+| Salamander | Gasparde, the Navy's Greatest Stain | 4 | Gasparde's Syrup Saber | Resistance | **Syrup Flood**: A wave of syrup glues every foe around you in place, then sets into spikes under them. |
+| Lily Carnation | Baron Omatsuri | 4 | Red Arrow Lance | Regeneration | **Lily Arrow Storm**: Lily drinks from the foes around you, and what she takes flows back into you. |
+| Karakuri | Dr. Ratchet, Lord of Mecha Island | 4 | Ratchet's Drill Lance | Haste II | **Super Zogame-kun**: A rocket claw hauls the foe you struck to you, and the shell cannons burst around it. |
+| Moa-Moa | Byrnndi World, Destroyer of the World | 5 | World's Horn Halberd | Speed II, Jump boost II | **Moa Moa Hundred**: You move a hundred times faster, and pebbles thrown a hundred times bigger burst around the foe you struck. |
+| Trump King | Bear King of the Trump Pirates | 3 | Kachi-Kachi Knuckle | Fire resistance | **Hot Boiling Special**: Your fists heat until they burn: the foe you struck and those around it are burned and knocked back, and your skin hardens like stone. |
+| Festival | Buena Festa, the Festival Pirate | 4 | Festa's Firework Cane | Luck, Speed | **Festival Finale**: Fireworks burst over every foe around you, burning and dazing them. |
+| Seven Star | Saga of the Seven Star Sword | 4 | Seven Star Sword | Strength | **Dark Fire Slash**: A cut of green fire flies down the line in front of you, burning and withering everything it passes. |
+| Golden Kirin | Count Butler, the Horn Eater | 3 | Butler's Kirin Horn Spear | Jump boost | **Golden Horn Frenzy**: Your violin hypnotises the foes around you, and you charge the one you struck with fiery golden horns. |
+| Harpoon Queen | "Harpoon Queen" Maribel Sedge | 3 | Maribel's Whaling Harpoon | Dolphins grace in water, Water breathing in water | **Harpoon Volley**: Harpoons fly at every foe around you and reel them in to your feet, slowed. |
+| Red Tithe | Cardinal Severo Lume, the Red Tithe | 4 | Lume's Censer Mace | Resistance | **Tithe of Bells**: Your bell tolls: the foes around you reel, and a tithe of their life heals you. |
+| Cinderwake | Kael Ashgrave, the Ash Corsair | 5 | Ash Corsair's Cutlass | Fire resistance, Strength | **Cinder Broadside**: A broadside of burning shot sets every foe around you alight and blasts them back. |
+
+The sets are in `src/main/resources/opbosses/gear.json` (names, colours, passives) and the moves in `gear/GearSignatures.java`. `python3 tools/gen_gear.py src/main/resources` draws the icons and worn textures and writes the models, recipes, repair tags and names (`--sheet docs/gear.png` draws them all on one page, as in [docs/gear.png](docs/gear.png)). A new boss needs an entry in `gear.json` and a case in `GearSignatures`. A set for a boss that isn't in `bosses.json` yet is skipped, and `gen_gear.py` gives its recipes a load condition, so a set can be made ahead of its boss; rerun `gen_gear.py` once the boss lands. In-game check: `gradlew runClientGameTest -Dopbosses.tests=gear` (add `-Dopbosses.only=<boss ids>` for some of them).
+
 ## Finding them
 
 - **Rumor Posters** are the rogues' Wanted Posters. Use one on a block to call the rogue out. Beat them and the poster brings them back on Hard, then Expert; sneak while using it for a Normal fight.

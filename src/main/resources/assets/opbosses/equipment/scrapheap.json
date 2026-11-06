@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "opbosses:scrapheap"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "opbosses:scrapheap"
+      }
+    ]
+  }
+}

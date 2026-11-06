@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "opbosses:karakuri"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "opbosses:karakuri"
+      }
+    ]
+  }
+}

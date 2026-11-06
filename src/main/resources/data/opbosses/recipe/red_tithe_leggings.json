@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_red_tithe",
+  "ingredients": [
+    "minecraft:diamond_leggings",
+    "opbosses:remnant_severo_lume",
+    "opbosses:remnant_severo_lume",
+    "opbosses:remnant_severo_lume"
+  ],
+  "result": {
+    "id": "opbosses:red_tithe_leggings",
+    "count": 1
+  }
+}

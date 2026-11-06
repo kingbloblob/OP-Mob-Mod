@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "opbosses:gran_tesoro"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "opbosses:gran_tesoro"
+      }
+    ]
+  }
+}

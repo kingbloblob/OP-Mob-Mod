@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "opbosses:sandshackle"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "opbosses:sandshackle"
+      }
+    ]
+  }
+}

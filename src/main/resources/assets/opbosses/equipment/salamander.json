@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "opbosses:salamander"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "opbosses:salamander"
+      }
+    ]
+  }
+}

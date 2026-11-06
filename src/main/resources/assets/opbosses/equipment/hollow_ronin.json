@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "opbosses:hollow_ronin"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "opbosses:hollow_ronin"
+      }
+    ]
+  }
+}

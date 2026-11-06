@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_tidebreaker",
+  "ingredients": [
+    "minecraft:diamond_chestplate",
+    "opbosses:remnant_vasco_tidebreaker",
+    "opbosses:remnant_vasco_tidebreaker",
+    "opbosses:remnant_vasco_tidebreaker"
+  ],
+  "result": {
+    "id": "opbosses:tidebreaker_chestplate",
+    "count": 1
+  }
+}

@@ -12,6 +12,8 @@ import com.onepiecebosses.boss.RogueBosses;
 import com.onepiecebosses.bounty.BountyBoard;
 import com.onepiecebosses.crew.CrewKits;
 import com.onepiecebosses.crew.RivalCrews;
+import com.onepiecebosses.gear.GearItems;
+import com.onepiecebosses.gear.GearSets;
 import com.onepiecebosses.loot.LairChests;
 import com.onepiecebosses.loot.RumorDrops;
 import com.onepiecebosses.sea.SeaBosses;
@@ -37,6 +39,8 @@ public class BossesMod implements ModInitializer {
 		LairChests.initialize();
 		BountyBoard.initialize(); // The Marine Bounty Board and its daily hunts.
 		BossItems.initialize();
+		GearItems.initialize(); // Each boss's Remnant, armour set and weapon.
+		GearSets.initialize();
 		RumorDrops.initialize();
 		WorldMobs.initialize(); // Wandering bounty hunters and rookie pirate raids.
 		RivalCrews.initialize(); // Roaming rival pirate crews and their treasure camps.
