@@ -182,12 +182,17 @@ public final class SeaBosses {
 		return ship == null || ship.sinking || ShipBrain.isAi(ship) ? null : ship;
 	}
 
-	/** True if a flagship or a Sea King mini-boss is already out near here. */
+	/** True if a flagship, a Sea King mini-boss or one of the main mod's sea monsters is already out near here. */
 	private static boolean bossNear(ServerLevel level, Vec3 at) {
 		if (!level.getEntitiesOfClass(SeaKingBossEntity.class, new AABB(at, at).inflate(200), e -> e.isAlive()).isEmpty()) {
 			return true;
 		}
-		return !level.getEntitiesOfClass(ShipEntity.class, new AABB(at, at).inflate(200), s -> s.entityTags().contains(BossShips.TAG)).isEmpty();
+		if (!level.getEntitiesOfClass(ShipEntity.class, new AABB(at, at).inflate(200), s -> s.entityTags().contains(BossShips.TAG)).isEmpty()) {
+			return true;
+		}
+		// Or one of the main mod's own sea monsters (its Sea King Lord, the Kraken...): one boss at a time.
+		return !level.getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class, new AABB(at, at).inflate(120),
+				e -> e.isAlive() && e.entityTags().contains("onepiece_sea_monster")).isEmpty();
 	}
 
 	// ---- /opbosses seaboss | seaking (operators only) ----
