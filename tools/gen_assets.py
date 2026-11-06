@@ -37,6 +37,10 @@ TROPHIES = {
     "red_arrow": ((200, 40, 40), (240, 200, 60), "arrow"),
     "clockwork_gear": ((200, 170, 70), (200, 40, 40), "gear"),
     "broken_horn": ((232, 224, 200), (110, 60, 140), "horn"),
+    "spade_collar": ((240, 200, 64), (120, 40, 40), "spade"),
+    "expo_ticket": ((230, 60, 90), (240, 200, 64), "ticket"),
+    "seven_star_shard": ((90, 220, 120), (30, 70, 40), "blade"),
+    "golden_kirin_horn": ((240, 196, 60), (220, 90, 30), "horn"),
 }
 
 TROPHY_NAMES = {
@@ -60,6 +64,10 @@ TROPHY_NAMES = {
     "red_arrow": "Red Arrow of Omatsuri",
     "clockwork_gear": "Karakuri Clockwork Gear",
     "broken_horn": "World's Broken Horn",
+    "spade_collar": "Bear King's Spade Collar",
+    "expo_ticket": "Pirates Festival Ticket",
+    "seven_star_shard": "Shard of the Seven Star Sword",
+    "golden_kirin_horn": "Kirin Lion's Golden Horn",
 }
 
 
@@ -149,6 +157,22 @@ def item_texture(main, dark, shape):
         d.polygon([(3, 14), (7, 14), (10, 6), (9, 3), (6, 7)], fill=main + (255,))
         d.line([(9, 3), (10, 6)], fill=(150, 140, 120, 255)); d.point([(8, 4), (10, 4), (9, 5)], fill=(150, 140, 120, 255))   # the break
         box(d, 2, 13, 7, 2, dark)
+    elif shape == "spade":
+        # A golden spade, the Trump Pirates' card, like his collar.
+        d.polygon([(8, 1), (14, 8), (11, 11), (8, 9), (5, 11), (2, 8)], fill=main + (255,))
+        d.polygon([(8, 9), (10, 14), (6, 14)], fill=main + (255,)); d.line([(8, 2), (4, 7)], fill=shade(main, 1.15) + (255,))
+        box(d, 5, 14, 6, 1, dark)
+    elif shape == "ticket":
+        # A Pirates Festival ticket with a torn stub and a gold star.
+        box(d, 1, 4, 14, 8, main); box(d, 11, 4, 1, 8, (250, 240, 220))
+        for y in (5, 7, 9, 11):
+            d.point([(11, y)], fill=shade(main, 0.6) + (255,))
+        d.polygon([(6, 5), (7, 7), (9, 7), (7, 9), (8, 11), (6, 10), (4, 11), (5, 9), (3, 7), (5, 7)], fill=dark + (255,))
+    elif shape == "blade":
+        # A broken shard of the Seven Star Sword, glowing green.
+        d.polygon([(3, 14), (5, 12), (12, 2), (14, 1), (13, 4), (6, 13)], fill=(220, 230, 225, 255))
+        d.line([(5, 12), (12, 3)], fill=main + (255,)); box(d, 2, 12, 3, 3, dark)
+        d.point([(13, 2), (9, 6), (6, 10)], fill=main + (255,))
     elif shape == "key":
         # An old iron-bound key: a ring bow in the boss's colour, a long shaft and a toothed bit.
         d.ellipse([1, 1, 7, 7], outline=main + (255,), width=2); d.point([(4, 4)], fill=dark + (255,))
@@ -185,7 +209,8 @@ def main(res):
     if missing:
         sys.exit("No look yet for: " + ", ".join(missing) + " (add them to TROPHIES)")
     lang = {"itemGroup.opbosses.bosses": "One Piece: Rogue Bosses", "entity.opbosses.rogue_boss": "Rogue Boss",
-            "entity.opbosses.wandering_hunter": "Wandering Bounty Hunter", "entity.opbosses.rookie_raider": "Rookie Raider"}
+            "entity.opbosses.wandering_hunter": "Wandering Bounty Hunter", "entity.opbosses.rookie_raider": "Rookie Raider",
+            "entity.opbosses.rival_pirate": "Rival Pirate"}
     for b in bosses:
         items = [("rumor_" + b["id"], item_texture(POSTER_SEAL[b["tier"]], None, "poster"))]
         key_c, key_d = (TROPHIES[b["trophy"]][:2] if b.get("trophy") else ((200, 170, 70), (70, 60, 50)))

@@ -68,7 +68,7 @@ fabricApi {
 }
 
 // Pick what the in-world test plays (see src/gametest/.../TestFilter.java), e.g.
-// `gradlew runClientGameTest -Dopbosses.tests=lairs -Dopbosses.only=gran_tesoro`. By default it runs bosses, arenas, lairs and world mobs.
+// `gradlew runClientGameTest -Dopbosses.tests=lairs -Dopbosses.only=gran_tesoro`. By default it runs bosses, arenas, lairs, world mobs and crews.
 tasks.matching { it.name == "runClientGameTest" }.configureEach {
 	// Read through providers so the configuration cache keys on them (a plain System.properties loop isn't tracked,
 	// and a cached run would silently ignore a new -Dopbosses.tests).

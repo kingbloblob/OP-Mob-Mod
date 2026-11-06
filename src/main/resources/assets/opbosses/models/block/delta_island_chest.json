@@ -1,0 +1,302 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "stripes": "opbosses:block/chest/delta_island/stripes",
+    "front": "opbosses:block/chest/delta_island/front",
+    "gold": "opbosses:block/chest/delta_island/gold",
+    "rocket": "opbosses:block/chest/delta_island/rocket",
+    "star": "opbosses:block/chest/delta_island/star",
+    "particle": "opbosses:block/chest/delta_island/stripes"
+  },
+  "elements": [
+    {
+      "from": [
+        1.5,
+        0,
+        2
+      ],
+      "to": [
+        14.5,
+        10,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#front"
+        },
+        "south": {
+          "texture": "#stripes"
+        },
+        "east": {
+          "texture": "#stripes"
+        },
+        "west": {
+          "texture": "#stripes"
+        },
+        "up": {
+          "texture": "#stripes"
+        },
+        "down": {
+          "texture": "#stripes",
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "from": [
+        1,
+        10,
+        1.5
+      ],
+      "to": [
+        15,
+        11.5,
+        14.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#gold"
+        },
+        "south": {
+          "texture": "#gold"
+        },
+        "east": {
+          "texture": "#gold"
+        },
+        "west": {
+          "texture": "#gold"
+        },
+        "up": {
+          "texture": "#gold"
+        },
+        "down": {
+          "texture": "#gold"
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        11.5,
+        2.5
+      ],
+      "to": [
+        14,
+        13,
+        13.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stripes"
+        },
+        "south": {
+          "texture": "#stripes"
+        },
+        "east": {
+          "texture": "#stripes"
+        },
+        "west": {
+          "texture": "#stripes"
+        },
+        "up": {
+          "texture": "#stripes"
+        },
+        "down": {
+          "texture": "#stripes"
+        }
+      }
+    },
+    {
+      "from": [
+        -0.5,
+        1,
+        6.5
+      ],
+      "to": [
+        1.5,
+        12,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rocket"
+        },
+        "south": {
+          "texture": "#rocket"
+        },
+        "east": {
+          "texture": "#rocket"
+        },
+        "west": {
+          "texture": "#rocket"
+        },
+        "up": {
+          "texture": "#rocket"
+        },
+        "down": {
+          "texture": "#rocket"
+        }
+      }
+    },
+    {
+      "from": [
+        14.5,
+        1,
+        6.5
+      ],
+      "to": [
+        16.5,
+        12,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rocket"
+        },
+        "south": {
+          "texture": "#rocket"
+        },
+        "east": {
+          "texture": "#rocket"
+        },
+        "west": {
+          "texture": "#rocket"
+        },
+        "up": {
+          "texture": "#rocket"
+        },
+        "down": {
+          "texture": "#rocket"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        12,
+        7
+      ],
+      "to": [
+        1,
+        14,
+        8
+      ],
+      "faces": {
+        "north": {
+          "texture": "#gold"
+        },
+        "south": {
+          "texture": "#gold"
+        },
+        "east": {
+          "texture": "#gold"
+        },
+        "west": {
+          "texture": "#gold"
+        },
+        "up": {
+          "texture": "#gold"
+        },
+        "down": {
+          "texture": "#gold"
+        }
+      }
+    },
+    {
+      "from": [
+        15,
+        12,
+        7
+      ],
+      "to": [
+        16,
+        14,
+        8
+      ],
+      "faces": {
+        "north": {
+          "texture": "#gold"
+        },
+        "south": {
+          "texture": "#gold"
+        },
+        "east": {
+          "texture": "#gold"
+        },
+        "west": {
+          "texture": "#gold"
+        },
+        "up": {
+          "texture": "#gold"
+        },
+        "down": {
+          "texture": "#gold"
+        }
+      }
+    },
+    {
+      "from": [
+        6.5,
+        13,
+        7
+      ],
+      "to": [
+        9.5,
+        17,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#star"
+        },
+        "south": {
+          "texture": "#star"
+        },
+        "east": {
+          "texture": "#star"
+        },
+        "west": {
+          "texture": "#star"
+        },
+        "up": {
+          "texture": "#star"
+        },
+        "down": {
+          "texture": "#star"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        14.2,
+        7
+      ],
+      "to": [
+        11,
+        15.8,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#star"
+        },
+        "south": {
+          "texture": "#star"
+        },
+        "east": {
+          "texture": "#star"
+        },
+        "west": {
+          "texture": "#star"
+        },
+        "up": {
+          "texture": "#star"
+        },
+        "down": {
+          "texture": "#star"
+        }
+      }
+    }
+  ]
+}

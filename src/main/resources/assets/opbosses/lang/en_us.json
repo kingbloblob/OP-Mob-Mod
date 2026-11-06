@@ -3,6 +3,7 @@
   "entity.opbosses.rogue_boss": "Rogue Boss",
   "entity.opbosses.wandering_hunter": "Wandering Bounty Hunter",
   "entity.opbosses.rookie_raider": "Rookie Raider",
+  "entity.opbosses.rival_pirate": "Rival Pirate",
   "item.opbosses.rusted_anchor_link": "Rusted Anchor Link",
   "item.opbosses.widows_lantern": "Widow's Lantern",
   "item.opbosses.deserters_epaulette": "Deserter's Epaulette",
@@ -23,6 +24,10 @@
   "item.opbosses.red_arrow": "Red Arrow of Omatsuri",
   "item.opbosses.clockwork_gear": "Karakuri Clockwork Gear",
   "item.opbosses.broken_horn": "World's Broken Horn",
+  "item.opbosses.spade_collar": "Bear King's Spade Collar",
+  "item.opbosses.expo_ticket": "Pirates Festival Ticket",
+  "item.opbosses.seven_star_shard": "Shard of the Seven Star Sword",
+  "item.opbosses.golden_kirin_horn": "Kirin Lion's Golden Horn",
   "item.opbosses.lair_charter": "Lair Restoration Charter",
   "block.opbosses.scrapheap_reef_chest": "Rourke's Sea Chest",
   "block.opbosses.lantern_house_chest": "The Widow's Casket",
@@ -43,5 +48,9 @@
   "block.opbosses.salamander_chest": "Gasparde's Syrup Safe",
   "block.opbosses.omatsuri_island_chest": "Festival Prize Box",
   "block.opbosses.karakuri_castle_chest": "Clockwork Turtle Chest",
-  "block.opbosses.groseade_chest": "World's War Chest"
+  "block.opbosses.groseade_chest": "World's War Chest",
+  "block.opbosses.clockwork_island_chest": "Trump Card Strongbox",
+  "block.opbosses.delta_island_chest": "Festival Treasure Chest",
+  "block.opbosses.asuka_island_chest": "Seven Star Reliquary",
+  "block.opbosses.crown_island_chest": "Butler's Specimen Case"
 }

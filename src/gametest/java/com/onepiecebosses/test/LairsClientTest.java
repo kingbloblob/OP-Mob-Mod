@@ -80,7 +80,11 @@ public class LairsClientTest implements FabricClientGameTest {
 			new Lair("salamander", "gasparde", "gasparde_pirate", 7, true),
 			new Lair("omatsuri_island", "baron_omatsuri", "red_arrows_pirate", 7, false),
 			new Lair("karakuri_castle", "ratchet", "karakuri_soldier", 6, true),
-			new Lair("groseade", "byrnndi_world", "world_pirate", 6, false));
+			new Lair("groseade", "byrnndi_world", "world_pirate", 6, false),
+			new Lair("clockwork_island", "bear_king", "trump_pirate", 7, false),
+			new Lair("delta_island", "buena_festa", "festival_pirate", 7, false),
+			new Lair("asuka_island", "saga", "seven_star_swordsman", 7, false),
+			new Lair("crown_island", "count_butler", "butler_henchman", 6, false));
 
 	@Override
 	public void runTest(ClientGameTestContext context) {
