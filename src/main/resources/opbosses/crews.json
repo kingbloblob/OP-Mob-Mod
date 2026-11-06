@@ -1,5 +1,5 @@
 {
-	"_help": "The rogue bosses' crews. Same format as the One Piece Mod's npc_kits.json: they are its pirate NPCs (same AI, fighting styles and skins), added to its kit list when the game loads. Skins must be one of the main mod's skin groups (see its NpcSkins.java).",
+	"_help": "The rogue bosses' crews. Same format as the One Piece Mod's npc_kits.json: they are its pirate NPCs (same AI, fighting styles and skins), added to its kit list when the game loads. Skins must be one of the main mod's skin groups (see its NpcSkins.java). 'rivals' are the roaming rival crews (crew/RivalCrews.java): a captain kit, the kits their crew is drawn from, how many follow the captain (min-max), their flag and tent colour (a dye colour) and the captain's battle cry. 'bounty' on a captain kit is how much your bounty rises for beating them.",
 	"kits": [
 		{
 			"id": "scrapdeck_raider",
@@ -304,6 +304,274 @@
 			"damage": 15,
 			"armor": 9,
 			"berries": 9
+		},
+		{
+			"id": "red_tusk_brawler",
+			"faction": "pirate",
+			"crews": ["Red Tusk Pirates"],
+			"name": "{rank} {name}",
+			"ranks": ["Tusker", "Bruiser", "Gorer"],
+			"skins": ["bandit", "deckhand"],
+			"loadouts": [
+				{"style": "brawler", "weight": 2, "weapons": []},
+				{"style": "heavy", "weight": 2, "weapons": ["minecraft:iron_axe", "minecraft:stone_axe"]}
+			],
+			"health": 32,
+			"damage": 6,
+			"armor": 3,
+			"knockbackResistance": 0.1,
+			"berries": 3
+		},
+		{
+			"id": "red_tusk_captain",
+			"faction": "pirate",
+			"crews": ["Red Tusk Pirates"],
+			"name": "Captain {name} \"Red Tusk\"",
+			"ranks": ["Captain"],
+			"skins": ["pirate_captain", "bandit"],
+			"loadouts": [
+				{"style": "heavy", "weight": 2, "weapons": ["minecraft:iron_axe"]},
+				{"style": "brawler", "weight": 1, "weapons": []}
+			],
+			"health": 110,
+			"damage": 12,
+			"armor": 6,
+			"knockbackResistance": 0.5,
+			"scale": 1.15,
+			"bounty": 8000000,
+			"berries": 14
+		},
+		{
+			"id": "gilded_gull_gunner",
+			"faction": "pirate",
+			"crews": ["Gilded Gull Pirates"],
+			"name": "{rank} {name}",
+			"ranks": ["Powder Monkey", "Gunner", "Quartermaster"],
+			"skins": ["baroque", "deckhand"],
+			"loadouts": [
+				{"style": "gunner", "weight": 3, "weapons": ["onepiece:flintlock_pistol"]},
+				{"style": "sword", "weight": 1, "weapons": ["minecraft:golden_sword"]}
+			],
+			"health": 30,
+			"damage": 6,
+			"armor": 2,
+			"berries": 4
+		},
+		{
+			"id": "gilded_gull_captain",
+			"faction": "pirate",
+			"crews": ["Gilded Gull Pirates"],
+			"name": "Captain {epithet} {surname}",
+			"ranks": ["Captain"],
+			"skins": ["donquixote", "baroque"],
+			"loadouts": [
+				{"style": "gunner", "weight": 2, "weapons": ["onepiece:flintlock_pistol"]},
+				{"style": "sword", "weight": 1, "weapons": ["minecraft:golden_sword"]}
+			],
+			"health": 90,
+			"damage": 11,
+			"armor": 5,
+			"bounty": 9000000,
+			"berries": 20
+		},
+		{
+			"id": "ashen_wake_bomber",
+			"faction": "pirate",
+			"crews": ["Ashen Wake Pirates"],
+			"name": "{rank} {name}",
+			"ranks": ["Fuse-hand", "Bombardier", "Blast Mate"],
+			"skins": ["gifter", "bandit"],
+			"loadouts": [
+				{"style": "bomber", "weight": 3, "weapons": []},
+				{"style": "heavy", "weight": 1, "weapons": ["minecraft:stone_axe"]}
+			],
+			"health": 34,
+			"damage": 7,
+			"armor": 3,
+			"berries": 3
+		},
+		{
+			"id": "ashen_wake_captain",
+			"faction": "pirate",
+			"crews": ["Ashen Wake Pirates"],
+			"name": "Captain {name} \"Cinder\"",
+			"ranks": ["Captain"],
+			"skins": ["headliner", "gifter"],
+			"loadouts": [
+				{"style": "bomber", "weight": 2, "weapons": []},
+				{"style": "heavy", "weight": 1, "weapons": ["minecraft:mace"]}
+			],
+			"health": 105,
+			"damage": 12,
+			"armor": 6,
+			"knockbackResistance": 0.3,
+			"bounty": 10000000,
+			"berries": 14
+		},
+		{
+			"id": "thornback_blade",
+			"faction": "pirate",
+			"crews": ["Thornback Pirates"],
+			"name": "{rank} {name}",
+			"ranks": ["Sword-hand", "Duelist", "Blade Mate"],
+			"skins": ["bounty_hunter", "deckhand"],
+			"loadouts": [
+				{"style": "sword", "weight": 3, "weapons": ["minecraft:iron_sword", "minecraft:stone_sword"]},
+				{"style": "rokushiki", "weight": 1, "weapons": []}
+			],
+			"health": 36,
+			"damage": 8,
+			"armor": 3,
+			"berries": 4
+		},
+		{
+			"id": "thornback_captain",
+			"faction": "pirate",
+			"crews": ["Thornback Pirates"],
+			"name": "Captain {epithet} {name}",
+			"ranks": ["Captain"],
+			"skins": ["bounty_hunter", "pirate_captain"],
+			"loadouts": [
+				{"style": "sword", "weight": 3, "weapons": ["minecraft:diamond_sword"]},
+				{"style": "haki", "weight": 1, "weapons": []}
+			],
+			"health": 120,
+			"damage": 14,
+			"armor": 7,
+			"knockbackResistance": 0.3,
+			"bounty": 12000000,
+			"berries": 16
+		},
+		{
+			"id": "coral_fang_raider",
+			"faction": "pirate",
+			"crews": ["Coral Fang Pirates"],
+			"name": "{rank} {name}",
+			"ranks": ["Reef-diver", "Fang", "Tide Mate"],
+			"skins": ["fishman"],
+			"loadouts": [
+				{"style": "fishman", "weight": 3, "weapons": []},
+				{"style": "sword", "weight": 1, "weapons": ["minecraft:trident"]}
+			],
+			"health": 48,
+			"damage": 9,
+			"armor": 4,
+			"berries": 5
+		},
+		{
+			"id": "coral_fang_captain",
+			"faction": "pirate",
+			"crews": ["Coral Fang Pirates"],
+			"name": "Captain {name} the Coral Fang",
+			"ranks": ["Captain"],
+			"skins": ["fishman"],
+			"loadouts": [
+				{"style": "fishman", "weight": 3, "weapons": []},
+				{"style": "sword", "weight": 1, "weapons": ["minecraft:trident"]}
+			],
+			"health": 150,
+			"damage": 16,
+			"armor": 8,
+			"knockbackResistance": 0.5,
+			"scale": 1.25,
+			"bounty": 15000000,
+			"berries": 18
+		},
+		{
+			"id": "howling_gale_sniper",
+			"faction": "pirate",
+			"crews": ["Howling Gale Pirates"],
+			"name": "{rank} {name}",
+			"ranks": ["Lookout", "Sharpshooter", "Gale Mate"],
+			"skins": ["deckhand", "rookie"],
+			"loadouts": [
+				{"style": "sniper", "weight": 2, "weapons": ["onepiece:marine_rifle"]},
+				{"style": "gunner", "weight": 1, "weapons": ["onepiece:flintlock_pistol"]},
+				{"style": "sword", "weight": 1, "weapons": ["minecraft:stone_sword"]}
+			],
+			"health": 28,
+			"damage": 6,
+			"armor": 2,
+			"berries": 3
+		},
+		{
+			"id": "howling_gale_captain",
+			"faction": "pirate",
+			"crews": ["Howling Gale Pirates"],
+			"name": "Captain {epithet} {surname}",
+			"ranks": ["Captain"],
+			"skins": ["pirate_captain", "headliner"],
+			"loadouts": [
+				{"style": "sniper", "weight": 2, "weapons": ["onepiece:marine_rifle"]},
+				{"style": "sword", "weight": 1, "weapons": ["minecraft:iron_sword"]}
+			],
+			"health": 95,
+			"damage": 12,
+			"armor": 5,
+			"bounty": 9000000,
+			"berries": 14
+		}
+	],
+	"rivals": [
+		{
+			"id": "red_tusk",
+			"name": "Red Tusk Pirates",
+			"captain": "red_tusk_captain",
+			"crew": ["red_tusk_brawler"],
+			"min": 3,
+			"max": 5,
+			"color": "red",
+			"boast": "Red Tusk charges first and asks never!"
+		},
+		{
+			"id": "gilded_gull",
+			"name": "Gilded Gull Pirates",
+			"captain": "gilded_gull_captain",
+			"crew": ["gilded_gull_gunner"],
+			"min": 3,
+			"max": 4,
+			"color": "yellow",
+			"boast": "Every coin on this island belongs to the Gilded Gull."
+		},
+		{
+			"id": "ashen_wake",
+			"name": "Ashen Wake Pirates",
+			"captain": "ashen_wake_captain",
+			"crew": ["ashen_wake_bomber"],
+			"min": 3,
+			"max": 4,
+			"color": "gray",
+			"boast": "Light the fuses, lads. We leave nothing but ash."
+		},
+		{
+			"id": "thornback",
+			"name": "Thornback Pirates",
+			"captain": "thornback_captain",
+			"crew": ["thornback_blade"],
+			"min": 2,
+			"max": 4,
+			"color": "green",
+			"boast": "Draw your blade. A Thornback never fights an unarmed fool."
+		},
+		{
+			"id": "coral_fang",
+			"name": "Coral Fang Pirates",
+			"captain": "coral_fang_captain",
+			"crew": ["coral_fang_raider"],
+			"min": 2,
+			"max": 3,
+			"color": "cyan",
+			"boast": "The reef takes the weak. So do we."
+		},
+		{
+			"id": "howling_gale",
+			"name": "Howling Gale Pirates",
+			"captain": "howling_gale_captain",
+			"crew": ["howling_gale_sniper"],
+			"min": 3,
+			"max": 5,
+			"color": "light_blue",
+			"boast": "You never hear the Howling Gale coming. Only the shot."
 		}
 	]
 }
