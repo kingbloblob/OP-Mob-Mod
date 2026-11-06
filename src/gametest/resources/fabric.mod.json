@@ -12,7 +12,8 @@
       "com.onepiecebosses.test.ModelShotsClientTest",
       "com.onepiecebosses.test.PlacesClientTest",
       "com.onepiecebosses.test.SeaClientTest",
-      "com.onepiecebosses.test.WorldMobsClientTest"
+      "com.onepiecebosses.test.WorldMobsClientTest",
+      "com.onepiecebosses.test.RivalCrewsClientTest"
     ]
   },
   "depends": {

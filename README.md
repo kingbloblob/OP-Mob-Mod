@@ -70,6 +70,16 @@ Two kinds of mobs that fill gaps the One Piece Mod leaves open. Its own Marine s
 - **Rookie pirate raids.** While you're in a village (three or more villagers nearby) or one of the One Piece Mod's towns, now and then a small crew lands on the shore in a rowboat (or walks in from the edge) and marches on it, going after villagers, townsfolk, golems and you. A red boss bar counts the raiders left. Beat them all for Berries (and Hero of the Village in a village). Leave, or let six minutes pass, and they make off with their loot. About one raid per 25 minutes spent in a settlement, then a 20 minute break; while one is on, the main mod holds back its Marine hunts on you.
 - Operators can call them with `/opbosses hunters [player]`, `/opbosses roam` and `/opbosses raid [player]`. Their kits are `wandering_hunter`, `veteran_hunter`, `rookie_raider` and `raider_captain` in `src/main/resources/opbosses/world_mobs.json`.
 
+### Rival pirate crews
+
+Six original crews roam the land behind their captain: the Red Tusk Pirates (brawlers and axes), Gilded Gull Pirates (gunners), Ashen Wake Pirates (bombers), Thornback Pirates (swordsmen), Coral Fang Pirates (Fish-Men) and Howling Gale Pirates (snipers).
+
+- **On the move.** A captain leads two to five crewmates a short way at a time, waiting for stragglers. They attack you, Marines and bounty hunters on sight, and when one of them starts a fight the whole crew piles in. The captain shouts their crew's battle cry when they close in.
+- **Crew against crew.** Rival crews hate each other more than they hate you. Two crews that meet fight it out, and sometimes you'll arrive in the middle of a brawl already going. Join in or let them wear each other down. They never turn on their own crew, and they leave the main mod's pirates alone.
+- **Treasure camps.** Some crews have made camp: a campfire with log seats, a tent in the crew's colour, their flag on a pole, barrels of plunder and a weapon rack. Their treasure chest sits in the tent (Berries, gold, emeralds, sometimes a diamond, a golden apple or a Rumor Poster). A camped crew never leaves or despawns; get past them to get the chest.
+- **Beating the captain** raises your bounty (8M for the Red Tusk captain up to 15M for the Coral Fang) and the toughest crewmate left takes over as Acting Captain.
+- About one crew every 20 minutes out in the Overworld (never while another crew is close by): roughly a third are camps and a quarter are two crews clashing. Operators can call them with `/opbosses crew [crew]`, `/opbosses crew camp [crew]` and `/opbosses crew clash`. The crews are the `rivals` list in `src/main/resources/opbosses/crews.json` (captain kit, crew kits, size, colour, battle cry); the spawn rates are at the top of `crew/RivalCrews.java`.
+
 ## Changing or adding a rogue
 
 | File | What it does |
@@ -127,7 +137,7 @@ The One Piece Mod isn't on a maven, so build against its jar, the same way as On
 1. In the One Piece Mod, run `./gradlew build`.
 2. Copy `build/libs/onepiece-0.1.0.jar` into this repo's `libs/` folder (change `onepiece_jar` in `gradle.properties` if the name differs).
 3. Run `./gradlew build` here. The jar lands in `build/libs/`; put it in your `mods/` folder next to the One Piece Mod.
-4. To test, run `./gradlew runClientGameTest`. A game window opens, fights every boss in a test world and closes: Rumor Poster spawn, crew waves, phase lines, signature moves, trophy, bounty (including a long-range kill), the Hard rematch and Rumor Poster drops. It fails with a list of what went wrong, checks the bounty hunters and a pirate raid, and saves screenshots to `build/run/clientGameTest/screenshots`. The tests are in `src/gametest` and never go into the mod jar, and a normal `runClient` or modpack launch never runs them. To replay only what a change touches, add `-Dopbosses.tests=bosses`, `lairs` or `mobs` (or `models` for model portraits) and `-Dopbosses.only=<boss ids or lair names>` (`hunters` or `raids` for the world mobs).
+4. To test, run `./gradlew runClientGameTest`. A game window opens, fights every boss in a test world and closes: Rumor Poster spawn, crew waves, phase lines, signature moves, trophy, bounty (including a long-range kill), the Hard rematch and Rumor Poster drops. It fails with a list of what went wrong, checks the bounty hunters, a pirate raid and the rival crews (a roaming crew, a clash and a treasure camp), and saves screenshots to `build/run/clientGameTest/screenshots`. The tests are in `src/gametest` and never go into the mod jar, and a normal `runClient` or modpack launch never runs them. To replay only what a change touches, add `-Dopbosses.tests=bosses`, `lairs`, `mobs` or `crews` (or `models` for model portraits) and `-Dopbosses.only=<boss ids or lair names>` (`hunters` or `raids` for the world mobs, `roam`, `clash` or `camp` for the crews).
 
 ## Planned
 
