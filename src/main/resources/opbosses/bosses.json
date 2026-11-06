@@ -645,7 +645,7 @@
 			"rumorFrom": ["bandit", "bounty_hunter", "gifter"],
 			"trophy": "golden_kirin_horn",
 			"beasts": ["onepiece:fighting_bull"],
-			"lairBeasts": ["onepiece:deer", "onepiece:long_horse"]
+			"lairBeasts": ["onepiece:drum_reindeer", "onepiece:long_horse"]
 		}
 	]
 }

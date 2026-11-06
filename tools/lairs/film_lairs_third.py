@@ -748,7 +748,7 @@ def add(lair, OCEANS, DEEP):
 
         b.rogue(AX, 1, AZ, "count_butler")
         b.crew("butler_henchman", ((AX - 8, AZ - 4), (AX + 8, AZ - 4), (AX - 7, AZ + 8), (AX + 7, AZ + 8), (16, 60), (MX0 + 10, 1, MZ0 + 20)))
-        b.beast("onepiece:deer", ((MX0 + 4, MZ0 + 3), (MX0 + 9, MZ0 + 3)))
+        b.beast("onepiece:drum_reindeer", ((MX0 + 4, MZ0 + 3), (MX0 + 9, MZ0 + 3)))
         b.beast("onepiece:long_horse", ((PX0 + 8, PZ0 + 7), (PX0 + 18, PZ0 + 7)))
         clear_spawns(b)
 
