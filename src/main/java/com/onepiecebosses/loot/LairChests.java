@@ -42,7 +42,9 @@ public final class LairChests {
 				{"gran_tesoro", "gild_tesoro"}, {"elegia_stage", "uta_diva"}, {"end_point", "zephyr_z"},
 				{"ironclad_colosseum", "douglas_bullet"}, {"merveille", "shiki_golden_lion"},
 				{"gold_island", "el_drago"}, {"salamander", "gasparde"}, {"omatsuri_island", "baron_omatsuri"},
-				{"karakuri_castle", "ratchet"}, {"groseade", "byrnndi_world"}};
+				{"karakuri_castle", "ratchet"}, {"groseade", "byrnndi_world"},
+				{"clockwork_island", "bear_king"}, {"delta_island", "buena_festa"}, {"asuka_island", "saga"},
+				{"crown_island", "count_butler"}};
 		for (String[] pair : pairs) {
 			LAIR_BOSSES.put(pair[0], pair[1]);
 		}
