@@ -18,7 +18,11 @@
   },
   "mixins": [
     "opbosses.worldgen.mixins.json",
-    "opbosses.sea.mixins.json"
+    "opbosses.sea.mixins.json",
+    {
+      "config": "opbosses.client.mixins.json",
+      "environment": "client"
+    }
   ],
   "depends": {
     "fabricloader": ">=0.19.5",
