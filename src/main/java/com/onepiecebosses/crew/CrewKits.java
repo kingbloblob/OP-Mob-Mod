@@ -13,7 +13,7 @@ import com.onepiecemod.npc.NpcKit;
 /**
  * The rogue bosses' crews (src/main/resources/opbosses/crews.json). They are the One Piece Mod's pirate NPCs,
  * so they fight with its styles and wear its skins; this only adds their kits to its kit list.
- * /npc spawn <kit> works on them too.
+ * /npc spawn <kit> works on them too. The "rivals" list is the roaming rival crews (RivalCrews).
  */
 public final class CrewKits {
 	private CrewKits() {
@@ -21,6 +21,7 @@ public final class CrewKits {
 
 	private static class FileData {
 		List<NpcKit> kits = List.of();
+		List<RivalCrews.Rival> rivals = List.of();
 	}
 
 	public static void initialize() {
@@ -29,6 +30,7 @@ public final class CrewKits {
 			for (NpcKit kit : data.kits) {
 				OnePieceBridge.addNpcKit(kit);
 			}
+			RivalCrews.load(data.rivals);
 		} catch (Exception e) {
 			throw new RuntimeException("Could not read opbosses/crews.json", e);
 		}

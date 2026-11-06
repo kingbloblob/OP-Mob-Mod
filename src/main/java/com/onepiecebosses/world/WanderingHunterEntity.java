@@ -63,6 +63,7 @@ public class WanderingHunterEntity extends HumanNpc {
 				(target, level) -> isPrey(target)));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, SeaPirateEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, RookieRaiderEntity.class, true));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, com.onepiecebosses.crew.RivalPirateEntity.class, true));
 	}
 
 	@Override

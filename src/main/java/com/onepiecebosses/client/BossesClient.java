@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.fabricmc.api.ClientModInitializer;
 
 import com.onepiecebosses.boss.RogueBosses;
+import com.onepiecebosses.crew.RivalCrews;
 import com.onepiecebosses.world.WorldMobs;
 import com.onepiecemod.npc.client.NpcRenderer;
 
@@ -17,5 +18,6 @@ public class BossesClient implements ClientModInitializer {
 		// The world mobs are the main mod's pirate NPCs underneath, so they wear its NPC skins.
 		EntityRenderers.register(WorldMobs.WANDERING_HUNTER, NpcRenderer::new);
 		EntityRenderers.register(WorldMobs.ROOKIE_RAIDER, NpcRenderer::new);
+		EntityRenderers.register(RivalCrews.RIVAL_PIRATE, NpcRenderer::new);
 	}
 }
