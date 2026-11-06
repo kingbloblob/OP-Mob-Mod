@@ -16,9 +16,11 @@ import java.util.stream.Collectors;
  *     gradlew runClientGameTest -Dopbosses.tests=crews                (the rival pirate crews)
  *     gradlew runClientGameTest -Dopbosses.tests=places -Dopbosses.only=angel_beach   (screenshots of a main-mod structure)
  *     gradlew runClientGameTest -Dopbosses.tests=bounty               (the Marine Bounty Board)
+ *     gradlew runClientGameTest -Dopbosses.tests=sea -Dopbosses.only=widowmaker,gulpmaw   (flagships and Sea King mini-bosses)
  *
- * opbosses.tests: any of bosses, arenas, lairs, mobs, crews, models, places, bounty (default "bosses,arenas,lairs,mobs,crews,bounty"). opbosses.only: boss ids or lair
- * names (default: all of them); a lair is picked by its own name or its boss's id; the world mobs are "hunters" and "raids"; the rival crews are "roam", "clash" and "camp".
+ * opbosses.tests: any of bosses, arenas, lairs, mobs, crews, models, places, bounty, sea (default "bosses,arenas,lairs,mobs,crews,bounty"). opbosses.only: boss ids or lair
+ * names (default: all of them); a lair is picked by its own name or its boss's id; the world mobs are "hunters" and "raids"; the rival crews are "roam", "clash" and "camp";
+ * the sea test picks a flagship by its id or its captain's, a Sea King by its id (gulpmaw, ironscale, thundercoil).
  */
 final class TestFilter {
 	private TestFilter() {

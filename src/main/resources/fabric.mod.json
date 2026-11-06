@@ -18,6 +18,7 @@
   },
   "mixins": [
     "opbosses.worldgen.mixins.json",
+    "opbosses.sea.mixins.json",
     {
       "config": "opbosses.client.mixins.json",
       "environment": "client"

@@ -1,0 +1,240 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "wood": "opbosses:block/chest/widowmaker/wood",
+    "front": "opbosses:block/chest/widowmaker/front",
+    "bone": "opbosses:block/chest/widowmaker/bone",
+    "lid": "opbosses:block/chest/widowmaker/lid",
+    "tooth": "opbosses:block/chest/widowmaker/tooth",
+    "particle": "opbosses:block/chest/widowmaker/wood"
+  },
+  "elements": [
+    {
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        15,
+        9,
+        15
+      ],
+      "faces": {
+        "north": {
+          "texture": "#front"
+        },
+        "south": {
+          "texture": "#wood"
+        },
+        "east": {
+          "texture": "#wood"
+        },
+        "west": {
+          "texture": "#wood"
+        },
+        "up": {
+          "texture": "#wood"
+        },
+        "down": {
+          "texture": "#wood",
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "from": [
+        1,
+        9,
+        1
+      ],
+      "to": [
+        15,
+        13,
+        15
+      ],
+      "faces": {
+        "north": {
+          "texture": "#front"
+        },
+        "south": {
+          "texture": "#wood"
+        },
+        "east": {
+          "texture": "#wood"
+        },
+        "west": {
+          "texture": "#wood"
+        },
+        "up": {
+          "texture": "#lid"
+        },
+        "down": {
+          "texture": "#wood"
+        }
+      }
+    },
+    {
+      "from": [
+        0.5,
+        0,
+        0.5
+      ],
+      "to": [
+        2,
+        13.5,
+        15.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#bone"
+        },
+        "south": {
+          "texture": "#bone"
+        },
+        "east": {
+          "texture": "#bone"
+        },
+        "west": {
+          "texture": "#bone"
+        },
+        "up": {
+          "texture": "#bone"
+        },
+        "down": {
+          "texture": "#bone",
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "from": [
+        14,
+        0,
+        0.5
+      ],
+      "to": [
+        15.5,
+        13.5,
+        15.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#bone"
+        },
+        "south": {
+          "texture": "#bone"
+        },
+        "east": {
+          "texture": "#bone"
+        },
+        "west": {
+          "texture": "#bone"
+        },
+        "up": {
+          "texture": "#bone"
+        },
+        "down": {
+          "texture": "#bone",
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "from": [
+        0.5,
+        8.5,
+        0.4
+      ],
+      "to": [
+        15.5,
+        9.5,
+        15.6
+      ],
+      "faces": {
+        "north": {
+          "texture": "#bone"
+        },
+        "south": {
+          "texture": "#bone"
+        },
+        "east": {
+          "texture": "#bone"
+        },
+        "west": {
+          "texture": "#bone"
+        },
+        "up": {
+          "texture": "#bone"
+        },
+        "down": {
+          "texture": "#bone"
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        6,
+        0.2
+      ],
+      "to": [
+        9,
+        12,
+        1
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tooth"
+        },
+        "south": {
+          "texture": "#tooth"
+        },
+        "east": {
+          "texture": "#tooth"
+        },
+        "west": {
+          "texture": "#tooth"
+        },
+        "up": {
+          "texture": "#tooth"
+        },
+        "down": {
+          "texture": "#tooth"
+        }
+      }
+    },
+    {
+      "from": [
+        7.5,
+        4.5,
+        0.3
+      ],
+      "to": [
+        8.5,
+        6,
+        0.9
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tooth"
+        },
+        "south": {
+          "texture": "#tooth"
+        },
+        "east": {
+          "texture": "#tooth"
+        },
+        "west": {
+          "texture": "#tooth"
+        },
+        "up": {
+          "texture": "#tooth"
+        },
+        "down": {
+          "texture": "#tooth"
+        }
+      }
+    }
+  ]
+}

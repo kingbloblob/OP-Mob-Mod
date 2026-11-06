@@ -41,6 +41,9 @@ TROPHIES = {
     "expo_ticket": ((230, 60, 90), (240, 200, 64), "ticket"),
     "seven_star_shard": ((90, 220, 120), (30, 70, 40), "blade"),
     "golden_kirin_horn": ((240, 196, 60), (220, 90, 30), "horn"),
+    "sea_king_harpoon": ((180, 180, 190), (110, 70, 40), "arrow"),
+    "red_tithe_censer": ((230, 180, 50), (150, 20, 20), "lantern"),
+    "cinder_heart": ((255, 120, 30), (40, 34, 36), "core"),
 }
 
 TROPHY_NAMES = {
@@ -68,6 +71,16 @@ TROPHY_NAMES = {
     "expo_ticket": "Pirates Festival Ticket",
     "seven_star_shard": "Shard of the Seven Star Sword",
     "golden_kirin_horn": "Kirin Lion's Golden Horn",
+    "sea_king_harpoon": "Harpoon Queen's Harpoon",
+    "red_tithe_censer": "Red Tithe Censer",
+    "cinder_heart": "Cinder Heart",
+}
+
+# The Sea King mini-bosses (sea/SeaKingBosses.java): entity name, and the trophy each drops (id, name, look).
+SEA_KINGS = {
+    "gulpmaw": ("Gulpmaw, the Lantern Deep", ("gulpmaw_lure", "Gulpmaw's Lure", ((150, 255, 200), (40, 60, 70), "core"))),
+    "ironscale": ("Ironscale, the Keelbreaker", ("ironscale_plate", "Ironscale Plate", ((120, 130, 140), (60, 70, 80), "shackle"))),
+    "thundercoil": ("Thundercoil, the Storm Serpent", ("thundercoil_fang", "Thundercoil Fang", ((240, 240, 160), (60, 90, 200), "claw"))),
 }
 
 
@@ -226,6 +239,13 @@ def main(res):
                        {"parent": "minecraft:item/generated", "textures": {"layer0": "opbosses:item/" + name}})
             write_json(os.path.join(assets, "items", name + ".json"),
                        {"model": {"type": "minecraft:model", "model": "opbosses:item/" + name}})
+    for sid, (name, (trophy, trophy_name, (main_c, dark, shape))) in SEA_KINGS.items():
+        lang["entity.opbosses." + sid] = name
+        lang["item.opbosses." + trophy] = trophy_name
+        item_texture(main_c, dark, shape).save(os.path.join(assets, "textures/item", trophy + ".png"))
+        write_json(os.path.join(assets, "models/item", trophy + ".json"),
+                   {"parent": "minecraft:item/generated", "textures": {"layer0": "opbosses:item/" + trophy}})
+        write_json(os.path.join(assets, "items", trophy + ".json"), {"model": {"type": "minecraft:model", "model": "opbosses:item/" + trophy}})
     charter = item_texture((220, 170, 50), (150, 30, 30), "charter")
     os.makedirs(os.path.join(assets, "textures/item"), exist_ok=True)
     charter.save(os.path.join(assets, "textures/item", "lair_charter.png"))

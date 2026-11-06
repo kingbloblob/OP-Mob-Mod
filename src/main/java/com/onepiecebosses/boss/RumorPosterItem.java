@@ -44,11 +44,28 @@ public class RumorPosterItem extends Item {
 		textConsumer.accept(Component.literal("Tier " + boss.tier() + " rogue").withStyle(ChatFormatting.RED));
 		textConsumer.accept(Component.literal(boss.lore).withStyle(ChatFormatting.GRAY));
 		textConsumer.accept(Component.literal("Use on a block to call them out. Sneak for a Normal fight.").withStyle(ChatFormatting.DARK_GRAY));
+		if (com.onepiecebosses.sea.BossShips.shipOf(bossId) != null) {
+			textConsumer.accept(Component.literal("Use it while sailing and their flagship comes for you instead.").withStyle(ChatFormatting.DARK_AQUA));
+		}
 	}
 
 	@Override
 	public InteractionResult useOn(UseOnContext context) {
 		if (context.getLevel() instanceof ServerLevel level) {
+			// A flagship's captain, called while sailing: her ship comes for you (sea/BossShips) instead.
+			String flagship = com.onepiecebosses.sea.BossShips.shipOf(bossId);
+			if (flagship != null && context.getPlayer() instanceof net.minecraft.server.level.ServerPlayer sailor
+					&& com.onepiecemod.ship.ShipEntity.aboard(sailor) != null) {
+				if (com.onepiecebosses.sea.SeaBosses.sendShip(level, sailor, flagship) != null) {
+					if (!sailor.isCreative()) {
+						context.getItemInHand().shrink(1);
+					}
+				} else {
+					sailor.sendOverlayMessage(Component.literal("Her sails won't show here: sail out into open, deep sea.")
+							.withStyle(ChatFormatting.YELLOW));
+				}
+				return InteractionResult.SUCCESS;
+			}
 			RogueBossEntity boss = RogueBosses.ROGUE_BOSS.create(level, EntitySpawnReason.SPAWN_ITEM_USE);
 			if (boss != null) {
 				BlockPos pos = context.getClickedPos().relative(context.getClickedFace());
