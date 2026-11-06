@@ -189,5 +189,29 @@
 			{"type": "tide", "from": 2, "particle": "minecraft:cloud", "warn": "Butler's roar shakes the whole island!"},
 			{"type": "debris", "from": 3, "block": "minecraft:stone", "warn": "Rocks crash down from the cliffs!"}
 		]
+	},
+	"maribel_sedge": {
+		"music": "widowmaker", "bar": "blue",
+		"finalWave": "Harpoons ready! Bring me that skull!",
+		"hazards": [
+			{"type": "debris", "from": 2, "block": "minecraft:iron_bars", "warn": "Harpoons rain down from the Widowmaker's rigging!"},
+			{"type": "geyser", "from": 3, "particle": "minecraft:splash", "warn": "Something huge thrashes under the hull, and spray bursts through the deck!"}
+		]
+	},
+	"severo_lume": {
+		"music": "tithe_cathedral", "bar": "white", "darkenFrom": 3,
+		"finalWave": "Acolytes! Collect the tithe!",
+		"hazards": [
+			{"type": "tide", "from": 2, "particle": "minecraft:note", "warn": "The great bell tolls, and its peal knocks you back!"},
+			{"type": "lightning", "from": 3, "warn": "The cathedral's spires call down judgment!"}
+		]
+	},
+	"kael_ashgrave": {
+		"music": "cinderwake", "bar": "red",
+		"finalWave": "Burn it all! Every last plank!",
+		"hazards": [
+			{"type": "geyser", "from": 2, "particle": "minecraft:flame", "fire": true, "warn": "The Cinderwake's furnaces vent fire across the deck!"},
+			{"type": "cloud", "from": 3, "effect": "minecraft:blindness", "particle": "minecraft:large_smoke", "warn": "Choking smoke rolls off the burning ship!"}
+		]
 	}
 }

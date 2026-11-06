@@ -190,5 +190,29 @@
         "stream": true
       }
     ]
+  },
+  "music.lair.widowmaker": {
+    "sounds": [
+      {
+        "name": "opbosses:music/widowmaker",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.tithe_cathedral": {
+    "sounds": [
+      {
+        "name": "opbosses:music/tithe_cathedral",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.cinderwake": {
+    "sounds": [
+      {
+        "name": "opbosses:music/cinderwake",
+        "stream": true
+      }
+    ]
   }
 }

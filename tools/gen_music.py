@@ -203,6 +203,18 @@ THEMES = {
 		key="G4", bpm=128, A="0:1 4:1 2:0.5 4:0.5 7:1 6:1 4:1 2:1 4:1", sA=3,
 		B="7:2 4:1 2:1 4:2 0:2", bB=-2, sB=1,
 		lead="strings", counter="brass", pad="choir", bass="march", drums="march", extra="bells"),
+	"widowmaker": dict(  # Maribel Sedge: a whaler's grim shanty, fiddle and creaking chains.
+		key="F4", bpm=132, A="0:1 0:0.5 2:0.5 4:1 2:1 3:1.5 2:0.5 0:2", sA=-2,
+		B="7:1 4:1 5:1 4:1 2:2 4:2", bB=3, sB=-1,
+		lead="fiddle", counter="accordion", pad="strings", bass="pulse", drums="shanty", extra="chains"),
+	"tithe_cathedral": dict(  # Severo Lume: a sailing cathedral, organ, choir and tolling bells.
+		key="E4", bpm=108, A="0:2 4:1 3:1 2:2 0:2", sA=3,
+		B="7:2 6:1 4:1 5:2 4:2", bB=-2, sB=1,
+		lead="organ", counter="choir", pad="choir_oo", bass="pulse", drums="epic", extra="bells"),
+	"cinderwake": dict(  # Kael Ashgrave: a burning warship, fast brass over hammering drums.
+		key="C5", bpm=158, A="0:0.5 0:0.5 2:0.5 4:0.5 7:1 4:1 6:1 4:0.5 2:0.5 0:2", sA=-1,
+		B="4:1 4:0.5 2:0.5 4:1 7:1 6:2 4:2", bB=3, sB=-1, power=True,
+		lead="brass", counter="strings", pad="organ", bass="drive", drums="rock", extra="anvils"),
 }
 
 # The cadences end each section on the dominant (V), so every section leads back to the tonic.
