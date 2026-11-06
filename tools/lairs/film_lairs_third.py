@@ -10,6 +10,7 @@ from kit import AIR, LANTERN, HANG, BARREL, CAMPFIRE, PANE, log, leaves, pane, l
 from parts import stair, slab, fence, candle, carpet, wall_post, SOUL_LANTERN, SOUL_HANG, SOUL_FIRE, SMOKE, WATER  # noqa: F401
 from film_lairs import GOLD_BRICK, MARINE_BRICK, facing, item, table, rumor, BERRY, ENCHANT  # noqa: F401
 from film_lairs_more import clear_spawns, ROD, BARS_X, BARS_Z, PAPER_LANTERN, PAPER_HANG  # noqa: F401
+import detail
 
 COPPER = "minecraft:waxed_copper_block"
 OXCOPPER = "minecraft:waxed_oxidized_copper"
@@ -90,6 +91,200 @@ def tent(b, tx, tz, col, rnd, bed_col=None):
     bed(bed_col or col, tx - 1, 1, tz, b, "south"); b.set(tx + 1, 1, tz + 2, BARREL)
 
 
+def tower_detail(b, rnd, TX0, TZ0, TX1, TZ1, TCX, TCZ, CITY, CY):
+    """The clock tower's outside: a stepped plinth, corner piers that step back as they rise, pilasters, string courses,
+    a frame and pediment round each clock, a carved portal, and lit lamps hanging under the city."""
+    dark, stone = "minecraft:polished_deepslate", "minecraft:stone_bricks"
+    # the plinth: two steps back up to the wall
+    for i, (top, fam) in enumerate(((3, "polished_deepslate"), (6, "stone_brick"))):
+        o = 2 - i
+        for x in range(TX0 - o, TX1 + o + 1):
+            for z in range(TZ0 - o, TZ1 + o + 1):
+                if x in range(TX0, TX1 + 1) and z in range(TZ0, TZ1 + 1):
+                    continue
+                b.box(x, 1, z, x, top, z, dark if i == 0 else stone)
+        detail.string_course(b, TX0 - o, TZ0 - o, TX1 + o, TZ1 + o, top + 1, fam)
+    # corner piers, set back at a third and two thirds of the way up
+    for (cx, sx) in ((TX0, -1), (TX1, 1)):
+        for (cz, sz) in ((TZ0, -1), (TZ1, 1)):
+            for (y0, y1, o) in ((1, 16, 2), (17, 30, 1)):
+                for dx in range(0, o + 1):
+                    for dz in range(0, o + 1):
+                        if dx or dz:
+                            b.box(cx + sx * dx, y0, cz + sz * dz, cx + sx * dx, y1, cz + sz * dz, dark)
+            for k in range(0, 3):   # the weathering on each set-back
+                b.set(cx + sx * 2, 17, cz + sz * k, stair("polished_deepslate", "east" if sx < 0 else "west"))
+                b.set(cx + sx * k, 17, cz + sz * 2, stair("polished_deepslate", "south" if sz < 0 else "north"))
+            b.set(cx + sx, 31, cz + sz, stair("polished_deepslate", "east" if sx < 0 else "west"))
+    # pilasters flanking the windows, and string courses at the copper bands
+    for k in (-4, 4):
+        detail.pier(b, TCX + k, TZ0, "north", 7, 20, "minecraft:polished_andesite", cap="polished_andesite")
+        detail.pier(b, TCX + k, TZ1, "south", 7, 20, "minecraft:polished_andesite", cap="polished_andesite")
+        detail.pier(b, TX0, TCZ + k, "west", 7, 20, "minecraft:polished_andesite", cap="polished_andesite")
+        detail.pier(b, TX1, TCZ + k, "east", 7, 20, "minecraft:polished_andesite", cap="polished_andesite")
+    for y in (11, 22):
+        detail.string_course(b, TX0, TZ0, TX1, TZ1, y, "stone_brick")
+    # a little copper pediment over each clock
+    for k in range(-6, 7):
+        top = CY + 7 - abs(k) // 2
+        for (x, z, f) in ((TCX + k, TZ0 - 1, "south"), (TCX + k, TZ1 + 1, "north"), (TX0 - 1, TCZ + k, "east"), (TX1 + 1, TCZ + k, "west")):
+            if b.get(x, top, z) in (None, AIR):
+                b.set(x, top, z, stair("waxed_cut_copper", f, "top"))
+    # the portal: deep jambs, a copper lintel and a lamp in the arch
+    for x in (TCX - 2, TCX + 2):
+        b.box(x, 1, TZ1 + 1, x, 5, TZ1 + 2, dark)
+        b.set(x, 1, TZ1 + 3, stair("polished_deepslate", "north"))
+    b.box(TCX - 1, 1, TZ1 + 1, TCX + 1, 4, TZ1 + 2, AIR)
+    b.box(TCX - 2, 6, TZ1 + 1, TCX + 2, 6, TZ1 + 2, COPPER)
+    b.box(TCX - 2, 7, TZ1 + 1, TCX + 2, 7, TZ1 + 1, stair("waxed_cut_copper", "north"))
+    b.box(TCX - 1, 5, TZ1 + 1, TCX + 1, 5, TZ1 + 1, dark)
+    b.set(TCX, 5, TZ1 + 2, GOLD_BRICK)
+    for k in (-1, 1):
+        b.set(TCX + k, 5, TZ1 + 2, stair("polished_deepslate", "east" if k < 0 else "west", "top"))
+    b.set(TCX, 4, TZ1 + 2, HANG)
+    for z in range(TZ1 + 1, TZ1 + 3):
+        for x in range(TCX - 1, TCX + 2):
+            b.set(x, 0, z, dark)
+    # lamps on chains under the braces
+    for (x, z) in ((TX0 - 5, TZ0 + 3), (TX1 + 5, TZ0 + 3), (TX0 - 5, TZ1 - 3), (TX1 + 5, TZ1 - 3), (TCX - 2, TZ0 - 6), (TCX + 2, TZ1 + 6)):
+        b.hang_from(x, CITY - 4, z, HANG, up=8)
+
+
+def plaza_detail(b, rnd, PX0, PZ0, PX1, PZ1, TX0, TZ0, TX1, TZ1, TCX, TCZ, CITY):
+    """The city on the tower: a dial laid into the paving, timber townhouses with steep copper and tile roofs, a fountain,
+    market stalls, planters and benches."""
+    y = CITY
+    for x in range(PX0 + 1, PX1):
+        for z in range(PZ0 + 1, PZ1):
+            if b.get(x, y, z) in (None, AIR):
+                continue
+            d = math.hypot(x - TCX, z - TCZ)
+            if 14.4 < d < 15.6:
+                b.set(x, y, z, CUT_COPPER)
+            elif 9.4 < d < 10.6:
+                b.set(x, y, z, "minecraft:polished_diorite")
+            elif d <= 15:
+                b.set(x, y, z, "minecraft:smooth_stone" if int(math.atan2(z - TCZ, x - TCX) * 12 / math.pi) % 2 else "minecraft:polished_andesite")
+            else:
+                b.set(x, y, z, rnd.choice(["minecraft:stone_bricks"] * 3 + ["minecraft:polished_andesite", "minecraft:cracked_stone_bricks"]))
+    # balustrade piers with lamps
+    spots = [(x, z) for x in range(PX0, PX1 + 1, 8) for z in (PZ0, PZ1)] + [(x, z) for z in range(PZ0, PZ1 + 1, 8) for x in (PX0, PX1)]
+    for (x, z) in spots:
+        b.box(x, y + 1, z, x, y + 2, z, "minecraft:stone_bricks")
+        b.set(x, y + 3, z, slab("stone_brick"))
+        b.set(x, y + 4, z, "minecraft:lantern[hanging=false,waterlogged=false]")
+    # the townhouses, each its own colour and roof
+    houses = ((PX0 + 2, PZ0 + 2, 9, 8, "minecraft:white_terracotta", "waxed_oxidized_cut_copper", "south"),
+              (PX1 - 10, PZ0 + 2, 9, 8, "minecraft:yellow_terracotta", "deepslate_tile", "south"),
+              (PX0 + 2, PZ1 - 9, 9, 8, "minecraft:light_gray_terracotta", "mangrove", "north"),
+              (PX1 - 10, PZ1 - 9, 9, 8, "minecraft:white_terracotta", "waxed_cut_copper", "north"),
+              (PX0 + 2, TCZ - 3, 7, 7, "minecraft:orange_terracotta", "deepslate_tile", "east"),
+              (PX1 - 8, TCZ - 3, 7, 7, "minecraft:white_terracotta", "mangrove", "west"))
+    for (hx, hz, w, d, wall, fam, door) in houses:
+        ridge = detail.townhouse(b, hx, hz, w, d, y, rnd, plaster=wall, fam=fam, fill=wall, door=door)
+        detail.chimney(b, hx + w - 2, ridge - 3, hz + 1, 5, rnd)
+    detail.fountain(b, TCX - 9, y, PZ1 - 5, r=3)
+    for (x, z, c) in ((TCX + 6, PZ1 - 4, "red"), (TCX + 10, PZ1 - 4, "blue")):
+        b.stall(x, y + 1, z, c)
+    for (x, z) in ((TCX - 7, PZ0 + 3), (TCX + 7, PZ0 + 3)):
+        detail.planter(b, x, y + 1, z)
+    for x in (TCX - 4, TCX + 4):
+        detail.bench(b, x, y + 1, PZ0 + 7, "north")
+
+
+def castle_detail(b, rnd, CX0, CZ0, CX1, CZ1):
+    """Trump Castle's outside: buttresses, a gatehouse on the door, dormers in the roof, a chimney, brick worked into the
+    red wall, and stone mouldings round the towers."""
+    detail.mix(b, CX0, 1, CZ0, CX1, 10, CZ1, "minecraft:red_terracotta", ["minecraft:bricks", "minecraft:red_nether_bricks", "minecraft:brown_terracotta"], rnd, 0.22)
+    for x in range(CX0 + 4, CX1 - 3, 8):
+        detail.pier(b, x, CZ0, "north", 1, 6, "minecraft:polished_blackstone_bricks", cap="polished_blackstone_brick")
+        detail.pier(b, x, CZ1, "south", 1, 6, "minecraft:polished_blackstone_bricks", cap="polished_blackstone_brick")
+    for (tx, tz) in ((CX0, CZ0), (CX1, CZ0), (CX0, CZ1), (CX1, CZ1)):
+        detail.mix(b, tx - 3, 0, tz - 3, tx + 3, 16, tz + 3, "minecraft:white_concrete", ["minecraft:calcite", "minecraft:polished_diorite", "minecraft:diorite"], rnd, 0.6)
+        for y in (5, 11):
+            for (dx, dz, f) in ((4, 0, "west"), (-4, 0, "east"), (0, 4, "north"), (0, -4, "south")):
+                b.set(tx + dx, y, tz + dz, stair("polished_blackstone_brick", f, "top"))
+    # the gatehouse on the west door
+    gz = CZ0 + 11
+    for z in (gz - 2, gz + 4):
+        b.box(CX0 - 5, 0, z, CX0 - 1, 9, z, "minecraft:polished_blackstone_bricks")
+        b.set(CX0 - 6, 1, z, stair("polished_blackstone_brick", "east"))
+    b.box(CX0 - 5, 6, gz - 1, CX0 - 1, 9, gz + 3, "minecraft:red_terracotta")
+    for z in range(gz - 1, gz + 4):
+        b.set(CX0 - 5, 5, z, "minecraft:iron_bars[east=false,north=true,south=true,waterlogged=false,west=false]")
+    b.gable_roof(CX0 - 5, gz - 2, CX0 - 1, gz + 4, 10, "dark_oak", "minecraft:red_terracotta", axis="x")
+    for x in (CX0 + 7, CX0 + 19):
+        detail.dormer(b, x, 15, CZ0 + 5, "north", "dark_oak", "minecraft:red_terracotta", "minecraft:quartz_pillar[axis=y]")
+        detail.dormer(b, x, 15, CZ1 - 5, "south", "dark_oak", "minecraft:red_terracotta", "minecraft:quartz_pillar[axis=y]")
+    detail.chimney(b, CX0 + 13, 18, CZ0 + 8, 8, rnd)
+
+
+def barracks_detail(b, rnd, BX0, BZ0, BX1, BZ1):
+    detail.mix(b, BX0, 1, BZ0, BX1, 6, BZ1, "minecraft:stone_bricks", ["minecraft:cracked_stone_bricks", "minecraft:mossy_stone_bricks", "minecraft:andesite"], rnd, 0.3)
+    for x in (BX0 + 6, BX0 + 18):
+        detail.dormer(b, x, 10, BZ0 + 3, "north", "spruce", "minecraft:spruce_planks", log("dark_oak"))
+        detail.dormer(b, x, 10, BZ1 - 3, "south", "spruce", "minecraft:spruce_planks", log("dark_oak"))
+    detail.chimney(b, BX0 + 12, 12, BZ0 + 5, 7, rnd)
+    # a lean-to porch over the east door
+    for z in (BZ0 + 7, BZ0 + 11):
+        b.box(BX1 + 3, 1, z, BX1 + 3, 3, z, fence("dark_oak"))
+    for x in range(BX1 + 1, BX1 + 4):
+        for z in range(BZ0 + 6, BZ0 + 13):
+            b.set(x, 4 + (BX1 + 3 - x) // 2, z, stair("spruce", "west") if (BX1 + 3 - x) % 2 == 0 else slab("spruce", "top"))
+
+
+def courtyard_detail(b, rnd, AX, AZ):
+    """The arena's dressing, kept to the edges so the fight has the floor: a dark kerb, the four suits in the paving, and
+    planters and stacked stores along each side."""
+    for x in range(30, 63):
+        for z in (33, 80):
+            if b.get(x, 0, z) not in (None, "minecraft:sand"):
+                b.set(x, 0, z, "minecraft:polished_deepslate")
+    for z in range(33, 81):
+        for x in (30, 62):
+            if b.get(x, 0, z) not in (None, "minecraft:sand"):
+                b.set(x, 0, z, "minecraft:polished_deepslate")
+    detail.suit(b, AX - 11, 0, AZ - 8, "spade", "minecraft:black_concrete")
+    detail.suit(b, AX + 11, 0, AZ - 8, "heart", "minecraft:red_concrete")
+    detail.suit(b, AX - 11, 0, AZ + 12, "diamond", "minecraft:red_concrete")
+    detail.suit(b, AX + 11, 0, AZ + 12, "club", "minecraft:black_concrete")
+    for z in (42, 50, 66, 74):
+        detail.planter(b, 33, 1, z)
+        detail.planter(b, 59, 1, z)
+    b.crates(35, 1, 76, rnd, n=5, spread=2)
+    b.set(58, 1, 77, BARREL); b.set(57, 1, 77, BARREL); b.set(58, 2, 77, BARREL)
+
+
+def grounds_detail(b, rnd, W, D, AX, AZ, CX0, CZ0, CX1, CZ1, BX0, BZ0, BX1, BZ1):
+    """Everything between the buildings: a ragged beach line, worn paths, drifted ground, proper trees, palms, hedges, rocks."""
+    courtyard_detail(b, rnd, AX, AZ)
+    castle_detail(b, rnd, CX0, CZ0, CX1, CZ1)
+    barracks_detail(b, rnd, BX0, BZ0, BX1, BZ1)
+    for x in range(W + 1):   # the beach ends raggedly, not in a ruled line
+        edge = D - 14 - int(detail.noise(x, 0, 11) * 7)
+        for z in range(edge, D - 13):
+            if b.get(x, 0, z) in ("minecraft:grass_block", "minecraft:coarse_dirt"):
+                b.set(x, 0, z, "minecraft:sand")
+    detail.ground_patches(b, W, D, rnd)
+    # worn paths from the courtyard to the barracks door and the castle gate, wandering a little
+    soft = ("minecraft:grass_block", "minecraft:coarse_dirt", "minecraft:podzol", "minecraft:moss_block")
+    for (x0, x1, z) in ((BX1 + 1, 30, BZ0 + 9), (63, CX0 - 6, CZ0 + 13)):
+        for x in range(x0, x1):
+            zz = z + round((detail.noise(x * 2, z, 13) - 0.5) * 4)
+            for dz in (-1, 0, 1):
+                if b.get(x, 0, zz + dz) in soft:
+                    b.set(x, 0, zz + dz, rnd.choice(["minecraft:gravel", "minecraft:coarse_dirt", "minecraft:cobblestone"]))
+    for (x, z) in ((5, 8), (16, 5), (9, 22), (26, 14), (24, 31), (70, 10), (84, 7), (90, 20), (74, 28), (85, 31), (6, 68), (17, 72), (91, 76), (76, 78)):
+        detail.oak(b, x, 1, z, rnd.randint(6, 9), rnd, "oak" if (x + z) % 3 else "birch")
+    for (x, z) in ((62, 90), (70, 87), (78, 91), (87, 86), (92, 91), (45, 93)):
+        detail.palm(b, x, 1, z, rnd.randint(7, 10), rnd)
+    for (x, z) in ((12, 14), (30, 8), (88, 14), (66, 22), (12, 76), (84, 72), (70, 74)):
+        detail.bush(b, x, 1, z, rnd, "oak" if x % 2 else "azalea")
+    for (x, z, r) in ((3, 16, 2.6), (22, 4, 2), (93, 13, 2.4), (40, 90, 1.6), (2, 74, 2.4), (93, 82, 2.2), (34, 6, 1.6)):
+        detail.rock(b, x, 1, z, r, rnd)
+    detail.flower_drifts(b, W, D, rnd)
+
+
 def add(lair, OCEANS, DEEP):
     """Registers the four lairs with gen_lairs's @lair decorator."""
 
@@ -117,7 +312,7 @@ def add(lair, OCEANS, DEEP):
                     elif corner:
                         b.set(x, y, z, "minecraft:polished_deepslate")
                     elif edge:
-                        b.set(x, y, z, CUT_COPPER if y % 11 == 0 else rnd.choice(["minecraft:stone_bricks"] * 4 + ["minecraft:cracked_stone_bricks"]))
+                        b.set(x, y, z, CUT_COPPER if y % 11 == 0 else rnd.choice(["minecraft:stone_bricks"] * 5 + ["minecraft:cracked_stone_bricks", "minecraft:tuff_bricks", "minecraft:andesite"]))
                     else:
                         b.set(x, y, z, AIR)
             if y % 6 == 3 and 3 < y < TH - 12:   # arrow-slit windows up the sides
@@ -187,18 +382,14 @@ def add(lair, OCEANS, DEEP):
                 b.set(x, CITY, z, "minecraft:smooth_stone" if (x + z) % 2 else "minecraft:polished_andesite")
                 if x in (PX0, PX1) or z in (PZ0, PZ1):
                     b.set(x, CITY, z, CUT_COPPER)
-                    b.set(x, CITY + 1, z, wall_post("stone_brick"))
+                    b.set(x, CITY + 1, z, detail.wall_run("stone_brick", "x" if z in (PZ0, PZ1) else "z"))
         for k in range(1, 10):   # braces from the tower walls out under the plaza's edge
             for z in range(TZ0 + 1, TZ1, 4):
                 b.set(TX0 - k, CITY - 10 + k, z, COPPER); b.set(TX1 + k, CITY - 10 + k, z, COPPER)
             for x in range(TX0 + 1, TX1, 4):
                 b.set(x, CITY - 10 + k, TZ0 - k, COPPER); b.set(x, CITY - 10 + k, TZ1 + k, COPPER)
-        for (hx, hz, wall, roof) in ((PX0 + 1, PZ0 + 1, "minecraft:white_terracotta", "minecraft:red_terracotta"),
-                                     (PX1 - 7, PZ0 + 1, "minecraft:yellow_terracotta", "minecraft:blue_terracotta"),
-                                     (PX0 + 1, PZ1 - 7, "minecraft:light_blue_terracotta", "minecraft:red_terracotta"),
-                                     (PX1 - 7, PZ1 - 7, "minecraft:white_terracotta", "minecraft:green_terracotta")):
-            b.house(hx, hz, 7, 7, 4, wall, roof, floor="minecraft:spruce_planks", y=CITY, door="south" if hz < TCZ else "north")
-            b.set(hx + 1, CITY + 1, hz + 1, BARREL); b.set(hx + 5, CITY + 1, hz + 5, facing("crate_stack", "north"))
+        tower_detail(b, rnd, TX0, TZ0, TX1, TZ1, TCX, TCZ, CITY, CY)
+        plaza_detail(b, rnd, PX0, PZ0, PX1, PZ1, TX0, TZ0, TX1, TZ1, TCX, TCZ, CITY)
         # the key that holds the city up, standing in the middle of the plaza
         KX, KZ = TCX, PZ0 + 4
         b.box(KX, CITY + 1, KZ, KX, CITY + 10, KZ, GOLD_BRICK)
@@ -215,10 +406,10 @@ def add(lair, OCEANS, DEEP):
         b.hall(CX0, CZ0, CX1, CZ1, 0, 9, "minecraft:red_terracotta", "minecraft:polished_blackstone_bricks", "minecraft:quartz_pillar[axis=y]",
                trim=GOLD_BRICK, floor="minecraft:polished_blackstone", win=pane("red"), every=4, win_h=3,
                doors=[("west", 11, 3, 4)], proud=True)
-        b.gable_roof(CX0, CZ0, CX1, CZ1, 10, "dark_oak", "minecraft:red_terracotta", axis="x")
+        b.gable_roof(CX0, CZ0, CX1, CZ1, 10, "dark_oak", "minecraft:red_terracotta", axis="x", eave=True)
         for (tx, tz) in ((CX0, CZ0), (CX1, CZ0), (CX0, CZ1), (CX1, CZ1)):
-            b.tower(tx, tz, 3, 15, "minecraft:white_concrete", roof="minecraft:red_concrete")
-            b.tower_cap(tx, tz, 3, 15, "minecraft:red_concrete")
+            b.tower(tx, tz, 3, 15, "minecraft:white_concrete")
+            detail.stair_cone(b, tx, tz, 3, 16, "red_nether_brick", "minecraft:red_nether_bricks", finial=GOLD_BRICK)
         for x in range(CX0 + 1, CX1 - 3):   # a red carpet from the door to the throne
             for z in (52, 53, 54):
                 b.set(x, 1, z, carpet("red"))
@@ -241,7 +432,7 @@ def add(lair, OCEANS, DEEP):
         BX0, BZ0, BX1, BZ1 = 4, 40, 28, 60
         b.hall(BX0, BZ0, BX1, BZ1, 0, 6, "minecraft:stone_bricks", "minecraft:mossy_cobblestone", log("dark_oak"),
                floor="minecraft:spruce_planks", win=pane(), every=4, doors=[("east", 8, 3, 3)], proud=True)
-        b.gable_roof(BX0, BZ0, BX1, BZ1, 7, "spruce", "minecraft:spruce_planks", axis="x")
+        b.gable_roof(BX0, BZ0, BX1, BZ1, 7, "spruce", "minecraft:spruce_planks", axis="x", eave=True)
         for x in range(BX0 + 2, BX1 - 1, 3):
             bed("red", x, 1, BZ0 + 1, b, "south"); bed("black", x, 1, BZ1 - 2, b, "north")
         b.table(BX0 + 8, 1, 50, "spruce", carpet("red"), w=8)
@@ -287,16 +478,14 @@ def add(lair, OCEANS, DEEP):
         for z in range(80, D - 13):   # the path from the beach to the courtyard
             for x in range(AX - 2, AX + 3):
                 b.set(x, 0, z, "minecraft:gravel" if abs(x - AX) < 2 else "minecraft:cobblestone")
-        for (x, z) in ((4, 6), (14, 4), (88, 8), (92, 22), (6, 70), (92, 76), (24, 30), (74, 28), (82, 86)):
-            b.tree(x, 1, z, rnd.randint(5, 7), "oak", 2.5)
-        for (x, z) in ((70, 90), (80, 88), (90, 92), (60, 92)):
-            b.palm(x, 1, z, rnd.randint(5, 7))
-        b.scatter(0, 0, W, D, 1, ["minecraft:short_grass", "minecraft:poppy", "minecraft:dandelion", "minecraft:short_grass"], 0.06, rnd, only_on=grass)
+        grounds_detail(b, rnd, W, D, AX, AZ, CX0, CZ0, CX1, CZ1, BX0, BZ0, BX1, BZ1)
 
         b.rogue(AX, 1, AZ, "bear_king")
         b.crew("trump_pirate", ((AX - 8, AZ - 6), (AX + 8, AZ - 6), (AX - 8, AZ + 8), (AX + 8, AZ + 8), (BX0 + 10, 47), (CX0 + 8, 58),
                                 (TCX, CITY + 1, TCZ + 8)))
         clear_spawns(b)
+        detail.fade_edges(b, W, D, seed=7)
+        b.adaptation = "beard_thin"   # beard_box banks the land up square all round the lair
 
     # ============================================================ Buena Festa: Delta Island, the Pirates Expo
     @lair("delta_island", "Delta Island", "buena_festa",

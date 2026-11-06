@@ -97,6 +97,8 @@ def clear_ground(b):
     top = min(max(ys), CLEAR_TOP)
     for x in range(min(xs), max(xs) + 1):
         for z in range(min(zs), max(zs) + 1):
+            if (x, z) in getattr(b, "natural", ()):   # past the lair's faded edge: the land stays as it is
+                continue
             for y in range(1, top + 1):
                 if b.get(x, y, z) is None:
                     b.set(x, y, z, AIR)
@@ -1190,7 +1192,7 @@ def main(root, only=()):
         size, my = b.save(f'{D}/structure/{name}.nbt')
         st = {"type": "minecraft:jigsaw", "biomes": f"#opbosses:has_structure/{name}", "step": "surface_structures",
               "spawn_overrides": {"monster": {"bounding_box": "piece", "spawns": []}, "ambient": {"bounding_box": "piece", "spawns": []}},
-              "terrain_adaptation": "beard_box", "start_pool": f"opbosses:{name}", "size": 1, "max_distance_from_center": 80, "use_expansion_hack": False}
+              "terrain_adaptation": getattr(b, "adaptation", "beard_box"), "start_pool": f"opbosses:{name}", "size": 1, "max_distance_from_center": 80, "use_expansion_hack": False}
         # The jigsaw puts a piece's lowest level 1 below surface + start_height (a single element's ground level delta is 1),
         # so start_height 0 puts y = 0 on the top block of the ground, or of the sea for a sea lair's waterline.
         if l['place'] == "land":
