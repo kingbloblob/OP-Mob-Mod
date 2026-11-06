@@ -273,6 +273,88 @@ public final class GearSignatures {
 				MoveFx.shockwave(level, target.position(), 5, MoveFx.QUAKE, MoveFx.QUAKE_OUT);
 				level.playSound(null, player.blockPosition(), SoundEvents.WIND_CHARGE_BURST.value(), SoundSource.PLAYERS, 2.0f, 0.5f);
 			}
+			// ---- Sets for bosses other branches add (ignored until the boss is in bosses.json) ----
+			case "bear_king" -> { // Hot Boiling Special: burning fists for the struck foe and those around it, and stone-hard skin.
+				for (LivingEntity foe : foes(player, target, level, 6)) {
+					if (foe.distanceTo(target) <= 4 || foe == target) {
+						hit(player, foe, foe == target ? damage * 1.2f : damage * 0.7f, level, hurt);
+						foe.igniteForSeconds(4);
+						push(foe, player, 1.2, 0.5);
+					}
+				}
+				player.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 100, 1));
+				MoveFx.shockwave(level, target.position(), 4, MoveFx.MAGMA, MoveFx.MAGMA_OUT);
+				level.playSound(null, player.blockPosition(), SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS, 1.5f, 0.6f);
+			}
+			case "buena_festa" -> { // Festival Finale: fireworks burst over every foe around you.
+				for (LivingEntity foe : foes(player, target, level, 9)) {
+					hit(player, foe, damage * 0.8f, level, hurt);
+					foe.igniteForSeconds(3);
+					foe.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 100, 0));
+					foe.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 60, 1));
+					level.sendParticles(ParticleTypes.FIREWORK, foe.getX(), foe.getY() + 2, foe.getZ(), 30, 0.6, 0.6, 0.6, 0.15);
+				}
+				level.playSound(null, player.blockPosition(), SoundEvents.FIREWORK_ROCKET_LARGE_BLAST, SoundSource.PLAYERS, 2.0f, 1.0f);
+			}
+			case "saga" -> { // Dark Fire Slash: a cut of green fire down the line, burning and withering.
+				for (LivingEntity foe : line(player, target, level, 12)) {
+					hit(player, foe, damage * 1.15f, level, hurt);
+					foe.igniteForSeconds(4);
+					foe.addEffect(new MobEffectInstance(MobEffects.WITHER, 60, 1));
+				}
+				sweep(level, player, 12, ParticleTypes.SOUL_FIRE_FLAME);
+				level.playSound(null, player.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1.5f, 0.6f);
+			}
+			case "count_butler" -> { // Golden Horn Frenzy: the violin hypnotises the foes around you, then a horned charge.
+				for (LivingEntity foe : foes(player, target, level, 10)) {
+					foe.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 80, 2));
+					foe.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 80, 1));
+					if (foe instanceof Mob mob && mob.getTarget() == player && foe != target) {
+						mob.setTarget(null); // Lulled by the violin.
+					}
+					level.sendParticles(ParticleTypes.NOTE, foe.getX(), foe.getY() + 2.2, foe.getZ(), 3, 0.3, 0.2, 0.3, 0.5);
+				}
+				hit(player, target, damage * 1.3f, level, hurt);
+				target.igniteForSeconds(3);
+				push(target, player, 1.6, 0.6);
+				level.playSound(null, player.blockPosition(), SoundEvents.NOTE_BLOCK_HARP.value(), SoundSource.PLAYERS, 2.0f, 0.8f);
+				level.playSound(null, player.blockPosition(), SoundEvents.RAVAGER_ROAR, SoundSource.PLAYERS, 1.0f, 1.2f);
+			}
+			case "maribel_sedge" -> { // Harpoon Volley: harpoons reel every foe around you in, slowed.
+				for (LivingEntity foe : foes(player, target, level, 10)) {
+					pull(foe, player, 1.1);
+					hit(player, foe, damage * 0.8f, level, hurt);
+					foe.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 80, 2));
+					level.sendParticles(ParticleTypes.CRIT, foe.getX(), foe.getY() + 1, foe.getZ(), 10, 0.3, 0.5, 0.3, 0.2);
+				}
+				level.playSound(null, player.blockPosition(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.5f, 0.8f);
+				level.playSound(null, player.blockPosition(), SoundEvents.CHAIN_PLACE, SoundSource.PLAYERS, 1.2f, 0.7f);
+			}
+			case "severo_lume" -> { // Tithe of Bells: the toll stuns the foes around you and their tithe heals you.
+				int tithed = 0;
+				for (LivingEntity foe : foes(player, target, level, 9)) {
+					foe.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 80, 3));
+					foe.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, 80, 1));
+					foe.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 100, 0));
+					hit(player, foe, damage * 0.7f, level, hurt);
+					tithed++;
+				}
+				player.heal(2.0f * Math.min(tithed, 5));
+				MoveFx.shockwave(level, player.position(), 9, MoveFx.GOLD, 0xFFA01818);
+				level.playSound(null, player.blockPosition(), SoundEvents.BELL_BLOCK, SoundSource.PLAYERS, 2.5f, 0.6f);
+			}
+			case "kael_ashgrave" -> { // Cinder Broadside: burning shot sets every foe around you alight and blasts them back.
+				for (LivingEntity foe : foes(player, target, level, 8)) {
+					hit(player, foe, damage, level, hurt);
+					foe.igniteForSeconds(6);
+					push(foe, player, 1.3, 0.6);
+					level.sendParticles(ParticleTypes.EXPLOSION, foe.getX(), foe.getY() + 0.8, foe.getZ(), 1, 0, 0, 0, 0);
+				}
+				player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 120, 0));
+				MoveFx.shockwave(level, player.position(), 8, MoveFx.FIRE, MoveFx.FIRE_OUT);
+				level.sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(), player.getY() + 1, player.getZ(), 40, 2, 1, 2, 0.05);
+				level.playSound(null, player.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 1.5f, 0.9f);
+			}
 			default -> hit(player, target, damage, level, hurt);
 		}
 

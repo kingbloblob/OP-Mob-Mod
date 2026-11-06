@@ -1,5 +1,8 @@
 {
   "values": [
-    "opbosses:remnant_vasco_tidebreaker"
+    {
+      "id": "opbosses:remnant_vasco_tidebreaker",
+      "required": false
+    }
   ]
 }

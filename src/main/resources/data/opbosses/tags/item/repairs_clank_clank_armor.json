@@ -1,5 +1,8 @@
 {
   "values": [
-    "opbosses:remnant_douglas_bullet"
+    {
+      "id": "opbosses:remnant_douglas_bullet",
+      "required": false
+    }
   ]
 }

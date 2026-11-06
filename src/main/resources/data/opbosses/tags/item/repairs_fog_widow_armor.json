@@ -1,5 +1,8 @@
 {
   "values": [
-    "opbosses:remnant_corvina_fog_widow"
+    {
+      "id": "opbosses:remnant_corvina_fog_widow",
+      "required": false
+    }
   ]
 }

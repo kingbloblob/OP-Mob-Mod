@@ -52,7 +52,8 @@ public final class GearItems {
 		for (GearData data : GearData.all().values()) {
 			RogueData boss = RogueData.get(data.boss);
 			if (boss == null) {
-				BossesMod.LOGGER.warn("gear.json: no boss {} in bosses.json, skipping its set", data.boss);
+				// A set made ahead for a boss another branch adds. Its recipes only load once its items exist.
+				BossesMod.LOGGER.info("gear.json: no boss {} in bosses.json yet, skipping its set", data.boss);
 				continue;
 			}
 			int tier = boss.tier();

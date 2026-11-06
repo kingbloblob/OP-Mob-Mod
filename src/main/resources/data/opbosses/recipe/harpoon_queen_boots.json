@@ -1,0 +1,24 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:registry_contains",
+      "registry": "minecraft:item",
+      "values": [
+        "opbosses:remnant_maribel_sedge"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "opbosses_harpoon_queen",
+  "ingredients": [
+    "minecraft:diamond_boots",
+    "opbosses:remnant_maribel_sedge",
+    "opbosses:remnant_maribel_sedge",
+    "opbosses:remnant_maribel_sedge"
+  ],
+  "result": {
+    "id": "opbosses:harpoon_queen_boots",
+    "count": 1
+  }
+}

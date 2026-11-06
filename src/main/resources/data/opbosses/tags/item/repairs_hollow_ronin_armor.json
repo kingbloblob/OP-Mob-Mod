@@ -1,5 +1,8 @@
 {
   "values": [
-    "opbosses:remnant_hollow_ronin_tsurugi"
+    {
+      "id": "opbosses:remnant_hollow_ronin_tsurugi",
+      "required": false
+    }
   ]
 }

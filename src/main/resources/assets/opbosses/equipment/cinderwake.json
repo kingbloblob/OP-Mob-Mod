@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "opbosses:cinderwake"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "opbosses:cinderwake"
+      }
+    ]
+  }
+}

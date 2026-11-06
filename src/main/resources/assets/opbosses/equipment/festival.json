@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "opbosses:festival"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "opbosses:festival"
+      }
+    ]
+  }
+}

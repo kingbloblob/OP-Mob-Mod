@@ -1,5 +1,8 @@
 {
   "values": [
-    "opbosses:remnant_mortimer_gale"
+    {
+      "id": "opbosses:remnant_mortimer_gale",
+      "required": false
+    }
   ]
 }

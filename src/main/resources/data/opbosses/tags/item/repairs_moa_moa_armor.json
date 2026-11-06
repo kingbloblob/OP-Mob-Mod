@@ -1,5 +1,8 @@
 {
   "values": [
-    "opbosses:remnant_byrnndi_world"
+    {
+      "id": "opbosses:remnant_byrnndi_world",
+      "required": false
+    }
   ]
 }

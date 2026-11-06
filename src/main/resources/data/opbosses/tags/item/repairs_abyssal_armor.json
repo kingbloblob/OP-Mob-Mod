@@ -1,5 +1,8 @@
 {
   "values": [
-    "opbosses:remnant_nereus_vane"
+    {
+      "id": "opbosses:remnant_nereus_vane",
+      "required": false
+    }
   ]
 }

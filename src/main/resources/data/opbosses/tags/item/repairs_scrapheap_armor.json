@@ -1,5 +1,8 @@
 {
   "values": [
-    "opbosses:remnant_saltjaw_rourke"
+    {
+      "id": "opbosses:remnant_saltjaw_rourke",
+      "required": false
+    }
   ]
 }

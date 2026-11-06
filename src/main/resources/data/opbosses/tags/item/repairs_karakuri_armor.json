@@ -1,5 +1,8 @@
 {
   "values": [
-    "opbosses:remnant_ratchet"
+    {
+      "id": "opbosses:remnant_ratchet",
+      "required": false
+    }
   ]
 }

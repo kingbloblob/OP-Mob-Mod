@@ -1,5 +1,8 @@
 {
   "values": [
-    "opbosses:remnant_uta_diva"
+    {
+      "id": "opbosses:remnant_uta_diva",
+      "required": false
+    }
   ]
 }

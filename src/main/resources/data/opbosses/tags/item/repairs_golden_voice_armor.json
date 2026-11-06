@@ -1,5 +1,8 @@
 {
   "values": [
-    "opbosses:remnant_el_drago"
+    {
+      "id": "opbosses:remnant_el_drago",
+      "required": false
+    }
   ]
 }

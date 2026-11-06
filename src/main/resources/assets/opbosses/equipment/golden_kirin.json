@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "opbosses:golden_kirin"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "opbosses:golden_kirin"
+      }
+    ]
+  }
+}

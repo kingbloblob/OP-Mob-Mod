@@ -1,5 +1,8 @@
 {
   "values": [
-    "opbosses:remnant_boilerheart_gantz"
+    {
+      "id": "opbosses:remnant_boilerheart_gantz",
+      "required": false
+    }
   ]
 }

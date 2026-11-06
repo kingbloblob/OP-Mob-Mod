@@ -1,5 +1,8 @@
 {
   "values": [
-    "opbosses:remnant_khamsin_sandshackle"
+    {
+      "id": "opbosses:remnant_khamsin_sandshackle",
+      "required": false
+    }
   ]
 }

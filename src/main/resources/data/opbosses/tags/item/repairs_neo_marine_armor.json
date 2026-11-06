@@ -1,5 +1,8 @@
 {
   "values": [
-    "opbosses:remnant_zephyr_z"
+    {
+      "id": "opbosses:remnant_zephyr_z",
+      "required": false
+    }
   ]
 }

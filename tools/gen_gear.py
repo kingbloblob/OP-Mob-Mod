@@ -70,6 +70,8 @@ EMBLEMS = {
     "skull": [".AAAA.", "AOAAOA", "AAAAAA", ".AWAA.", ".A.A.."],
     "crown": ["A.AA.A", "AAAAAA", "AWAAWA", "AAAAAA", "......"],
     "note": ["...AAA", "...A.A", "...A..", "AAA...", "AAA..."],
+    "spade": ["..AA..", ".AAAA.", "AAAAAA", "AAWAAA", "..AA.."],
+    "bell": ["..AA..", ".AAAA.", ".AAAA.", "AAAAAA", "..WW.."],
     "flower": [".A..A.", "AAWWAA", ".AWWA.", "AA..AA", "......"],
 }
 
@@ -430,6 +432,7 @@ def item_files(assets, name, texture, parent="minecraft:item/generated"):
 
 def main(res, sheet=None):
     sets = load(res)
+    bosses = {b["id"] for b in json.load(open(os.path.join(res, "opbosses/bosses.json")))["bosses"]}
     assets = os.path.join(res, "assets/opbosses")
     data = os.path.join(res, "data/opbosses")
     shots = []
@@ -456,13 +459,19 @@ def main(res, sheet=None):
         for piece in PIECES + ["weapon"]:
             out = g["weapon"] if piece == "weapon" else "%s_%s" % (g["set"], piece)
             base = "minecraft:diamond_sword" if piece == "weapon" else DIAMOND[piece]
-            write_json(os.path.join(data, "recipe", out + ".json"), {
+            recipe = {
                 "type": "minecraft:crafting_shapeless",
                 "category": "equipment",
                 "group": "opbosses_" + g["set"],
                 "ingredients": [base, "opbosses:" + remnant, "opbosses:" + remnant, "opbosses:" + remnant],
-                "result": {"id": "opbosses:" + out, "count": 1}})
-        write_json(os.path.join(data, "tags/item", "repairs_%s_armor.json" % g["set"]), {"values": ["opbosses:" + remnant]})
+                "result": {"id": "opbosses:" + out, "count": 1}}
+            if g["boss"] not in bosses:
+                # The boss isn't in bosses.json yet (another branch adds it): only load once its items are registered.
+                recipe = {"fabric:load_conditions": [{"condition": "fabric:registry_contains", "registry": "minecraft:item",
+                                                      "values": ["opbosses:" + remnant]}], **recipe}
+            write_json(os.path.join(data, "recipe", out + ".json"), recipe)
+        write_json(os.path.join(data, "tags/item", "repairs_%s_armor.json" % g["set"]),
+                   {"values": [{"id": "opbosses:" + remnant, "required": False}]})
         shots.append((g, icons, weapon, humanoid, leggings))
 
     # Names, kept alongside gen_assets.py's.

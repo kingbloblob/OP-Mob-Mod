@@ -1,5 +1,8 @@
 {
   "values": [
-    "opbosses:remnant_shiki_golden_lion"
+    {
+      "id": "opbosses:remnant_shiki_golden_lion",
+      "required": false
+    }
   ]
 }
