@@ -296,7 +296,7 @@ public class SeaClientTest implements FabricClientGameTest {
 			Vec3 at = own.position().add(0, 0, 40);
 			k.setNoAi(true);
 			k.snapTo(at.x, level.getSeaLevel() - 1.2, at.z, 90f, 0f);
-			look(p, at.add(-6, 8, 22), at.add(-4, 1, 0));
+			look(p, at.add(-4, 5, 13), at.add(-3, 1, 0));
 		});
 		if (king[0] == null) {
 			return;
@@ -321,8 +321,8 @@ public class SeaClientTest implements FabricClientGameTest {
 		});
 		context.waitTicks(78); // 5 + 70 ticks of warning, then the breach
 		// Out of the splash, to see it rear up beside the ship.
-		server(sp, s -> look(player(s), own.position().add(-22, 9, 12), king[0].position().add(0, 3, 0)));
-		context.waitTicks(3);
+		server(sp, s -> look(player(s), own.position().add(-16, 8, 14), king[0].position().add(0, 4, 0)));
+		context.waitTicks(5);
 		clearChat(context);
 		context.takeScreenshot("sea_" + kind.id + "_breach");
 		context.waitTicks(20);

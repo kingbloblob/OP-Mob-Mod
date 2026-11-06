@@ -289,6 +289,7 @@ public final class BossShips {
 		};
 		BlockPos anchor = BlockPos.containing(ship.getX(), Math.round(ship.getY()), ship.getZ());
 		int blocked = 0;
+		List<BlockPos> seabed = new java.util.ArrayList<>();
 		java.util.Map<String, Integer> what = new java.util.TreeMap<>();
 		for (ShipLayout.ShipBlock block : ship.getLayout().blocks) {
 			BlockPos target = anchor.offset(block.pos().rotate(rotation));
@@ -302,8 +303,23 @@ public final class BossShips {
 				level.setBlock(target, net.minecraft.world.level.block.Blocks.WATER.defaultBlockState(), 2);
 				continue;
 			}
+			if (target.getY() < level.getSeaLevel() && seabed(state)) {
+				seabed.add(target); // A shoal under her keel: cleared below, if that's all that's in the way.
+				continue;
+			}
 			blocked++;
 			what.merge(net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(state.getBlock()).getPath(), 1, Integer::sum);
+		}
+		// Sand, clay or rock of the sea floor under the keel, a few hundred blocks at most (not an island), is dug out.
+		if (blocked == 0 && seabed.size() <= 300) {
+			for (BlockPos pos : seabed) {
+				level.setBlock(pos, net.minecraft.world.level.block.Blocks.WATER.defaultBlockState(), 2);
+			}
+		} else {
+			blocked += seabed.size();
+			if (!seabed.isEmpty()) {
+				what.put("seabed", seabed.size());
+			}
 		}
 		if (blocked > 0) {
 			com.onepiecebosses.BossesMod.LOGGER.info("Flagship {} can't dock at {}: {} blocks in the way {}", ship.getName().getString(),
@@ -336,6 +352,14 @@ public final class BossShips {
 		level.sendParticles(ParticleTypes.POOF, boss.getX(), boss.getY() + 1, boss.getZ(), 20, 0.4, 0.8, 0.4, 0.02);
 		player.sendSystemMessage(Component.literal(boss.getData().name + " steps out to meet you. Beat them for the key to the strongroom!")
 				.withStyle(ChatFormatting.GOLD));
+	}
+
+	private static boolean seabed(net.minecraft.world.level.block.state.BlockState state) {
+		return state.is(net.minecraft.tags.BlockTags.SAND) || state.is(net.minecraft.tags.BlockTags.DIRT)
+				|| state.is(net.minecraft.tags.BlockTags.BASE_STONE_OVERWORLD)
+				|| state.is(net.minecraft.world.level.block.Blocks.GRAVEL) || state.is(net.minecraft.world.level.block.Blocks.CLAY)
+				|| state.is(net.minecraft.world.level.block.Blocks.MUD) || state.is(net.minecraft.world.level.block.Blocks.SANDSTONE)
+				|| state.is(net.minecraft.world.level.block.Blocks.MAGMA_BLOCK) || state.is(net.minecraft.world.level.block.Blocks.SOUL_SAND);
 	}
 
 	/** A free deck spot 3 to 5 blocks from the player, or right beside them. */

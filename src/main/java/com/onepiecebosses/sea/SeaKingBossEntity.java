@@ -260,8 +260,9 @@ public class SeaKingBossEntity extends SeaKingEntity {
 	private void breach(ServerLevel level, ShipEntity ship) {
 		double sea = level.getSeaLevel();
 		Vec3 under = new Vec3(ship.getX(), sea - 3, ship.getZ());
-		this.setPos(under.x, under.y, under.z);
-		this.setDeltaMovement(0, 1.4, 0);
+		// Up out of the water beside the keel, rearing high before it crashes back down.
+		this.setPos(under.x + 3, sea - 1, under.z + 3);
+		this.setDeltaMovement(0, 1.9, 0);
 		this.needsSync = true;
 		float hull = kind == Kind.IRONSCALE ? 70f : 45f;
 		ShipHull.damage(ship, hull, null, under.add(0, 2, 0), null);
