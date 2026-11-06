@@ -13,6 +13,7 @@ import com.onepiecebosses.crew.CrewKits;
 import com.onepiecebosses.crew.RivalCrews;
 import com.onepiecebosses.loot.LairChests;
 import com.onepiecebosses.loot.RumorDrops;
+import com.onepiecebosses.sea.SeaBosses;
 import com.onepiecebosses.world.WorldMobs;
 
 /**
@@ -37,6 +38,7 @@ public class BossesMod implements ModInitializer {
 		RumorDrops.initialize();
 		WorldMobs.initialize(); // Wandering bounty hunters and rookie pirate raids.
 		RivalCrews.initialize(); // Roaming rival pirate crews and their treasure camps.
+		SeaBosses.initialize(); // Flagships and Sea King mini-bosses that hunt sailing players.
 		LOGGER.info("One Piece Bosses: {} rogue bosses loaded", com.onepiecebosses.boss.RogueData.all().size());
 	}
 

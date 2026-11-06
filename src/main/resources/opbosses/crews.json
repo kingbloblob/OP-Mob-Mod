@@ -577,6 +577,57 @@
 			"armor": 5,
 			"bounty": 9000000,
 			"berries": 14
+		},
+		{
+			"id": "sedge_whaler",
+			"faction": "pirate",
+			"crews": ["Sedge Whaling Company"],
+			"name": "{rank} {name}",
+			"ranks": ["Boatsteerer", "Harpooner", "Flenser", "Mate"],
+			"skins": ["deckhand", "bounty_hunter"],
+			"loadouts": [
+				{"style": "sniper", "weight": 2, "weapons": ["minecraft:trident"]},
+				{"style": "heavy", "weight": 1, "weapons": ["minecraft:iron_axe"]},
+				{"style": "sword", "weight": 1, "weapons": ["minecraft:iron_sword"]}
+			],
+			"health": 52,
+			"damage": 9,
+			"armor": 4,
+			"berries": 4
+		},
+		{
+			"id": "tithe_acolyte",
+			"faction": "pirate",
+			"crews": ["Red Tithe Order"],
+			"name": "{rank} {name}",
+			"ranks": ["Acolyte", "Collector", "Deacon", "Inquisitor"],
+			"skins": ["baroque", "cp_agent"],
+			"loadouts": [
+				{"style": "sword", "weight": 2, "weapons": ["minecraft:golden_sword"]},
+				{"style": "gunner", "weight": 1, "weapons": ["onepiece:flintlock_pistol"]},
+				{"style": "rokushiki", "weight": 1, "weapons": []}
+			],
+			"health": 85,
+			"damage": 13,
+			"armor": 7,
+			"berries": 7
+		},
+		{
+			"id": "ashgrave_corsair",
+			"faction": "pirate",
+			"crews": ["Ashgrave Corsairs"],
+			"name": "{rank} {name}",
+			"ranks": ["Stoker", "Firebrand", "Ash Corsair", "Cinder Mate"],
+			"skins": ["gifter", "headliner"],
+			"loadouts": [
+				{"style": "bomber", "weight": 2, "weapons": []},
+				{"style": "heavy", "weight": 1, "weapons": ["minecraft:netherite_axe"]},
+				{"style": "gunner", "weight": 1, "weapons": ["onepiece:flintlock_pistol"]}
+			],
+			"health": 105,
+			"damage": 16,
+			"armor": 9,
+			"berries": 9
 		}
 	],
 	"rivals": [

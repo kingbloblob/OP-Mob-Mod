@@ -1,0 +1,13 @@
+{
+  "name": "Widowmaker",
+  "template": "opbosses:ships/widowmaker",
+  "bow": "east",
+  "waterline": 3.9,
+  "faction": "boss",
+  "tiers": [],
+  "crew": "Sedge Whaling Company",
+  "length": 59,
+  "beam": 23,
+  "height": 49,
+  "blocks": 4449
+}
