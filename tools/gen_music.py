@@ -187,6 +187,22 @@ THEMES = {
 		key="F4", bpm=156, A="0:1 0:0.5 2:0.5 4:1 7:1 4:1.5 2:0.5 0:2", sA=-2,
 		B="7:1 4:1 9:1 7:1 4:2 7:2", bB=3, sB=-1,
 		lead="brass", counter="choir", pad="strings", bass="drive", drums="rock", extra="timpani"),
+	"clockwork_island": dict(  # Bear King: a clock tower's march, gears ticking under brass.
+		key="D5", bpm=140, A="0:0.5 2:0.5 4:1 2:0.5 0:0.5 4:1 3:1 2:1 0:2", sA=-2,
+		B="7:1 6:0.5 4:0.5 2:1 4:1 3:2 2:2", bB=3, sB=-1,
+		lead="brass", counter="marimba", pad="organ", bass="drive", drums="industrial", extra="clockwork"),
+	"delta_island": dict(  # Buena Festa: the pirate festival, a carnival band with a dangerous edge.
+		key="A4", bpm=150, A="0:0.5 0:0.5 4:0.5 4:0.5 7:1 4:1 6:1 4:1 2:2", sA=3,
+		B="4:1 5:0.5 4:0.5 2:1 4:1 7:2 4:2", bB=-2, sB=1,
+		lead="brass", counter="accordion", pad="strings", bass="gallop", drums="festival", extra="bells"),
+	"asuka_island": dict(  # Saga: a cursed blade's shrine, flute and koto over slow taiko.
+		key="B4", bpm=116, A="0:1.5 2:0.5 4:1 7:1 6:1 4:1 2:2", sA=-2,
+		B="4:1 5:0.5 4:0.5 2:1 1b:1 0:4", bB=3, sB=-1, power=True,
+		lead="whistle", counter="harp", pad="strings", bass="pulse", drums="taiko", extra="koto"),
+	"crown_island": dict(  # Count Butler: a stolen crown, a pompous court march gone wild.
+		key="G4", bpm=128, A="0:1 4:1 2:0.5 4:0.5 7:1 6:1 4:1 2:1 4:1", sA=3,
+		B="7:2 4:1 2:1 4:2 0:2", bB=-2, sB=1,
+		lead="strings", counter="brass", pad="choir", bass="march", drums="march", extra="bells"),
 }
 
 # The cadences end each section on the dominant (V), so every section leads back to the tonic.

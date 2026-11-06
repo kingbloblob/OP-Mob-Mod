@@ -158,5 +158,37 @@
         "stream": true
       }
     ]
+  },
+  "music.lair.clockwork_island": {
+    "sounds": [
+      {
+        "name": "opbosses:music/clockwork_island",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.delta_island": {
+    "sounds": [
+      {
+        "name": "opbosses:music/delta_island",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.asuka_island": {
+    "sounds": [
+      {
+        "name": "opbosses:music/asuka_island",
+        "stream": true
+      }
+    ]
+  },
+  "music.lair.crown_island": {
+    "sounds": [
+      {
+        "name": "opbosses:music/crown_island",
+        "stream": true
+      }
+    ]
   }
 }

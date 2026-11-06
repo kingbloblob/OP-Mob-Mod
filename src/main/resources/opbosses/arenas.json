@@ -157,5 +157,37 @@
 			{"type": "debris", "from": 2, "block": "minecraft:stone_bricks", "warn": "Giant rubble crashes down from the Groseade!"},
 			{"type": "tide", "from": 3, "particle": "minecraft:explosion", "warn": "Byrnndi World's giant fist shakes the ground!"}
 		]
+	},
+	"bear_king": {
+		"music": "clockwork_island", "bar": "green",
+		"finalWave": "Trump Pirates! Wind up the tower!",
+		"hazards": [
+			{"type": "geyser", "from": 2, "particle": "minecraft:cloud", "warn": "Steam blasts out of the clock tower's gears!"},
+			{"type": "collapse", "from": 3, "warn": "The clockwork floor grinds open beneath you!"}
+		]
+	},
+	"buena_festa": {
+		"music": "delta_island", "bar": "red",
+		"finalWave": "The festival's finale, everyone! Make it loud!",
+		"hazards": [
+			{"type": "geyser", "from": 2, "particle": "minecraft:firework", "fire": true, "warn": "Festival fireworks go off all over the grounds!"},
+			{"type": "debris", "from": 3, "block": "minecraft:tnt", "warn": "Festa's explosive finale rains down!"}
+		]
+	},
+	"saga": {
+		"music": "asuka_island", "bar": "purple", "darkenFrom": 3,
+		"finalWave": "The Seven Star Sword demands blood!",
+		"hazards": [
+			{"type": "cloud", "from": 2, "effect": "minecraft:wither", "particle": "minecraft:soul_fire_flame", "warn": "The cursed sword's aura seeps across the island."},
+			{"type": "lightning", "from": 3, "warn": "The seven stars call lightning down on Asuka Island!"}
+		]
+	},
+	"count_butler": {
+		"music": "crown_island", "bar": "white",
+		"finalWave": "Animals of Crown Island, obey your king!",
+		"hazards": [
+			{"type": "tide", "from": 2, "particle": "minecraft:cloud", "warn": "Butler's roar shakes the whole island!"},
+			{"type": "debris", "from": 3, "block": "minecraft:stone", "warn": "Rocks crash down from the cliffs!"}
+		]
 	}
 }
