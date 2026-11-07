@@ -548,3 +548,134 @@ def dress_edges(b, W, D, rnd, n=14):
         else:
             bush(b, x, 1, z, rnd, "oak", 1.8)
         placed += 1
+
+
+def line(b, p, q, wood="dark_oak"):
+    """A rope from p to q through empty cells: it steps one axis at a time, and each fence joins the next, so it reads as a
+    line and not a row of loose posts."""
+    cells = [tuple(p)]
+    c = list(p)
+    total = max(1, sum(abs(q[i] - p[i]) for i in range(3)))
+    done = [0, 0, 0]
+    while tuple(c) != tuple(q):
+        i = min(range(3), key=lambda k: (done[k] + 1) / abs(q[k] - p[k]) if q[k] != p[k] and done[k] < abs(q[k] - p[k]) else 9e9)
+        c[i] += 1 if q[i] > p[i] else -1
+        done[i] += 1
+        cells.append(tuple(c))
+    for k, cell in enumerate(cells):
+        if b.get(*cell) not in (None, AIR):
+            continue
+        near = {cells[j] for j in (k - 1, k + 1) if 0 <= j < len(cells)}
+        x, y, z = cell
+        st = {"east": (x + 1, y, z) in near, "west": (x - 1, y, z) in near, "north": (x, y, z - 1) in near, "south": (x, y, z + 1) in near}
+        b.set(x, y, z, f"minecraft:{wood}_fence[east={str(st['east']).lower()},north={str(st['north']).lower()},south={str(st['south']).lower()},waterlogged=false,west={str(st['west']).lower()}]")
+
+
+def sail(b, x, cz, y0, y1, h0, h1, s, belly=3, wood="spruce"):
+    """A square sail on a yard: the head stays on the yard, the cloth bellies forward (+x) like it is full of wind, the
+    sides taper up the mast and the foot is cut in a curve. A spar across the top carries it."""
+    def off(z, y):
+        t = (y - y0) / max(1, y1 - y0)
+        half = h0 + (h1 - h0) * t
+        zn = min(1.0, abs(z) / max(1.0, half))
+        return belly * (1 - zn * zn) * math.sin(math.pi * min(1.0, t * 0.82 + 0.14)) ** 0.9
+    for y in range(y0, y1 + 1):
+        t = (y - y0) / max(1, y1 - y0)
+        half = h0 + (h1 - h0) * t
+        for z in range(-int(half), int(half) + 1):
+            zn = abs(z) / max(1.0, half)
+            if y < y0 + (1 - zn * zn):
+                continue   # the curved foot
+            o = off(z, y)
+            near = min(off(z + 1, y), off(z - 1, y), off(z, min(y + 1, y1)), off(z, max(y - 1, y0)), o)
+            for xx in range(round(near), round(o) + 1):   # no gaps where the cloth curves away
+                b.set(x + xx, y, cz + z, s)
+    for z in range(-int(h1) - 2, int(h1) + 3):
+        b.set(x, y1 + 1, cz + z, log(wood, "z"))
+    for z in (-int(h1) - 2, int(h1) + 2):
+        b.set(x, y1 + 1, cz + z, slab(wood))
+
+
+def rig(b, x0, cz, dy, W, masts, s, rail):
+    """Masts with two or three sails each, shrouds down to the rails, and stays between the mastheads."""
+    tops = []
+    for (mx, mh) in masts:
+        x = x0 + mx
+        tiers = 3 if mh >= 24 else 2 if mh >= 13 else 1
+        lo, hi = dy + 5, dy + mh - 3
+        share = {1: (1.0,), 2: (0.58, 0.42), 3: (0.42, 0.33, 0.25)}[tiers]
+        y = lo
+        full = W / 2 - 0.5
+        widths = (full, full * 0.76, full * 0.56, full * 0.42)
+        for i in range(tiers):
+            top = y + round((hi - lo) * share[i]) - 1
+            sail(b, x + 1, cz, y, top, widths[i], widths[i + 1] + 0.5, s, belly=2 if i == 0 else 1)
+            y = top + 2   # the next sail starts right above this yard
+        # shrouds from the first yard's height down to the rail, either side, just abaft the mast
+        hy = lo + round((hi - lo) * share[0])
+        for k in (1, 3, 5):
+            for side in (-1, 1):
+                rx = x - k
+                rz = rail(rx)
+                if rz:
+                    line(b, (x, hy, cz + side), (rx, dy + 2, cz + side * rz))
+        tops.append((x, dy + mh - 1))
+    for (a, c) in zip(tops, tops[1:]):
+        line(b, (a[0], a[1], cz), (c[0], c[1] - 4, cz))
+
+
+def hull(b, x0, y0, z0, L, W, wall, deck, depth):
+    """A ship's body with a shape: full in the middle, fine at the bow, the stem and stern raked out as they rise, and the
+    sides coming back in a little above the widest point. Returns the deck level."""
+    cz = z0 + W // 2
+    for y in range(y0, y0 + depth + 1):
+        t = (y - y0) / max(1, depth)
+        stem = round((1 - t) * L * 0.11)
+        post = round((1 - t) * L * 0.05)
+        profile = (0.42 + 0.58 * min(1.0, t / 0.68)) * (1 - 0.09 * max(0.0, (t - 0.68) / 0.32))
+        for x in range(x0 + post, x0 + L - stem):
+            f = (x - x0 - post) / max(1, L - stem - post - 1)
+            taper = 1.0 - max(0.0, (f - 0.62) / 0.38) ** 1.7 * 0.94 - max(0.0, (0.1 - f) / 0.1) ** 1.5 * 0.34
+            half = max(0, round((W / 2 - 0.5) * profile * taper))
+            for z in range(cz - half, cz + half + 1):
+                edge = abs(z - cz) == half or y == y0
+                b.set(x, y, z, wall if (edge or y < y0 + depth) else deck)
+                if y == y0 + depth:
+                    b.set(x, y, z, deck if abs(z - cz) < half else wall)
+            if y == y0 + depth:
+                for z in (cz - half, cz + half):
+                    b.set(x, y + 1, z, fence("dark_oak"))
+    return y0 + depth
+
+
+def rail_half(b, cz, dy, wall, deck):
+    """How far the deck reaches either side of the centre line at a given x."""
+    def half(x):
+        zs = [z for z in range(cz - 40, cz + 41) if b.get(x, dy, z) in (wall, deck)]
+        return (cz - min(zs)) if zs else 0
+    return half
+
+
+def strakes(b):
+    """Planking lines along each hull: every third course a different wood."""
+    for (x0, y0, z0, L, W, wall, dy) in getattr(b, "ships", []):
+        alt = WEATHERED.get(wall, ["minecraft:spruce_planks"])[0]
+        for (x, y, z), s in list(b.blocks.items()):
+            if s == wall and x0 - 1 <= x <= x0 + L and z0 - 1 <= z <= z0 + W and y0 < y < dy and (y - y0) % 3 == 1:
+                if b.get(x, y, z - 1) in (None, AIR) or b.get(x, y, z + 1) in (None, AIR):
+                    b.set(x, y, z, alt)
+
+
+def tatter(b, s, rnd, others):
+    """Old sails: the foot in rags, long tears down the cloth and stains, but still plainly a sail."""
+    cells = [p for p, v in b.blocks.items() if v == s]
+    for p in cells:
+        n = noise(p[0] * 2 + p[2] * 3, p[1] * 2, 31)
+        if 0.88 < n < 0.9:
+            b.set(*p, AIR)   # a long, thin tear
+        elif n > 0.6:
+            b.set(*p, others[int(n * 100) % len(others)])
+    foot = [p for p in cells if b.get(*p) not in (None, AIR) and b.get(p[0], p[1] - 1, p[2]) in (None, AIR)]
+    for p in foot:   # a ragged foot, one block deep
+        if rnd.random() < 0.3:
+            b.set(*p, AIR)

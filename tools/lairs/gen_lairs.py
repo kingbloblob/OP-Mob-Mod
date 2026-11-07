@@ -65,6 +65,28 @@ class Lair(Parts):
     def palm(self, x, y, z, h=6):
         detail.palm(self, x, y, z, h + 2, random.Random(x * 73 + z * 19))
 
+    def ship(self, x0, y0, z0, L, W, hull="minecraft:dark_oak_planks", deck="minecraft:spruce_planks", masts=(), sail="minecraft:white_wool",
+             flag=("minecraft:black_wool", "minecraft:white_wool"), cabin=None, depth=4):
+        cz = z0 + W // 2
+        dy = detail.hull(self, x0, y0, z0, L, W, hull, deck, depth)
+        self.waterline = dy - 2
+        self.ships = getattr(self, "ships", []) + [(x0, y0, z0, L, W, hull, dy)]
+        for (mx, mh) in masts:
+            self.box(x0 + mx, dy + 1, cz, x0 + mx, dy + mh - 1, cz, log("spruce"))
+            if flag:
+                self.set(x0 + mx, dy + mh, cz, log("spruce"))
+                self.box(x0 + mx, dy + mh - 1, cz + 1, x0 + mx, dy + mh, cz + 3, flag[0])
+                self.set(x0 + mx, dy + mh, cz + 2, flag[1])
+        detail.rig(self, x0, cz, dy, W, masts, sail, detail.rail_half(self, cz, dy, hull, deck))
+        if cabin:
+            cl, ch, mat = cabin
+            self.room(x0 + 1, dy, cz - W // 2 + 2, x0 + cl, dy + ch, cz + W // 2 - 2, mat, floor=deck)
+            self.door(x0 + cl, dy + 1, cz, axis="z")
+        return dy
+
+    def mast_yard(self, x0, dy, z0, W, masts):
+        pass   # ship() carries its sails on proper yards now
+
     def tower(self, cx, cz, r, h, wall, roof=None, y=0, windows=True, ladder_side=True, floors=None):
         super().tower(cx, cz, r, h, wall, None, y, windows, ladder_side, floors)
         if roof:
@@ -1270,6 +1292,7 @@ def main(root, only=()):
                 kit = [t for t in data["Tags"] if t.startswith(KIT_TAG_PREFIX)][0][len(KIT_TAG_PREFIX):]
                 assert kit in kits, (l['name'], kit)
         name = l['name']
+        detail.strakes(b)
         if l['place'] == "land":
             soften_ground(b)
             clear_ground(b)

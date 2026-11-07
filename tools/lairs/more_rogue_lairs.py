@@ -21,6 +21,8 @@ LAB_LIGHT = "onepiece:lab_light"
 BONE = "minecraft:bone_block[axis=y]"
 BARS = "minecraft:iron_bars[east=false,north=false,south=false,west=false,waterlogged=false]"
 BUBBLE_HANG = "onepiece:bubble_lamp[hanging=true]"
+import detail
+CAMPFIRE_LIT = "minecraft:campfire[facing=north,lit=true,signal_fire=false,waterlogged=false]"
 
 
 def facing(name, f):
@@ -29,6 +31,111 @@ def facing(name, f):
 
 def banner(color, f):
     return f"minecraft:{color}_wall_banner[facing={f}]"
+
+
+def gilded_ship(b, rnd, X0, Z0, L, CZ, dy, HULL, DECK, FX0):
+    """A galleon's fittings: a gilded stern with a row of lit windows, gunports, deck gratings, a capstan, and rope on the rails."""
+    for z in range(CZ - 7, CZ + 8):                                 # the stern: a gold-framed gallery of windows
+        for y in range(dy - 2, dy + 6):
+            x = X0 + 1
+            if b.get(x, y, z) in (None, AIR):
+                continue
+            if y in (dy - 2, dy + 5) or z % 3 == 0:
+                b.set(x - 1, y, z, GOLD_BRICK)
+            elif y in (dy, dy + 1, dy + 2, dy + 3):
+                b.set(x - 1, y, z, "minecraft:cyan_stained_glass")
+    for x in range(X0 + 18, FX0 - 2, 5):                            # gunports down both sides, a dark square with a muzzle in it
+        for side in (-1, 1):
+            zs = [z for z in range(CZ - 12, CZ + 13) if b.get(x, dy - 1, z) not in (None, AIR)]
+            if zs:
+                z = min(zs) if side < 0 else max(zs)
+                b.set(x, dy - 1, z, "minecraft:black_concrete")
+                b.set(x, dy - 1, z + side, "minecraft:polished_blackstone_wall[east=none,north=none,south=none,west=none,up=true,waterlogged=false]")
+    for (x0, x1) in ((X0 + 24, X0 + 28), (X0 + 36, X0 + 40)):       # gratings over the hold
+        for x in range(x0, x1 + 1):
+            for z in range(CZ - 1, CZ + 2):
+                b.set(x, dy, z, "minecraft:dark_oak_trapdoor[facing=north,half=top,open=false,powered=false,waterlogged=false]")
+    for x in range(X0 + 40, X0 + 46):   # a shut hatch over the hold's stair, so the crew don't wander down it
+        if b.get(x, dy, CZ) in (None, AIR):
+            b.set(x, dy, CZ, "minecraft:dark_oak_trapdoor[facing=west,half=top,open=false,powered=false,waterlogged=false]")
+    b.set(X0 + 34, dy + 1, CZ - 3, facing("capstan", "north"))
+    b.set(X0 + 22, dy + 1, CZ + 3, facing("rope_coil", "north")); b.set(X0 + 43, dy + 1, CZ - 3, facing("rope_coil", "north"))
+
+
+def gilded_island(b, rnd, RX, RZ, RRX, RRZ, CVX, CVZ, rock):
+    """The reef as a place: sea stacks streaked with gold, a broken watchtower on the crest, the wrecked crew's graves,
+    a salvage camp and jetty on the beach, a whale's bones, palms, and a stair cut up from the sand."""
+    def ground(x, z):
+        for y in range(20, -2, -1):
+            if b.get(x, y, z) not in (None, AIR):
+                return y
+        return 0
+
+    # sea stacks: tall, leaning, ragged columns off the reef's far side
+    for (sx, sz, r, h) in ((RX + 30, RZ + 2, 4.5, 24), (RX + 25, RZ + 12, 3.2, 15), (RX - 31, RZ - 3, 3.6, 18), (RX + 8, RZ + 21, 3.4, 13)):
+        for y in range(-14, h + 1):
+            t = max(0.0, y) / h
+            rr = r * (1 - t * 0.62) + (detail.noise(y * 3, sx, 40) - 0.5) * 1.6
+            lean = t * t * 3
+            for dx in range(-7, 8):
+                for dz in range(-7, 8):
+                    if math.hypot(dx, dz) <= rr:
+                        n = detail.noise((sx + dx) * 2, y * 4, 41)
+                        s = "minecraft:raw_gold_block" if 0.46 < n < 0.5 else rnd.choice(rock[:4])
+                        b.set(sx + dx + round(lean), y, sz + dz, s)
+        b.set(sx + round(3), h + 1, sz, "minecraft:moss_block"); b.set(sx + round(3), h + 2, sz, "minecraft:dead_bush")
+    # palms and scrub, on the grass
+    for (x, z) in ((RX - 18, RZ - 5), (RX - 12, RZ + 8), (RX + 17, RZ + 7), (RX + 12, RZ - 9), (RX - 6, RZ + 11), (RX + 20, RZ - 2)):
+        detail.palm(b, x, ground(x, z) + 1, z, rnd.randint(8, 11), rnd)
+    for (x, z) in ((RX - 15, RZ + 3), (RX + 15, RZ + 2), (RX - 2, RZ + 12), (RX + 7, RZ - 11)):
+        detail.bush(b, x, ground(x, z) + 1, z, rnd, "jungle", 2)
+    # the watchtower on the crest: a round stone tower, its top fallen in, a green light still burning
+    TX, TZ = RX - 12, RZ - 2
+    ty = ground(TX, TZ)
+    b.cyl(TX, TZ, 4, ty - 2, ty + 4, "minecraft:stone_bricks")
+    b.cyl(TX, TZ, 3, ty, ty + 16, "minecraft:stone_bricks", hollow=True)
+    b.disk(TX, ty + 8, TZ, 2, "minecraft:spruce_planks")
+    detail.weather(b, TX - 4, ty, TZ - 4, TX + 4, ty + 16, TZ + 4, "minecraft:stone_bricks")
+    detail.ring_course(b, TX, TZ, 3, ty + 8, "stone_brick")
+    for a in range(0, 360, 20):                                     # the ruined top: broken away on the seaward side
+        x, z = round(TX + 3 * math.cos(math.radians(a))), round(TZ + 3 * math.sin(math.radians(a)))
+        for y in range(ty + 12 + (a // 40) % 4, ty + 17):
+            b.set(x, y, z, AIR)
+    b.box(TX, ty + 1, TZ + 3, TX, ty + 2, TZ + 3, AIR)
+    for y in range(ty + 1, ty + 9):
+        b.set(TX - 2, y, TZ, "minecraft:ladder[facing=east,waterlogged=false]")
+    b.set(TX, ty + 9, TZ, SOUL_FIRE); b.set(TX, ty + 8, TZ, "minecraft:soul_soil")
+    # the graves of the crew that came ashore: fence crosses and skulls on the slope
+    for i, (x, z) in enumerate(((RX + 13, RZ - 5), (RX + 15, RZ - 7), (RX + 17, RZ - 5), (RX + 15, RZ - 3), (RX + 19, RZ - 7), (RX + 11, RZ - 7))):
+        g = ground(x, z)
+        b.box(x, g + 1, z, x, g + 2, z, fence("dark_oak"))
+        b.set(x, g + 2, z + 1, fence("dark_oak")); b.set(x, g + 2, z - 1, fence("dark_oak"))
+        if i % 2:
+            b.set(x + 1, g + 1, z, "minecraft:skeleton_skull[powered=false,rotation=4]")
+    # the salvage camp on the beach: an awning, crates of what they raised, a fire
+    CX, CZ2 = RX - 6, RZ + RRZ - 5
+    cy = ground(CX, CZ2)
+    for (dx, dz) in ((-4, -3), (4, -3), (-4, 3), (4, 3)):
+        b.box(CX + dx, cy + 1, CZ2 + dz, CX + dx, cy + 4, CZ2 + dz, log("spruce"))
+    for dx in range(-5, 6):
+        for dz in range(-4, 5):
+            b.set(CX + dx, cy + 5 - abs(dz) // 2, CZ2 + dz, "minecraft:gray_wool" if (dx + 20) % 4 < 2 else "minecraft:black_wool")
+    b.set(CX + 1, cy + 1, CZ2, CAMPFIRE_LIT)
+    for (x, z) in ((CX - 3, CZ2 - 2), (CX - 3, CZ2 + 2), (CX + 3, CZ2 + 2)):
+        b.set(x, cy + 1, z, BARREL)
+    b.set(CX + 3, cy + 1, CZ2 - 2, facing("crate_stack", "north")); b.set(CX - 1, cy + 1, CZ2 + 2, facing("treasure_pile", "north"))
+    # a jetty out from the beach
+    JX = RX + 4
+    jz = RZ + RRZ - 6
+    for k in range(0, 16):
+        for dx in (-1, 0, 1):
+            b.set(JX + dx, 1, jz + k, "minecraft:spruce_planks")
+        if k % 4 == 0:
+            for dx in (-2, 2):
+                b.box(JX + dx, -8, jz + k, JX + dx, 3, jz + k, log("spruce"))
+            b.set(JX + 2, 4, jz + k, SOUL_LANTERN)
+    # a whale's bones on the sand
+    b.bones(RX - 24, 1, RZ + 7, 16, axis="x", height=7)
 
 
 def add(lair, OCEANS, DEEP):
@@ -393,11 +500,13 @@ def add(lair, OCEANS, DEEP):
         RX, RZ, RRX, RRZ = 50, 46, 28, 15
         for x in range(RX - RRX - 2, RX + RRX + 3):
             for z in range(RZ - RRZ - 2, RZ + RRZ + 3):
-                d = math.hypot((x - RX) / RRX, (z - RZ) / RRZ) + rnd.random() * 0.08
+                d = math.hypot((x - RX) / RRX, (z - RZ) / RRZ) + (detail.noise(x * 1.4, z * 1.4, 9) - 0.5) * 0.5
                 if d <= 1:
-                    top = int(1 + 7 * (1 - d) ** 1.3 + rnd.random() * 1.2) - 1
+                    top = int(1 + 13 * (1 - d) ** 1.25 + detail.noise(x * 2.5, z * 2.5, 10) * 3) - 1
                     for y in range(-4, top + 1):
-                        b.set(x, y, z, rnd.choice(rock) if y < top or d < 0.75 else rnd.choice(["minecraft:sand", "minecraft:gravel", "minecraft:sand"]))
+                        b.set(x, y, z, rnd.choice(rock))
+                    b.set(x, top, z, "minecraft:sand" if top <= 1 else rnd.choice(["minecraft:gravel", "minecraft:coarse_dirt"]) if top <= 3
+                          else rnd.choice(["minecraft:grass_block", "minecraft:grass_block", "minecraft:moss_block", "minecraft:coarse_dirt"]) if detail.noise(x * 2, z * 2, 12) > 0.42 else rnd.choice(rock))
         b.skirt(RX, RZ, RRX - 1, -16, -5, rock, rnd, spread=0.25, sz=RRX / RRZ)
         # the Hoard Cave: a hollow in the mound, its mouth facing the ship
         CVX, CVZ = RX + 2, RZ + 1
@@ -443,7 +552,7 @@ def add(lair, OCEANS, DEEP):
             b.set(x, y, z, rnd.choice([BARREL, BONE, log("dark_oak", "x"), "minecraft:dead_bush"]))
 
         # --- The Gilded Wake: a black galleon with gold trim, three masts of rotted sails and a stern castle.
-        dy = b.ship(X0, Y0, Z0, L, WD, hull=HULL, deck=DECK, masts=MASTS, sail="minecraft:gray_wool",
+        dy = b.ship(X0, Y0, Z0, L, WD, hull=HULL, deck=DECK, masts=MASTS, sail="minecraft:light_gray_wool",
                     flag=("minecraft:black_wool", "minecraft:white_wool"), depth=8)
         b.mast_yard(X0, dy, Z0, WD, MASTS)
         def half(x, y):
@@ -463,10 +572,7 @@ def add(lair, OCEANS, DEEP):
                 for z in (CZ - hl, CZ + hl):
                     if hl and rnd.random() < 0.18:
                         b.set(x, y, z, rnd.choice(rot))
-        sails = [p for p, s in b.blocks.items() if s == "minecraft:gray_wool"]
-        for p in sails:                                                # the sails are rags
-            r = rnd.random()
-            b.set(*p, AIR if r < 0.22 else "minecraft:cobweb" if r < 0.27 else rnd.choice(["minecraft:gray_wool", "minecraft:light_gray_wool", "minecraft:black_wool"]))
+        detail.tatter(b, "minecraft:light_gray_wool", rnd, ["minecraft:gray_wool"])   # old, torn cloth
         for (mx, mh) in MASTS:                                         # crow's nests with green fire
             ny = dy + mh - 5
             b.disk(X0 + mx, ny, CZ, 2, DECK)
@@ -567,8 +673,6 @@ def add(lair, OCEANS, DEEP):
             b.set(x, dy + 1, z, BARREL)
         for (mx, mh) in MASTS:
             b.set(X0 + mx - 1, dy + 1, CZ, "minecraft:hay_block[axis=y]") if mx != 32 else None
-            for y in range(dy + 6, dy + mh - 6, 5):
-                b.set(X0 + mx, y, CZ + 1, "minecraft:cobweb") if rnd.random() < 0.5 else None
         for x in range(X0 + 16, FX0 - 1, 6):
             b.set(x, dy + 1, CZ + half(x, dy) - 2, SOUL_LANTERN) if (x - X0) % 12 == 4 else None
         # the gangplank down to the reef
@@ -588,7 +692,7 @@ def add(lair, OCEANS, DEEP):
         wdy = b.ship(WX, -17, WZ, 34, 11, hull=HULL, deck=DECK, masts=((14, 31),), sail="minecraft:black_wool", flag=None, depth=5)
         b.mast_yard(WX, wdy, WZ, 11, ((14, 31),))
         for p in [p for p, s in b.blocks.items() if s == "minecraft:black_wool" and p[2] < Z0 - 2]:
-            if rnd.random() < 0.3 or p[1] < 0:
+            if p[1] < 0 or detail.noise(p[0] * 2 + p[2] * 3, p[1] * 2, 33) > 0.62:
                 b.set(*p, AIR)
         for y in range(-11, 15):
             if rnd.random() < 0.15:
@@ -599,6 +703,9 @@ def add(lair, OCEANS, DEEP):
             if len(comp) < 8:
                 for p in comp:
                     b.set(*p, AIR)
+
+        gilded_island(b, rnd, RX, RZ, RRX, RRZ, CVX, CVZ, rock)
+        gilded_ship(b, rnd, X0, Z0, L, CZ, dy, HULL, DECK, FX0)
 
         b.waterline = dy - 2   # the sea's top layer: the deck stands 2 above it
         b.rogue(X0 + 26, dy + 1, CZ, "mortimer_gale")
