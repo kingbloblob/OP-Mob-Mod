@@ -4,7 +4,8 @@
     python3 tools/gen_models.py .
 
 Writes src/main/java/com/onepiecebosses/client/RogueModels.java and
-src/main/resources/assets/opbosses/textures/entity/boss/<id>.png (128x128, or 256x256 if the boxes don't fit).
+src/main/resources/assets/opbosses/textures/entity/boss/<id>.png (128x128, or 256x256 if the boxes don't fit,
+saved at skin.SCALE times that size with the faces redrawn in more detail, see skin.py).
 Change a shape or a colour here and run it again; don't edit the generated files by hand.
 
 Model space is Minecraft's: 16 px = 1 block, y points down, the front is -z, the right side is -x, and the feet
@@ -20,6 +21,9 @@ import random
 import sys
 
 from PIL import Image
+
+import anime
+import skin
 
 # ---------------- the rogues ----------------
 # part pivots: head, body, arm (right shoulder; the left one is mirrored), leg (right hip; mirrored).
@@ -345,352 +349,10 @@ ROGUES = {
             B('leg', -3, 8, -3.5, 6, 4, 7, '#2a2a30', 'rivets'),                           # iron boots
         ]),
 
-    # ---------------- the film villains ----------------
-    # Douglas Bullet: a gorilla of a man. Traps up to his ears, a head sunk between them, arms thicker than his
-    # body that hang to his ankles, and the Clank-Clank Fruit's scrap fused into gauntlets and a riveted back plate.
-    "douglas_bullet": dict(
-        pivots=dict(head=(0, -4, -1), body=(0, -4, 0), arm=(-12, -1, 0), leg=(-3.5, 13, 0)),
-        boxes=[
-            B('head', -3, -6, -3.5, 6, 6, 7, '#8a5a40', None, front='face', eyes='#e02020', brows='#e8e8ec', mouth='grit'),
-            B('head', -3.5, -8, -2.5, 7, 3, 7, '#e8e8ec', 'hair'),                       # white hair, swept back
-            B('head', -3, 0, 0, 6, 10, 1, '#e8e8ec', 'hair', sway=1, pivot=(0, -6, 4)),  # long white mane down his back
-            B('body', -10, -2, -3, 20, 5, 7, '#8a5a40', 'muscle'),                       # traps
-            B('body', -9, 3, -4.5, 18, 8, 9, '#8a5a40', 'muscle', front='pecs'),         # chest
-            B('body', -6, 11, -3.5, 12, 4, 7, '#8a5a40', 'muscle', front='abs'),
-            B('body', -6.5, 15, -4, 13, 3, 8, '#2a2a30', 'leather', front='buckle'),
-            B('body', -8, -1, 4, 16, 13, 2, '#6a6a74', 'rivets'),                        # scrap fused to his back
-            B('body', -1, -5, 5.5, 2, 6, 2, '#5a5a64', 'iron', mirror=True),              # bolts sticking out of it
-            B('arm', -5, -4, -4.5, 9, 8, 9, '#8a5a40', 'muscle'),                        # boulder shoulders
-            B('arm', -5, 4, -4.5, 9, 11, 9, '#5a5a64', 'rivets'),                        # Clank-Clank gauntlet
-            B('arm', -4.5, 15, -4, 8, 6, 8, '#4a4a54', 'rivets', front='knuckles'),       # iron fist
-            B('leg', -3, 0, -3, 6, 8, 6, '#3a3a44', 'cloth'),
-            B('leg', -3.5, 8, -4, 7, 3, 7, '#202024', 'leather'),
-        ]),
-    # Gild Tesoro (Film Gold): very tall and muscular, built like a man. Slicked-back green hair, winged
-    # shades and star earrings; his white show jacket with gold stars and a rose over a gold shirt, gold
-    # trousers and shoes, a ring on every finger and a star on a chain at his right shoulder.
-    "gild_tesoro": dict(
-        pivots=dict(head=(0, -9, 0), body=(0, -9, 0), arm=(-6.5, -7, 0), leg=(-2.3, 6, 0)),
-        boxes=[
-            B('head', -3.6, -8, -3.6, 7.2, 8, 7.2, '#a06e4a', None, front='face', eyes=None, brows=None, mouth='grin', shades='#e8c040'),
-            B('head', -4.4, -5.2, -3.2, 0.8, 1.6, 1.2, '#e8c040', 'gold', mirror=True),   # the shades' wings
-            B('head', -3.9, -8.8, -3.4, 7.8, 1.8, 7.8, '#3a9a50', 'hair'),               # slicked back on top
-            B('head', -3.9, -7.4, 3.4, 7.8, 6, 1, '#3a9a50', 'hair'),                    # and down the back
-            B('head', -4.1, -3, -0.5, 0.5, 1, 1, '#f0d050', 'gold', mirror=True),        # star earrings
-            B('body', -5, 0, -2.6, 10, 12, 5.2, '#f4f0e6', 'stars', front='tesoro_jacket'),
-            B('body', -4.6, 12, -2.4, 9.2, 3, 4.8, '#d8b030', 'cloth', front='buckle'),
-            B('body', -5.4, 0.5, -2.9, 0.8, 5, 0.6, '#f0d050', 'chain'),                 # chain on his right shoulder
-            B('body', -6, 5.2, -3.1, 1.6, 1.6, 0.6, '#f0d050', 'gold'),                  # and its star
-            B('arm', -2.2, -2, -2.2, 4.4, 12, 4.4, '#f4f0e6', 'stars', front='cuff'),
-            B('arm', -1.9, 10, -1.9, 3.8, 3.5, 3.8, '#a06e4a', None, front='rings'),     # a ring on every finger
-            B('leg', -2.2, 0, -2.2, 4.4, 15.5, 4.4, '#d8b030', 'cloth'),
-            B('leg', -2.4, 15.5, -3, 4.8, 2.5, 5.4, '#e8c040', 'gold'),                  # gold shoes
-        ]),
-    # Zephyr: a mountain of an old Admiral, lopsided by the Battle Smasher, a seastone war-arm bigger than
-    # his chest on his right. Purple hair and beard, a visor, and the Neo Marines' black coat.
-    "zephyr_z": dict(
-        pivots=dict(head=(0, -6, -1), body=(0, -6, 0), arm=(-9, -4, 0), leg=(-3, 12, 0)),
-        boxes=[
-            B('head', -3.5, -7, -3.5, 7, 7, 7, '#c89070', None, front='face', eyes=None, brows=None, mouth=None, shades='#6a3a9a', scar=True),
-            B('head', -3, -1.5, -4.2, 6, 3, 5, '#8a5ab8', 'hair'),                        # beard
-            B('head', -4, -9, -3.5, 8, 3, 8, '#8a5ab8', 'hair'),                          # hair
-            B('head', -3.5, -8, 3.5, 7, 5, 2, '#8a5ab8', 'hair'),                         # swept back
-            B('body', -8, -1.5, -4.5, 16, 3, 9, '#3a2a50', 'ruff'),                       # coat collar
-            B('body', -7, 1, -4, 14, 9, 8, '#1e2028', 'cloth', front='neo_coat'),
-            B('body', -6, 10, -3.5, 12, 6, 7, '#2a2a34', 'cloth', front='buckle'),
-            B('body', -7.5, 0, 0, 15, 14, 1, '#1e2028', 'coat', sway=1, pivot=(0, 9, 4.2)),   # coat tails
-            B('arm', -2.5, -2, -2.5, 5, 12, 5, '#1e2028', 'cloth', only='left'),          # his own left arm
-            B('arm', -2, 10, -2, 4, 4, 4, '#c89070', None, front='knuckles', only='left'),
-            B('arm', -6, -4, -5, 10, 8, 10, '#4a4a58', 'rivets', only='right'),           # the Battle Smasher
-            B('arm', -6.5, 4, -6, 11, 12, 12, '#5a4a78', 'smasher', front='smasher_face', only='right'),
-            B('arm', -5.5, 16, -5.5, 9, 5, 11, '#3a3a48', 'rivets', front='knuckles', only='right'),
-            B('leg', -2.5, 0, -2.5, 5, 9, 5, '#2a2a34', 'cloth'),
-            B('leg', -3, 9, -3.5, 6, 3, 6, '#141418', 'leather'),
-        ]),
-    # Shiki (Strong World): a huge old man with a golden mane down to the ground, bald on top where part of
-    # a ship's wheel is stuck in his skull. Gold chin tuft, black goatee, dark pointed brows and a cigar. A red
-    # kimono trimmed orange and black, a dark green sash and gold chain, a tattered yellow-striped haori over
-    # his shoulders, and from the knees down his legs are his two swords.
-    "shiki_golden_lion": dict(
-        pivots=dict(head=(0, -10, 0), body=(0, -10, 0), arm=(-6, -8, 0), leg=(-2.3, 6, 0)),
-        boxes=[
-            B('head', -3.6, -8, -3.6, 7.2, 8, 7.2, '#e4c09c', None, front='face', eyes='#2a2a2a', brows='#141414', mouth=None),
-            B('head', -2, -2.6, -3.9, 4, 0.8, 0.4, '#141414'),                           # moustache
-            B('head', -2.4, -2.6, -3.9, 0.8, 1.6, 0.4, '#141414', mirror=True),          # its pointed ends
-            B('head', -1.2, -1.8, -3.9, 2.4, 1, 0.4, '#141414'),                         # pointed goatee
-            B('head', -1, -0.9, -4.1, 2, 3, 1.6, '#f0c840', 'mane'),                     # golden chin tuft
-            B('head', -3.2, -2.3, -5.8, 0.8, 0.8, 2.2, '#7a5030', 'wood'),               # cigar
-            B('head', -3.2, -2.3, -6.1, 0.8, 0.8, 0.3, '#ff7a30'),
-            B('head', -6.5, -8, 3.2, 13, 13, 2, '#f0c840', 'mane'),                      # lion's mane behind the head
-            B('head', -5.2, -7, -2.8, 1.6, 11, 6, '#f0c840', 'mane', mirror=True),       # and down the sides
-            B('head', -0.5, -5.5, -5.5, 1, 11, 11, '#6a4020', 'wheel', rot=(0.3, 0, 0), pivot=(0, -7.5, 0.5)),  # the wheel in his head, like a crest
-            B('body', -5, 0, -2.8, 10, 10, 5.6, '#9a2020', 'robe', front='shiki_kimono'),
-            B('body', -5.3, 10, -3.1, 10.6, 2.5, 6.2, '#2a5a3a', 'cloth'),               # dark green sash
-            B('body', -5.4, 12.5, -3.2, 10.8, 0.8, 6.4, '#e8c040', 'chain'),             # gold chain
-            B('body', -5, 12.5, -2.8, 10, 3.5, 5.6, '#9a2020', 'robe'),
-            B('body', -6.6, -0.6, -3.3, 13.2, 3.2, 6.6, '#e8c030', 'stripes'),           # haori over his shoulders
-            B('body', -6.6, 2.6, -3.4, 2.2, 11, 0.6, '#e8c030', 'stripes', mirror=True),  # its open fronts
-            B('body', -6.6, 0, 0, 13.2, 17, 1, '#e8c030', 'stripes', sway=1, pivot=(0, 1, 3.4)),  # its tattered back
-            B('body', -5, 0, 0, 10, 30, 1.2, '#f0c840', 'mane', sway=1, pivot=(0, -1, 4.6)),     # mane to the ground
-            B('arm', -2.2, -2, -2.2, 4.4, 11.5, 4.4, '#9a2020', 'robe', front='cuff'),
-            B('arm', -1.9, 9.5, -1.9, 3.8, 3.5, 3.8, '#e4c09c'),
-            B('leg', -2.3, 0, -2.3, 4.6, 7, 4.6, '#9a2020', 'robe'),                     # kimono to the knee
-            B('leg', -1.1, 7, -1.1, 2.2, 2.5, 2.2, '#2a2020', 'leather'),                # sword hilt
-            B('leg', -2, 9.5, -2, 4, 1, 4, '#c8a040', 'gold'),                           # guard
-            B('leg', -0.5, 10.5, -1.5, 1, 7.5, 3, '#e0e4ec', 'blade'),                   # the blade he stands on
-        ]),
-    # Uta (Film Red): a slim young woman. Hair split red (her right) and white (her left, over that eye), two
-    # long ponytails ending in hoops and two more hoops on top, purple eyes, gold cone headphones on light-blue
-    # bands, a short white dress with a frilled neck, black bow and buttons, and a light-blue left sleeve.
-    "uta_diva": dict(
-        pivots=dict(head=(0, -9, 0), body=(0, -9, 0), arm=(-4, -7.5, 0), leg=(-1.7, 5, 0)),
-        boxes=[
-            B('head', -3.5, -7, -3.25, 7, 7, 6.5, '#f6e0d4', None, front='face', eyes='#9a5ac8', brows=None, mouth='smirk', lashes=True),
-            B('head', -3.8, -7.6, -3.6, 3.8, 2.2, 7.4, '#d83040', 'hair'),               # red half
-            B('head', 0, -7.6, -3.6, 3.8, 2.2, 7.4, '#f4f4f8', 'hair'),                  # white half
-            B('head', -3.8, -6, 2.9, 3.8, 7, 1, '#d83040', 'hair'),
-            B('head', 0, -6, 2.9, 3.8, 7, 1, '#f4f4f8', 'hair'),
-            B('head', 0.2, -6.2, -3.7, 3.4, 3.2, 0.5, '#f4f4f8', 'hair'),                # white fringe over her left eye
-            B('head', -2.5, -4, -0.5, 5, 5, 1, '#d83040', 'ring', rot=(0, 0, 0.3), pivot=(-2.6, -7.5, 0)),    # hoops on top
-            B('head', -2.5, -4, -0.5, 5, 5, 1, '#f4f4f8', 'ring', rot=(0, 0, -0.3), pivot=(2.6, -7.5, 0)),
-            B('head', -4.6, -6, 3, 1.6, 10, 1.6, '#d83040', 'hair'),                     # ponytails
-            B('head', 3, -6, 3, 1.6, 10, 1.6, '#f4f4f8', 'hair'),
-            B('head', -0.5, -3.5, -3.5, 1, 7, 7, '#d83040', 'ring', pivot=(-3.8, 7, 4)),  # ending in hoops, behind her
-            B('head', -0.5, -3.5, -3.5, 1, 7, 7, '#f4f4f8', 'ring', pivot=(3.8, 7, 4)),
-            B('head', -4.6, -5, -1.5, 1.2, 3, 3, '#e8c040', 'gold', mirror=True),         # cone headphones
-            B('head', -4.4, -8.2, -0.8, 8.8, 0.8, 1.6, '#8ad0f0', 'cloth'),              # their light-blue band
-            B('body', -3, 0, -1.75, 6, 6, 3.5, '#f8f6f8', 'cloth', front='uta_dress'),
-            B('body', -2.6, 6, -1.6, 5.2, 3, 3.2, '#f8f6f8', 'cloth'),
-            B('body', -3.6, 9, -2.3, 7.2, 8, 4.6, '#f8f6f8', 'frills'),                  # short dress
-            B('arm', -1.4, -1, -1.4, 2.8, 3, 2.8, '#f8f6f8', 'frills', only='right'),
-            B('arm', -1.2, 2, -1.2, 2.4, 9.5, 2.4, '#f6e0d4', None, only='right'),
-            B('arm', -1.3, -1.2, -1.3, 2.6, 12.7, 2.6, '#8ad0f0', 'cloth', front='strawhat', only='left'),  # light-blue sleeve
-            B('arm', -1.25, 11.5, -1.25, 2.5, 2, 2.5, '#f6e0d4'),
-            B('leg', -1.2, 0, -1.2, 2.4, 15, 2.4, '#f6e0d4'),
-            B('leg', -1.4, 15, -1.7, 2.8, 4, 3.2, '#f4f4f8', 'leather'),                 # boots
-        ]),
-    # El Drago (One Piece: The Movie): a tall, broad pirate with dark skin and a red, lion-like mane. Gold-alloy
-    # shoulder armour and gorget over a white shirt, a gold belt, and hard golden nails over his fingertips.
-    # The Goe Goe Fruit: his mouth is the weapon, so it's drawn open.
-    "el_drago": dict(
-        pivots=dict(head=(0, -6, 0), body=(0, -6, 0), arm=(-7, -4, 0), leg=(-2.6, 9, 0)),
-        boxes=[
-            B('head', -3.8, -8, -3.8, 7.6, 8, 7.6, '#5a3a28', None, front='face', eyes='#f0c040', brows='#c02818', mouth='roar'),
-            B('head', -4.4, -9.6, -4.2, 8.8, 2.2, 7.6, '#c02818', 'mane'),                 # mane on top
-            B('head', -5, -9, -3, 1.4, 11, 5.6, '#c02818', 'mane', mirror=True),            # and down the sides
-            B('head', -5.5, -9.5, 2.6, 11, 13, 2.6, '#c02818', 'mane'),                     # flowing down his back
-            B('body', -5.6, -0.8, -3.2, 11.2, 3, 6.4, '#e8c040', 'gold'),                   # gold gorget
-            B('body', -4.8, 0, -2.6, 9.6, 10, 5.2, '#f0eee8', 'cloth', front='drago_shirt'),
-            B('body', -5, 10, -2.8, 10, 2, 5.6, '#d8b030', 'gold', front='buckle'),
-            B('body', -4.6, 12, -2.5, 9.2, 3, 5, '#3a2a2a', 'cloth'),
-            B('arm', -3.6, -3, -3.4, 6.2, 4.5, 6.8, '#e8c040', 'plates'),                   # gold shoulder armour
-            B('arm', -2.2, -1, -2.2, 4.4, 9, 4.4, '#f0eee8', 'cloth'),
-            B('arm', -2, 8, -2, 4, 3.5, 4, '#5a3a28'),
-            B('arm', -2.1, 11.5, -2.6, 4.2, 1.6, 0.9, '#e8c040', 'gold', front='knuckles'),   # golden nails
-            B('leg', -2.4, 0, -2.4, 4.8, 13, 4.8, '#3a2a2a', 'cloth'),
-            B('leg', -2.6, 13, -3, 5.2, 2, 5.6, '#1e1618', 'leather'),
-        ]),
-    # Gasparde (Dead End Adventure): tall and muscular, heavy chin, narrow eyes, dark-blonde hair combed to the sides
-    # and flaring out behind. An ornate Marine officer's jacket (its insignia crossed out on the back) open over a brown
-    # shirt and a bare chest, a purple scarf, a black belt with two buckles, brown gloves and steel boots.
-    "gasparde": dict(
-        pivots=dict(head=(0, -8, 0), body=(0, -8, 0), arm=(-6.5, -6, 0), leg=(-2.4, 7, 0)),
-        boxes=[
-            B('head', -3.5, -8, -3.5, 7, 7.6, 7, '#e0b48c', None, front='face', eyes='#2a2a30', brows='#7a6030', mouth=None, narrow=True),
-            B('head', -3, -0.8, -3.9, 6, 1.6, 1, '#d4a880'),                                # heavy chin
-            B('head', -3.8, -8.8, -3.8, 7.6, 1.8, 7.6, '#a88a48', 'hair'),                  # combed to the sides
-            B('head', -4.6, -7.6, -2.6, 1.1, 4.6, 6, '#a88a48', 'hair', mirror=True),
-            B('head', -5.2, -7.2, 3.2, 10.4, 8, 1.4, '#a88a48', 'hair'),                    # and flaring out behind
-            B('body', -4.2, -1, -3, 8.4, 2.2, 6, '#6a3a8a', 'cloth'),                       # purple scarf
-            B('body', -3.6, 1.2, -3.3, 1.6, 5, 0.6, '#6a3a8a', 'cloth'),
-            B('body', -5, 0, -2.6, 10, 11, 5.2, '#2e4a3e', 'cloth', front='gasparde_coat'),
-            B('body', -4.8, 11, -2.7, 9.6, 2, 5.4, '#1a1a1e', 'leather', front='two_buckles'),
-            B('body', -4.6, 13, -2.5, 9.2, 2, 5, '#1e1e22', 'cloth'),
-            B('body', -5.6, 0, 0, 11.2, 14, 1, '#2e4a3e', 'crossed', sway=1, pivot=(0, 9, 2.8)),   # coat tails
-            B('arm', -3.2, -2.5, -3, 5.8, 2, 6, '#d8b040', 'fringe'),                       # epaulettes
-            B('arm', -2.4, -1, -2.4, 4.8, 11, 4.8, '#2e4a3e', 'cloth', front='cuff'),
-            B('arm', -2.2, 10, -2.2, 4.4, 3.5, 4.4, '#6a4a2a', 'leather'),                  # gloves
-            B('leg', -2.4, 0, -2.4, 4.8, 13, 4.8, '#1e1e22', 'cloth'),
-            B('leg', -2.7, 13, -3.2, 5.4, 4, 6, '#9aa0a8', 'iron'),                         # steel boots
-        ]),
-    # Baron Omatsuri (Baron Omatsuri and the Secret Island): tall and lean, broad shoulders, long limbs, a thin waist and
-    # a triangular head. Palm-tree hair, long brows, a pointed nose, an upswept moustache and a pointed black goatee,
-    # pink goggles on his forehead. A dark purple suit with orange-yellow flowers, a white collar and neckerchief, and
-    # Lily Carnation, the little yellow flower, sitting on his left shoulder. He fights with a bow.
-    "baron_omatsuri": dict(
-        pivots=dict(head=(0, -10, 0), body=(0, -10, 0), arm=(-5.5, -8, 0), leg=(-1.9, 6, 0)),
-        boxes=[
-            B('head', -3.4, -8, -3.4, 6.8, 5, 6.8, '#d8a880', None, front='face', eyes='#2a2a2a', brows='#141414', mouth=None),
-            B('head', -2.4, -3, -3, 4.8, 2.2, 5.6, '#d8a880'),                              # the head narrows to a point
-            B('head', -1.2, -0.8, -2.6, 2.4, 1, 4, '#d8a880'),
-            B('head', -0.8, 0.2, -2.8, 1.6, 2.2, 1.2, '#141414'),                           # pointed goatee
-            B('head', -2.6, -3.2, -3.5, 2, 0.6, 0.4, '#141414', mirror=True),              # moustache
-            B('head', -3, -4.2, -3.5, 0.6, 1, 0.4, '#141414', mirror=True),                # curling up
-            B('head', -0.4, -5.2, -4.2, 0.8, 1.6, 0.8, '#d8a880'),                          # pointed nose
-            B('head', -3.6, -8.2, -3.7, 7.2, 1.4, 0.6, '#f080b0', 'gold'),                  # pink goggles
-            B('head', -3.5, -9.2, -3.5, 7, 1.4, 7, '#2a2018', 'hair'),
-            B('head', -1, -12.5, -1, 2, 3.5, 2, '#2a2018', 'hair'),                          # palm-tree tuft
-            B('head', 0, -0.6, -1.2, 6, 1.2, 2.4, '#2a2018', 'hair', rot=(0, 0, 0.55), pivot=(0.5, -11.8, 0), mirror=True),
-            B('head', -1.2, -0.6, 0, 2.4, 1.2, 5.5, '#2a2018', 'hair', rot=(-0.55, 0, 0), pivot=(0, -11.8, 0.5)),
-            B('head', -1.2, -0.6, -5.5, 2.4, 1.2, 5.5, '#2a2018', 'hair', rot=(0.55, 0, 0), pivot=(0, -11.8, -0.5)),
-            B('body', -2.6, -0.8, -2.8, 5.2, 2.4, 1.2, '#f4f4f0', 'cloth'),                 # white collar and neckerchief
-            B('body', -5, 0, -2.4, 10, 5, 4.8, '#3e2a5a', 'flowers'),                       # broad shoulders
-            B('body', -3.4, 5, -2, 6.8, 7, 4, '#3e2a5a', 'flowers', front='omatsuri_suit'),  # thin waist
-            B('body', -3.8, 12, -2.2, 7.6, 4, 4.4, '#3e2a5a', 'flowers'),
-            B('body', 5, -3, -0.5, 1, 3, 1, '#3a8a3a'),                                      # Lily's stem, on his left shoulder
-            B('body', 3.6, -6.8, -0.6, 3.8, 3.8, 1.2, '#f0d030', None, front='lily_face'),
-            B('arm', -2.2, -2, -2.2, 4.4, 3, 4.4, '#3e2a5a', 'flowers'),
-            B('arm', -1.8, 1, -1.8, 3.6, 11, 3.6, '#3e2a5a', 'flowers', front='cuff'),
-            B('arm', -1.6, 12, -1.6, 3.2, 2.5, 3.2, '#d8a880'),
-            B('leg', -1.8, 0, -1.8, 3.6, 16, 3.6, '#3e2a5a', 'cloth'),
-            B('leg', -2, 16, -2.8, 4, 2, 4.8, '#1e1a22', 'leather'),
-        ]),
-    # Dr. Ratchet (The Giant Mechanical Soldier of Karakuri Castle): a thin, lanky young inventor. Light brown hair
-    # parted to one side, narrow eyes behind round orange mechanical glasses (with wipers), loose yellow overalls and
-    # a thick black scarf printed with red gears. His fighting is done by his machines.
-    "ratchet": dict(
-        pivots=dict(head=(0, -3, 0), body=(0, -3, 0), arm=(-4, -1.5, 0), leg=(-1.6, 10, 0)),
-        boxes=[
-            B('head', -3.5, -7.5, -3.5, 7, 7.5, 7, '#f0cca8', None, front='face', eyes=None, brows='#8a6038', mouth='smirk'),
-            B('head', -3.4, -5.6, -4.1, 3, 2.6, 0.5, '#f0a040', None, front='lens'),        # round mechanical glasses
-            B('head', 0.4, -5.6, -4.1, 3, 2.6, 0.5, '#f0a040', None, front='lens'),
-            B('head', -0.4, -4.8, -4.0, 0.8, 0.6, 0.4, '#b06a20'),
-            B('head', -3.7, -8.3, -3.7, 7.4, 1.8, 7.4, '#b08050', 'hair'),
-            B('head', -3.8, -7.2, -3.9, 4.6, 2, 0.6, '#b08050', 'hair'),                    # parted 7:3
-            B('head', 1.4, -7.2, -3.9, 2.4, 1.2, 0.6, '#b08050', 'hair'),
-            B('head', -3.7, -7, 3.1, 7.4, 5, 0.8, '#b08050', 'hair'),
-            B('body', -3.4, -1.2, -2.6, 6.8, 2.6, 5.2, '#1a1a1e', 'gears'),                 # thick black scarf
-            B('body', -3, 0, 0, 2, 7, 0.7, '#1a1a1e', 'gears', sway=-1, pivot=(0, 1.4, -2.7)),
-            B('body', -3.2, 0, -1.9, 6.4, 10, 3.8, '#e8c430', 'cloth', front='overalls'),
-            B('body', -3.3, 10, -2, 6.6, 3, 4, '#e8c430', 'cloth'),
-            B('arm', -1.5, -1.5, -1.5, 3, 10.5, 3, '#e8c430', 'cloth'),
-            B('arm', -1.4, 9, -1.4, 2.8, 2.5, 2.8, '#f0cca8'),
-            B('leg', -1.5, 0, -1.5, 3, 12, 3, '#e8c430', 'cloth'),
-            B('leg', -1.7, 12, -2.4, 3.4, 2, 4.2, '#5a3a22', 'leather'),
-        ]),
-    # Byrnndi World (the 3D2Y special): very tall and broad with huge bare arms on thin legs. A horned helmet with one
-    # horn broken off (so his brother Byojack could sit on his shoulder), a green beard and a paler W-shaped moustache,
-    # a gap-toothed grin, an open sleeveless black-and-purple coat over his bare chest, green trousers, a brown belt and shoes.
-    "byrnndi_world": dict(
-        pivots=dict(head=(0, -9, -1), body=(0, -8, 0), arm=(-9.5, -6, 0), leg=(-2.6, 8, 0)),
-        boxes=[
-            B('head', -3.5, -7, -3.5, 7, 7, 7, '#c89068', None, front='face', eyes='#2a2a2a', brows='#3a7a3a', mouth='gap'),
-            B('head', -3.4, -2, -4.0, 6.8, 5, 2.6, '#3a7a3a', 'hair'),                       # green beard
-            B('head', -3, -2.8, -4.2, 6, 1, 0.5, '#7aba6a', 'hair'),                         # W moustache
-            B('head', -3.4, -3.8, -4.2, 0.8, 1.6, 0.5, '#7aba6a', 'hair', mirror=True),
-            B('head', -4, -9, -4, 8, 3.5, 8, '#5a4a3a', 'iron'),                             # helmet
-            B('head', -0.7, -6, -0.7, 1.4, 6, 1.4, '#e8e0c8', 'bone', rot=(0, 0, -0.6), pivot=(-3.6, -8, 0)),   # his horn
-            B('head', -0.7, -2.2, -0.7, 1.4, 2.2, 1.4, '#e8e0c8', 'bone', rot=(0, 0, 0.6), pivot=(3.6, -8, 0)),  # the broken one
-            B('body', -8, -2, -1.2, 16, 3, 5.8, '#6a3a8a', 'ruff'),                          # purple collar
-            B('body', -7.5, 0, -4, 15, 9, 8, '#c89068', 'muscle', front='pecs'),
-            B('body', -8, -1, -4.4, 3.6, 15, 8.8, '#1e1a24', 'purple_trim', mirror=True),    # the open coat
-            B('body', -5.5, 9, -3.4, 11, 5, 6.8, '#c89068', 'muscle', front='abs'),
-            B('body', -6, 14, -3.6, 12, 2, 7.2, '#6a4a2a', 'leather', front='buckle'),
-            B('body', -8, 0, 0, 16, 15, 1, '#1e1a24', 'purple_trim', sway=1, pivot=(0, 9, 4.5)),   # coat tails
-            B('arm', -4.5, -3, -4.5, 8, 7, 9, '#c89068', 'muscle'),
-            B('arm', -4, 4, -4, 7, 10, 8, '#c89068', 'muscle'),
-            B('arm', -3.5, 14, -3.5, 6.5, 4, 7, '#b88060', None, front='knuckles'),
-            B('leg', -2, 0, -2, 4, 13, 4, '#3a6a3a', 'cloth'),
-            B('leg', -2.4, 13, -3, 4.8, 3, 5.6, '#6a4a2a', 'leather'),
-        ]),
-    # Bear King (Clockwork Island Adventure): a big man with black hair and whiskers under a big teddy-bear hat. A furred
-    # captain's jacket with a golden spade for a collar, a blue shirt with the card pips (clover, heart, diamond) left
-    # unbuttoned, relatively thin hairy arms and chest, and fur bands round his wrists. The Kachi Kachi Fruit makes his
-    # fists hard and hot.
-    "bear_king": dict(
-        pivots=dict(head=(0, -6, 0), body=(0, -6, 0), arm=(-6.4, -4, 0), leg=(-2.4, 9, 0)),
-        boxes=[
-            B('head', -3.6, -7.5, -3.6, 7.2, 7.5, 7.2, '#d8a47c', None, front='face', eyes='#202020', brows='#141414', mouth='grin'),
-            B('head', -3.8, -7.6, -1, 7.6, 5, 4.8, '#18181c', 'hair'),                        # black hair under the hat
-            B('head', -3.2, -2.6, -3.9, 2.2, 0.5, 0.4, '#18181c', None, mirror=True),         # whiskers
-            B('head', -3.6, -2, -3.9, 1.2, 0.5, 0.4, '#18181c', None, mirror=True),
-            B('head', -4.4, -13, -4.4, 8.8, 5.6, 8.8, '#8a5a32', 'fur', front='teddy'),       # the teddy-bear hat
-            B('head', -4.6, -14.6, -1.2, 2.4, 2.4, 1.6, '#8a5a32', 'fur', mirror=True),       # its ears
-            B('head', -1.5, -10.4, -5.4, 3, 2, 1, '#c89a6a', 'fur'),                          # its snout
-            B('body', -5.6, -4.5, 1.2, 11.2, 5.5, 1, '#e8c040', 'gold', front='spade'),       # the golden spade collar
-            B('body', -4.6, 0, -2.6, 9.2, 11, 5.2, '#3a6ac8', 'cloth', front='pips'),         # blue shirt, open at the neck
-            B('body', -5.2, -0.5, -3.0, 2.2, 13, 6, '#7a2a2a', 'cloth', mirror=True),         # the open jacket
-            B('body', -5.4, -0.8, -3.2, 10.8, 1.6, 6.4, '#ece6d8', 'fur'),                    # its fur trim at the shoulders
-            B('body', -4.8, 11, -2.8, 9.6, 2, 5.6, '#2a1a14', 'leather', front='buckle'),
-            B('body', -4.6, 13, -2.6, 9.2, 2, 5.2, '#2a2a34', 'cloth'),
-            B('body', -5.4, 0, 0, 10.8, 13, 1, '#7a2a2a', 'cloth', sway=1, pivot=(0, 1, 3.1)),   # jacket tails
-            B('arm', -2.4, -2, -2.4, 4.6, 6, 4.8, '#7a2a2a', 'cloth'),
-            B('arm', -1.7, 4, -1.7, 3.4, 5.5, 3.4, '#d8a47c', 'hairy'),                       # thin, hairy forearms
-            B('arm', -2.1, 9.2, -2.1, 4.2, 1.6, 4.2, '#ece6d8', 'fur'),                       # fur wrist bands
-            B('arm', -1.9, 10.8, -1.9, 3.8, 2.8, 3.8, '#d8a47c', None, front='knuckles'),
-            B('leg', -2.3, 0, -2.3, 4.6, 12, 4.6, '#2a2a34', 'cloth'),
-            B('leg', -2.6, 12, -3, 5.2, 3, 5.6, '#1a1410', 'leather'),
-        ]),
-    # Buena Festa (Stampede): a middle-aged showman with a huge dark afro and his glasses pushed up into it. A fancy
-    # buttoned coat over a buttoned shirt, a belt wrapped round his chest, pinstripe trousers and boots.
-    "buena_festa": dict(
-        pivots=dict(head=(0, -7, 0), body=(0, -7, 0), arm=(-5.4, -5, 0), leg=(-2.1, 8, 0)),
-        boxes=[
-            B('head', -3.4, -7.4, -3.4, 6.8, 7.4, 6.8, '#d8a884', None, front='face', eyes='#2a2a2a', brows='#1e1612', mouth='grin'),
-            B('head', -5.4, -15, -5, 10.8, 8.6, 10.4, '#1e1612', 'afro'),                     # the afro
-            B('head', -4.6, -8.2, -2.2, 1.4, 5, 6, '#1e1612', 'afro', mirror=True),           # down past his ears
-            B('head', -3.4, -9.4, -5.6, 2.8, 1.8, 0.6, '#d8c070', None, front='lens'),        # glasses up in the afro
-            B('head', 0.6, -9.4, -5.6, 2.8, 1.8, 0.6, '#d8c070', None, front='lens'),
-            B('head', -1.2, -2.2, -3.7, 2.4, 1.2, 0.4, '#1e1612'),                            # moustache
-            B('body', -3, -0.8, -2.8, 6, 2, 1, '#f4f0e8', 'cloth'),                           # shirt collar
-            B('body', -4.5, 0, -2.5, 9, 12, 5, '#a8324a', 'cloth', front='festa_coat'),
-            B('body', -4.7, 4, -2.7, 9.4, 1.4, 5.4, '#3a2418', 'leather', front='buckle'),    # the belt round his chest
-            B('body', -4.6, 12, -2.6, 9.2, 3, 5.2, '#4a4a52', 'pinstripe'),
-            B('body', -4.8, 0, 0, 9.6, 15, 1, '#a8324a', 'cloth', sway=1, pivot=(0, 10, 2.7)),   # coat tails
-            B('arm', -2, -1.5, -2, 4, 11, 4, '#a8324a', 'cloth', front='cuff'),
-            B('arm', -1.7, 9.5, -1.7, 3.4, 2.6, 3.4, '#d8a884'),
-            B('arm', -0.6, 10.5, -4.6, 1.2, 1.6, 3.4, '#5a3a22', 'wood', only='right'),       # his flintlock
-            B('leg', -2, 0, -2, 4, 13, 4, '#4a4a52', 'pinstripe'),
-            B('leg', -2.3, 13, -2.8, 4.6, 3, 5.2, '#2a1a14', 'leather'),
-        ]),
-    # Saga (Curse of the Sacred Sword): a tall man with tanned skin and long white hair worn loose down his back, a red
-    # robe, a white band on his left arm and red shoes. His right arm hangs (it was crippled at sea); the Seven Star
-    # Sword sits at his hip.
-    "saga": dict(
-        pivots=dict(head=(0, -10, 0), body=(0, -10, 0), arm=(-5, -8, 0), leg=(-1.9, 6, 0)),
-        boxes=[
-            B('head', -3.3, -7.8, -3.3, 6.6, 7.8, 6.6, '#b07850', None, front='face', eyes='#3a2a20', brows='#e8e8ee', mouth=None, narrow=True),
-            B('head', -3.6, -8.6, -3.6, 7.2, 2, 7.2, '#ececf2', 'hair'),
-            B('head', -4.1, -7.4, -3.2, 1, 7, 6, '#ececf2', 'hair', mirror=True),             # loose at the sides
-            B('head', -3.6, -3.2, -3.6, 2.4, 2, 0.6, '#ececf2', 'hair'),                      # a fringe across one eye
-            B('head', -4, -7, 3, 8, 6, 1.2, '#ececf2', 'hair'),
-            B('body', -4, -1, 0, 8, 14, 1.2, '#ececf2', 'hair', sway=1, pivot=(0, 1, 3.4)),   # long white hair down his back
-            B('body', -4.2, 0, -2.3, 8.4, 11, 4.6, '#b02424', 'robe', front='saga_robe'),
-            B('body', -4.4, 10, -2.5, 8.8, 2, 5, '#f0ece4', 'cloth'),                          # white sash
-            B('body', -4.5, 12, -2.6, 9, 4, 5.2, '#b02424', 'robe'),
-            B('body', -4.6, 0, 0, 9.2, 8, 1, '#b02424', 'robe', sway=-1, pivot=(0, 16, -2.6)),  # robe to the knees, front
-            B('body', -4.6, 0, 0, 9.2, 8, 1, '#b02424', 'robe', sway=1, pivot=(0, 16, 2.2)),    # and back
-            B('body', 4.5, 0, -0.6, 1.2, 12, 1.2, '#2a2420', 'leather', rot=(0.5, 0, 0), pivot=(0, 11, -1)),   # the Seven Star Sword's scabbard
-            B('body', 4.5, -3.4, -0.6, 1.2, 3.4, 1.2, '#3a7a4a', 'leather', rot=(0.5, 0, 0), pivot=(0, 11, -1)),   # its green-wrapped hilt
-            B('arm', -1.7, -1.5, -1.7, 3.4, 12.5, 3.4, '#b02424', 'robe', front='cuff'),
-            B('arm', -1.9, 3, -1.9, 3.8, 1.6, 3.8, '#f4f4f0', 'cloth', only='left'),          # white armband
-            B('arm', -1.5, 11, -1.5, 3, 2.5, 3, '#b07850'),
-            B('leg', -1.7, 0, -1.7, 3.4, 16, 3.4, '#2a2024', 'cloth'),
-            B('leg', -1.9, 16, -2.6, 3.8, 2, 4.4, '#b02424', 'leather'),                      # red shoes
-        ]),
-    # Count Butler (Chopper's Kingdom on the Island of Strange Animals): a tall, thin, pale gentleman scientist with
-    # slicked-back hair and a monocle, a long tailcoat with a white cravat, and the violin he hypnotises animals with.
-    # (The wiki gives no colours for him, so these are ours.) His phase 3 is the golden horns.
-    "count_butler": dict(
-        pivots=dict(head=(0, -10, 0), body=(0, -10, 0), arm=(-4.6, -8, 0), leg=(-1.7, 6, 0)),
-        boxes=[
-            B('head', -3.1, -8.4, -3.2, 6.2, 8.4, 6.4, '#ecd8c8', None, front='face', eyes='#5a2a6a', brows='#2a1a30', mouth='smirk', monocle=True),
-            B('head', -2.4, -0.6, -3.6, 4.8, 1.6, 1, '#e4ccbc'),                              # long chin
-            B('head', -3.4, -9.2, -3.4, 6.8, 2, 6.8, '#3a2440', 'hair'),                      # slicked back
-            B('head', -3.4, -8, 2.6, 6.8, 6, 1.4, '#3a2440', 'hair'),
-            B('head', -3.5, -7.6, -2.4, 0.6, 3, 5, '#3a2440', 'hair', mirror=True),
-            B('body', -2.2, -0.8, -2.8, 4.4, 2.6, 1, '#f4f4f0', 'frills'),                    # white cravat
-            B('body', -3.6, 0, -2.1, 7.2, 12, 4.2, '#5a2a6a', 'cloth', front='butler_coat'),
-            B('body', -3.4, 12, -2, 6.8, 4, 4, '#2a2030', 'cloth'),
-            B('body', -3.6, 0, 0, 3.4, 16, 1, '#5a2a6a', 'cloth', sway=1, pivot=(0, 9, 2.2), mirror=True),   # the two tails
-            B('arm', -1.5, -1.5, -1.5, 3, 12, 3, '#5a2a6a', 'cloth', front='cuff'),
-            B('arm', -1.3, 10.5, -1.3, 2.6, 2.2, 2.6, '#f4f4f0', 'cloth'),                    # white gloves
-            B('arm', -1.2, 6, -6, 2.4, 1.6, 6.5, '#a8582a', 'wood', front='violin', only='left'),   # the violin
-            B('arm', -0.4, 11.5, -6, 0.6, 0.6, 7, '#e8e0c8', None, only='right'),             # and its bow
-            B('leg', -1.5, 0, -1.5, 3, 16, 3, '#2a2030', 'cloth'),
-            B('leg', -1.7, 16, -2.5, 3.4, 2, 4.2, '#141014', 'leather'),
-        ]),
 }
+
+# The film villains are canon characters, built to their anime proportions in anime.py.
+ROGUES.update(anime.FILM)
 
 # ---------------- painting ----------------
 
@@ -1253,7 +915,10 @@ def pack(boxes, size):
     x = y = shelf = 0
     spots = []
     for b in boxes:
-        bw, bh = int(2 * b['d'] + 2 * b['w']) + 1, int(b['d'] + b['h']) + 1
+        # Room for the net as painted (whole pixels per side), which can be a pixel wider than the exact sizes.
+        rw, rh, rd = (int(round(b[k])) for k in ('w', 'h', 'd'))
+        bw = max(int(2 * b['d'] + 2 * b['w']), 2 * rd + 2 * rw) + 1
+        bh = max(int(b['d'] + b['h']), rd + rh) + 1
         if x + bw > size:
             x, y, shelf = 0, y + shelf, 0
         if y + bh > size or bw > size:
@@ -1324,7 +989,8 @@ def java(rogues, layouts):
     w('/**')
     w(' * Every rogue\'s own body, with wild One Piece proportions instead of the player shape. Each keeps the player')
     w(' * model\'s parts (head, body, arms, legs) so it walks, swings and looks around like one, but the parts sit where')
-    w(' * that rogue\'s body needs them and are built from its own boxes. Skins are 128x128 and match these boxes.')
+    w(' * that rogue\'s body needs them and are built from its own boxes. Skins are 128x128 (or 256) and match these boxes;')
+    w(' * the PNGs are drawn at twice that, so faces get more pixels.')
     w(' * GENERATED by tools/gen_models.py, which also paints the skins: change the shapes there and run it again')
     w(' * instead of editing this file.')
     w(' */')
@@ -1449,7 +1115,13 @@ def main(root):
         rnd = random.Random(i)
         for b, (u, v) in zip(boxes, spots):
             paint_box(img, u, v, b, rnd)
-        img.save(os.path.join(res, i + '.png'))
+        # The skin is saved at skin.SCALE times its declared size, with every face redrawn at that resolution.
+        big = skin.upscale(img)
+        for b, (u, v) in zip(boxes, spots):
+            if b.get('front') == 'face':
+                d = int(round(b['d']))
+                skin.paint_face(big, u + d, v + d, b['w'], b['h'], b)
+        big.save(os.path.join(res, i + '.png'))
         layouts[i] = (boxes, spots, size)
     out = os.path.join(root, 'src/main/java/com/onepiecebosses/client/RogueModels.java')
     with open(out, 'w') as fh:
