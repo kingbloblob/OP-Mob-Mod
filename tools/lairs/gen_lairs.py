@@ -69,6 +69,35 @@ class Lair(Parts):
         super().tower(cx, cz, r, h, wall, None, y, windows, ladder_side, floors)
         if roof:
             detail.stair_cone(self, cx, cz, r, y + h + 1, *detail.cone_family(roof))
+        detail.weather(self, cx - r, y + 1, cz - r, cx + r, y + h, cz + r, wall)
+        if r >= 3:
+            for yy in range(y + 6, y + h - 1, 8):
+                detail.ring_course(self, cx, cz, r, yy, detail.wall_family(wall))
+
+    def hall(self, x0, z0, x1, z1, y, h, wall, base, post, trim=None, floor=None, win=PANE, every=4,
+             doors=(), proud=True, win_h=2, ceiling=None):
+        out = super().hall(x0, z0, x1, z1, y, h, wall, base, post, trim, floor, win, every, doors, proud, win_h, ceiling)
+        detail.weather(self, x0, y + 2, z0, x1, y + h, z1, wall)
+        if h >= 6:   # a cornice under the eaves, clear of the door heads
+            detail.string_course(self, x0, z0, x1, z1, y + h - 1, detail.wall_family(wall))
+        return out
+
+    def gable_roof(self, x0, z0, x1, z1, y, fam, fill, ov=1, axis="x", eave=True):
+        ridge = super().gable_roof(x0, z0, x1, z1, y, fam, fill, ov, axis, eave)
+        length, span = (x1 - x0, z1 - z0) if axis == "x" else (z1 - z0, x1 - x0)
+        if length >= 14 and span >= 10:   # a big roof gets dormers down both slopes and a chimney
+            i = 3
+            for k in range(5, length - 3, 9):
+                if axis == "x":
+                    detail.dormer(self, x0 + k, y + i - 1, z0 - ov + i, "north", fam, fill, log("dark_oak"))
+                    detail.dormer(self, x0 + k, y + i - 1, z1 + ov - i, "south", fam, fill, log("dark_oak"))
+                else:
+                    detail.dormer(self, x0 - ov + i, y + i - 1, z0 + k, "west", fam, fill, log("dark_oak"))
+                    detail.dormer(self, x1 + ov - i, y + i - 1, z0 + k, "east", fam, fill, log("dark_oak"))
+            q = span // 3
+            cx, cz = (x0 + length // 2 + 2, z0 + q) if axis == "x" else (x0 + q, z0 + length // 2 + 2)
+            detail.chimney(self, cx, y + q, cz, q + 4, random.Random(x0 + z0))
+        return ridge
 
     def tower_cap(self, cx, cz, r, h, roof, y=0):
         pass   # the stair cone needs no filling under its tip
@@ -138,7 +167,15 @@ def soften_ground(b):
     xs = [p[0] for p in b.blocks]; zs = [p[2] for p in b.blocks]
     W, D = max(xs), max(zs)
     rnd = random.Random(W * 31 + D)
+    # Trees keep to the lair's ground: a crown hanging past it would widen the lair and crowd whatever stands next door.
+    gx = [p[0] for p in b.blocks if p[1] in (-1, 0)]; gz = [p[2] for p in b.blocks if p[1] in (-1, 0)]
+    for (x, y, z), s in list(b.blocks.items()):
+        if y >= 1 and not (min(gx) <= x <= max(gx) and min(gz) <= z <= max(gz)) and ("_leaves" in s or "_log" in s or s.startswith("minecraft:vine")):
+            del b.blocks[(x, y, z)]
+    xs = [p[0] for p in b.blocks]; zs = [p[2] for p in b.blocks]
+    W, D = max(xs), max(zs)
     detail.ground_patches(b, W, D, rnd)
+    detail.dress_edges(b, W, D, rnd)
     detail.flower_drifts(b, W, D, rnd)
     if not hasattr(b, "natural"):
         detail.fade_edges(b, W, D, seed=7)
@@ -1211,7 +1248,12 @@ def main(root, only=()):
         sys.exit('No such lair: ' + ', '.join(sorted(unknown)))
     if not only:   # a full run starts clean, so a lair taken out leaves nothing behind
         for p in ('structure', 'worldgen/template_pool', 'worldgen/structure', 'worldgen/structure_set', 'tags/worldgen/biome/has_structure', 'loot_table/chests'):
-            shutil.rmtree(f'{D}/{p}', ignore_errors=True)
+            for folder, _dirs, files in os.walk(f'{D}/{p}'):
+                if 'ships' in folder:
+                    continue   # tools/ships builds these, not this script
+                for f in files:
+                    if f not in ('cinderwake.json', 'tithe_cathedral.json', 'widowmaker.json'):
+                        os.remove(os.path.join(folder, f))
     bosses = {b['id'] for b in json.load(open(os.path.join(root, 'src/main/resources/opbosses/bosses.json')))['bosses']}
     kits = {k['id'] for k in json.load(open(os.path.join(root, 'src/main/resources/opbosses/crews.json')))['kits']}
     rows = []

@@ -483,3 +483,68 @@ def cone_family(roof):
         if word in name:
             return (fam, fill)
     return ("dark_oak", "minecraft:dark_oak_planks")
+
+
+WEATHERED = {
+    "minecraft:stone_bricks": ["minecraft:cracked_stone_bricks", "minecraft:mossy_stone_bricks", "minecraft:andesite"],
+    "minecraft:white_concrete": ["minecraft:calcite", "minecraft:polished_diorite"],
+    "minecraft:calcite": ["minecraft:diorite", "minecraft:polished_diorite"],
+    "minecraft:quartz_bricks": ["minecraft:smooth_quartz", "minecraft:calcite"],
+    "minecraft:spruce_planks": ["minecraft:stripped_spruce_wood[axis=y]", "minecraft:dark_oak_planks"],
+    "minecraft:dark_oak_planks": ["minecraft:spruce_planks", "minecraft:stripped_dark_oak_wood[axis=y]"],
+    "minecraft:bricks": ["minecraft:granite", "minecraft:brown_terracotta"],
+    "minecraft:gray_concrete": ["minecraft:andesite", "minecraft:polished_andesite"],
+    "minecraft:smooth_sandstone": ["minecraft:sandstone", "minecraft:cut_sandstone"],
+    "minecraft:cut_red_sandstone": ["minecraft:red_sandstone", "minecraft:smooth_red_sandstone"],
+    "minecraft:polished_blackstone_bricks": ["minecraft:cracked_polished_blackstone_bricks", "minecraft:polished_blackstone"],
+    "minecraft:polished_deepslate": ["minecraft:deepslate_bricks", "minecraft:cracked_deepslate_bricks"],
+    "minecraft:white_terracotta": ["minecraft:smooth_quartz", "minecraft:calcite"],
+    "minecraft:red_terracotta": ["minecraft:bricks", "minecraft:brown_terracotta"],
+    "minecraft:green_terracotta": ["minecraft:moss_block", "minecraft:lime_terracotta"],
+}
+FAMILIES = {
+    "minecraft:stone_bricks": "stone_brick", "minecraft:white_concrete": "quartz", "minecraft:calcite": "polished_diorite", "minecraft:quartz_bricks": "quartz",
+    "minecraft:spruce_planks": "spruce", "minecraft:dark_oak_planks": "dark_oak", "minecraft:bricks": "brick", "minecraft:smooth_sandstone": "smooth_sandstone",
+    "minecraft:cut_red_sandstone": "smooth_red_sandstone", "minecraft:polished_blackstone_bricks": "polished_blackstone_brick", "minecraft:polished_deepslate": "polished_deepslate",
+}
+
+
+def wall_family(wall):
+    return FAMILIES.get(wall, "polished_blackstone_brick")
+
+
+def weather(b, x0, y0, z0, x1, y1, z1, was):
+    """Age on a wall: drifts of related blocks where the noise says, so it isn't one flat colour."""
+    alts = WEATHERED.get(was)
+    if not alts:
+        return
+    for x in range(x0, x1 + 1):
+        for y in range(y0, y1 + 1):
+            for z in range(z0, z1 + 1):
+                if b.get(x, y, z) == was:
+                    n = noise(x * 3 + z * 3, y * 3, 21)
+                    if n > 0.62:
+                        b.set(x, y, z, alts[int(n * 100) % len(alts)])
+
+
+def dress_edges(b, W, D, rnd, n=14):
+    """Rocks and bushes in the empty ground near a land lair's edge, so its rim isn't bare."""
+    placed = 0
+    for _ in range(n * 30):
+        if placed >= n:
+            break
+        x, z = rnd.randint(3, W - 3), rnd.randint(3, D - 3)
+        if min(x, W - x, z, D - z) > 14:
+            continue
+        ground = (b.get(x, 0, z) or "").split("[")[0]
+        if ground not in SOFT_GROUND:
+            continue
+        if any(b.get(x + dx, y, z + dz) not in (None, AIR) for dx in range(-3, 4) for dz in range(-3, 4) for y in (1, 2, 3)):
+            continue
+        if ground == "minecraft:sand":
+            rock(b, x, 1, z, 1.4 + rnd.random(), rnd, blocks=("minecraft:sandstone", "minecraft:smooth_sandstone", "minecraft:cut_sandstone"))
+        elif placed % 2:
+            rock(b, x, 1, z, 1.4 + rnd.random(), rnd)
+        else:
+            bush(b, x, 1, z, rnd, "oak", 1.8)
+        placed += 1
