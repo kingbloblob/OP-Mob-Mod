@@ -26,6 +26,9 @@ from nbt import Byte  # noqa: E402
 KIT_TAG_PREFIX = "onepiece_kit_"   # the main mod's GuardKit.KIT_TAG_PREFIX
 
 
+import detail  # noqa: E402
+
+
 class Lair(Parts):
     """The main mod's canvas, plus this mod's boss, crews and chests."""
 
@@ -55,6 +58,20 @@ class Lair(Parts):
         # someone holding the key the boss drops.
         self.set(x, y, z, f"opbosses:{loot}_chest[facing={facing}]",
                  {"id": "opbosses:lair_chest", "LootTable": f"opbosses:chests/{loot}", "lock": {"items": f"opbosses:key_{self.boss}"}})
+
+    def tree(self, x, y, z, h=6, kind="oak", r=2.5):
+        detail.oak(self, x, y, z, h + 1, random.Random(x * 73 + z * 19), kind, r + 0.8)
+
+    def palm(self, x, y, z, h=6):
+        detail.palm(self, x, y, z, h + 2, random.Random(x * 73 + z * 19))
+
+    def tower(self, cx, cz, r, h, wall, roof=None, y=0, windows=True, ladder_side=True, floors=None):
+        super().tower(cx, cz, r, h, wall, None, y, windows, ladder_side, floors)
+        if roof:
+            detail.stair_cone(self, cx, cz, r, y + h + 1, *detail.cone_family(roof))
+
+    def tower_cap(self, cx, cz, r, h, roof, y=0):
+        pass   # the stair cone needs no filling under its tip
 
     def scatter(self, x0, z0, x1, z1, y, blocks, chance, rnd, only_on=None, replace=False):
         for x in range(x0, x1 + 1):
@@ -95,11 +112,37 @@ def clear_ground(b):
     face against the wall. LairSites (Java) already keeps lairs on fairly flat ground; this cuts away the rest."""
     xs = [p[0] for p in b.blocks]; zs = [p[2] for p in b.blocks]; ys = [p[1] for p in b.blocks]
     top = min(max(ys), CLEAR_TOP)
+    # Near the faded edge a hill is cut back in a slope, 2 blocks up for each block in, not straight down.
+    natural = getattr(b, "natural", set())
+    reach = {c: 0 for c in natural}
+    ring = list(natural)
+    for d in range(1, top // 2 + 1):
+        nxt = []
+        for (x, z) in ring:
+            for c in ((x + 1, z), (x - 1, z), (x, z + 1), (x, z - 1)):
+                if c not in reach:
+                    reach[c] = d
+                    nxt.append(c)
+        ring = nxt
     for x in range(min(xs), max(xs) + 1):
         for z in range(min(zs), max(zs) + 1):
-            for y in range(1, top + 1):
+            if (x, z) in natural:   # past the lair's faded edge: the land stays as it is
+                continue
+            for y in range(1, min(top, reach.get((x, z), top) * 2) + 1):
                 if b.get(x, y, z) is None:
                     b.set(x, y, z, AIR)
+
+
+def soften_ground(b):
+    """Every land lair: drifted ground, flowers in clumps, and an edge that fades into the land instead of a square."""
+    xs = [p[0] for p in b.blocks]; zs = [p[2] for p in b.blocks]
+    W, D = max(xs), max(zs)
+    rnd = random.Random(W * 31 + D)
+    detail.ground_patches(b, W, D, rnd)
+    detail.flower_drifts(b, W, D, rnd)
+    if not hasattr(b, "natural"):
+        detail.fade_edges(b, W, D, seed=7)
+    b.adaptation = "beard_thin"   # beard_box banks the land up square all round the lair
 
 
 def lair(name, title, boss, biomes, place, group="rogue_lairs"):
@@ -1186,11 +1229,12 @@ def main(root, only=()):
                 assert kit in kits, (l['name'], kit)
         name = l['name']
         if l['place'] == "land":
+            soften_ground(b)
             clear_ground(b)
         size, my = b.save(f'{D}/structure/{name}.nbt')
         st = {"type": "minecraft:jigsaw", "biomes": f"#opbosses:has_structure/{name}", "step": "surface_structures",
               "spawn_overrides": {"monster": {"bounding_box": "piece", "spawns": []}, "ambient": {"bounding_box": "piece", "spawns": []}},
-              "terrain_adaptation": "beard_box", "start_pool": f"opbosses:{name}", "size": 1, "max_distance_from_center": 80, "use_expansion_hack": False}
+              "terrain_adaptation": getattr(b, "adaptation", "beard_box"), "start_pool": f"opbosses:{name}", "size": 1, "max_distance_from_center": 80, "use_expansion_hack": False}
         # The jigsaw puts a piece's lowest level 1 below surface + start_height (a single element's ground level delta is 1),
         # so start_height 0 puts y = 0 on the top block of the ground, or of the sea for a sea lair's waterline.
         if l['place'] == "land":
